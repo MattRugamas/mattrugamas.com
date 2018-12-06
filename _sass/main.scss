@@ -1,0 +1,184 @@
+@import "reset";
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+$font-stack: 'Poppins', Helvetica, sans-serif;
+$black: #2A2D33;
+$white: #FFF4E0;
+$blue: #00ADB5;
+$red: #FC3C3C;
+$purple: #685C79;
+$yellow: #F8B500;
+$brown: #99927B;
+$darkpink: #AC6C82;
+$pink: #DA727E;
+
+* {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+*:before, *:after {
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+	color: $yellow;
+} //colors
+a:visited {
+	color: $pink;
+}
+
+ul {
+	list-style-type: none;
+	padding-inline-start: 0;
+	-webkit-padding-start: 0; 
+} // left-padding in user script hack
+
+html {
+	font-family: $font-stack;
+	background-color: $black;
+	color: $white;
+}
+
+body {
+	position: relative;
+	margin-left: 40px;
+}
+
+div h2, div h5 {
+	padding: 0 1px;
+} // left margin for type hack
+
+nav {
+  background: $black;
+  box-shadow: 0 1px 0 $white;
+}
+nav ul {
+  text-align: left;
+	margin: 0 auto;
+}
+nav ul li {
+  display: inline-block; 
+}
+nav ul li a {
+	position: relative;
+  display: block;
+	margin: 0 10px;
+  padding: 15px 0 15px 0;
+	
+	text-transform: uppercase;
+  text-decoration: none;
+	font-weight: 800;
+  color: $white; 
+}
+
+nav ul li a.current {
+	color: $blue;
+	box-shadow: 0px 1px 0px $blue;
+}
+nav ul li a.not-current {
+	color: $white;
+} // Colors & Blue Underline
+
+nav ul li a,
+nav ul li a:after,
+nav ul li a:before {
+  transition: all .5s;
+} // Transitions
+
+nav ul li a:hover {
+  color: $blue;
+} // Colors
+
+nav ul li a:after {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: $blue;
+  height: 1px;
+}
+nav ul li a:hover:after {
+  width: 100%;
+} // Blue Underline Animation
+
+img#selfie {
+	display: block;
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 25px;
+}
+
+div#content {
+	position: relative;
+	min-height: calc(100vh - 72px);
+	max-width: 777px;
+	padding: 18px 20px 18px 0;
+}
+
+div#content h1 {
+	margin: 0 auto;
+}
+div#content h1 span {
+	color: $blue;
+} //color
+div#content h2 {
+	margin: 0 auto;
+}
+
+// POST STUFF //
+div#content p#post-date {
+	display: inline-block;
+	margin: 0 auto;
+	color: $brown;
+	
+	padding: 3px 0;
+}
+
+div#content ul#blog-list {
+	margin-top: 2em;
+}
+div#content ul#blog-list li {
+	padding-left: 1em;
+	border-left-color: $white;
+	border-left-style: solid;
+	border-left-width: 1px;
+}
+div#content ul#blog-list li h2 {
+	display: inline-block;
+	margin: 0 auto;
+}
+div#content ul#blog-list li p.date {
+	display: inline-block;
+	margin: 0 auto;
+	color: $brown;
+	
+	padding: 5px 0.5em;
+	border-left-color: $white;
+	border-left-style: dotted;
+	border-left-width: 1px;
+}
+
+footer {
+	position: relative;
+	padding: 5px 0 0 0;
+	font-size: 25%;
+	text-align: center;
+	background-color: $black;
+	box-shadow: 0 -1px 0 $white;
+}
+footer p {
+	margin: 0 auto;
+	color: $white;
+}
+footer span {
+	padding: 5px 0 0 0;
+	color: $blue;
+	box-shadow: 0 -1px 0 $blue;
+}
