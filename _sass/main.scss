@@ -185,7 +185,12 @@ footer span {
 }
 
 	@media all and (max-width: 500px) {
-		footer span{
+		footer span {
+			padding: 4px 0 0 0;
+		}
+	}
+	@media all and (max-width: 800px) {
+		footer span {
 			padding: 4px 0 0 0;
 		}
 	}
