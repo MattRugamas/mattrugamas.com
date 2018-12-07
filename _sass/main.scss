@@ -125,12 +125,12 @@ div#content {
 }
 	@media all and (max-width: 500px) {
 		div#content {
-			min-height: calc(100vh - 92px);
+			min-height: calc(100vh - 102px);
 		}
 	}
 	@media all and (max-width: 800px) {
 		div#content {
-			min-height: calc(100vh - 92px);
+			min-height: calc(100vh - 102px);
 		}
 	}
 
@@ -193,7 +193,6 @@ footer span {
 	color: $blue;
 	box-shadow: 0 -1px 0 $blue;
 }
-
 	@media all and (max-width: 500px) {
 		footer span {
 			padding: 4px 0 0 0;
