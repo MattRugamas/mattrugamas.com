@@ -161,10 +161,14 @@ div#content ul#blog-list li {
 	border-left-width: 1px;
 }
 	@media all and (max-width: 500px) {
-		width: 100%;
+		div#content ul#blog-list li {
+			width: 100%;
+		}
 	}
 	@media all and (max-width: 800px) {
-		width: 100%;
+		div#content ul#blog-list li {
+			width: 100%;
+		}
 	}
 div#content ul#blog-list li p.read-more {
 	text-align: left;
