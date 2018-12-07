@@ -1,6 +1,6 @@
-title: Matthew Rugamas
+title: Matthew's Weblog
 description: >
-  A personal site
+  A personal site for showcasing ideas and projects.
 url: "https://samagurtam.github.io"
 show_excerpts: true
 permalink: /:categories/:title # Don't show the date of the post in the URL
