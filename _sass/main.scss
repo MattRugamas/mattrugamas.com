@@ -125,12 +125,12 @@ div#content {
 }
 	@media all and (max-width: 500px) {
 		div#content {
-			min-height: calc(100vh - 102px);
+			min-height: 0;
 		}
 	}
 	@media all and (max-width: 800px) {
 		div#content {
-			min-height: calc(100vh - 102px);
+			min-height: 0;
 		}
 	}
 
