@@ -201,17 +201,17 @@ footer p {
 	color: $white;
 }
 footer span {
-	padding: 5px 0 0 0;
+	padding: 6px 0 0 0;
 	color: $blue;
 	box-shadow: 0 -1px 0 $blue;
 }
 	@media all and (max-width: 500px) {
 		footer span {
-			padding: 4px 0 0 0;
+			padding: 5px 0 0 0;
 		}
 	}
 	@media all and (max-width: 800px) {
 		footer span {
-			padding: 4px 0 0 0;
+			padding: 5px 0 0 0;
 		}
 	}
