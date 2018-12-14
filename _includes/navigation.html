@@ -9,5 +9,10 @@
 				{% endif %}
 			">{{ item.name }}</a>
 		</li>{% endfor %}
+		{% if page.layout == 'post' %}
+			<li>
+				<a href="#" class="current">{{ page.title }}</a>
+			</li>
+		{% endif %}
 	</ul>
 </nav>
