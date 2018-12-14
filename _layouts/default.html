@@ -1,7 +1,13 @@
 <!doctype html>
 <html>
 	<head>
-		<title>{{ site.title }} | {{ page.title }}</title>
+		<title>
+			{% if page.url == "/" %}
+				{{ site.title }}
+			{% else %}
+				{{ site.title }} | {{ page.title }}
+			{% endif %}
+		</title>
 		<link rel="stylesheet" href="/assets/css/styles.css">
 		{% include faviconpackage.html %}
 		<meta charset="utf-8">
