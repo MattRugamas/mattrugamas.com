@@ -45,7 +45,8 @@ body {
 	margin-left: 40px;
 }
 
-div h2, div h5 {
+div h2 {
+	text-transform: capitalize;
 	padding: 0 1px;
 } // left margin for type hack
 
@@ -110,7 +111,17 @@ nav ul li a:hover:after {
 
 img#selfie {
 	display: block;
-	margin: 15px auto;
+	margin: auto;
+	
+	box-shadow: 1px -3px 3px 3px $pink;
+}
+img.img-responsive {
+	display: block;
+	margin: auto;
+	width: 100%;
+	max-width: 50%;
+	height: auto;
+	
 }
 
 div#content {
@@ -138,6 +149,9 @@ div#content h2 {
 	margin: 0 auto;
 }
 
+div#content h1#post-title {
+	text-transform: capitalize;
+}
 div#content p#post-date {
 	display: inline-block;
 	margin: 0 auto;
