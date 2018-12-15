@@ -111,7 +111,7 @@ nav ul li a:hover:after {
 
 img#selfie {
 	display: block;
-	margin: auto;
+	margin: 11px auto;
 	
 	box-shadow: 1px -3px 3px 3px $pink;
 }
@@ -138,6 +138,12 @@ div#content {
 			min-height: 0;
 		}
 	}
+	
+form.newsletter {
+	border: 1px solid $blue;
+	padding: 3px;
+	text-align: center;
+}
 
 div#content h1 {
 	margin: 0 auto;
