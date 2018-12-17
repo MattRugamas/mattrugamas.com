@@ -41,7 +41,7 @@ html {
 body {
 	display: flex;
 	flex-flow: column nowrap;
-	position: relative;
+  
 	margin-left: 40px;
 }
 
@@ -51,37 +51,32 @@ div h2 {
 } // left margin for type hack
 
 nav {
-  background: $black;
   box-shadow: 0 1px 0 $white;
-}
+} // Nav box-shadow styling
 nav ul {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	margin: 0 auto;
-}
-nav ul li {
-  display: inline-block; 
-}
+} // Nav flexbox setup
 nav ul li a {
-	position: relative;
-  display: block;
-	margin: 0 10px;
-  padding: 15px 0 15px 0;
+	position: relative; // Affects blue underline animation
+  display: block; // Affects box boundaries of nav <a> elements
+  padding: 15px 5px;
+  margin: 0 5px auto;
 	
 	text-transform: uppercase;
   text-decoration: none;
-	font-weight: 800;
-  color: $white; 
+	font-weight: 900;
 }
 
 nav ul li a.current {
 	color: $blue;
 	box-shadow: 0px 1px 0px $blue;
-}
+} // Colors & Blue Underline
 nav ul li a.not-current {
 	color: $white;
-} // Colors & Blue Underline
+}
 
 nav ul li a,
 nav ul li a:after,
@@ -89,11 +84,10 @@ nav ul li a:before {
   transition: all .5s;
 } // Transitions
 
-nav ul li a:hover {
-  color: $blue;
-} // Colors
-
-nav ul li a:after {
+nav ul li a.not-current:hover {
+  color: $yellow;
+} // Nav Link Hover Color
+nav ul li a.not-current:after {
   position: absolute;
   bottom: -1px;
   left: 0;
@@ -102,31 +96,16 @@ nav ul li a:after {
   width: 0%;
   content: '.';
   color: transparent;
-  background: $blue;
+  background: $yellow;
   height: 1px;
-}
-nav ul li a:hover:after {
+} // Sets up blue und anim for 'not-cur'
+nav ul li a.not-current:hover:after {
   width: 100%;
-} // Blue Underline Animation
-
-img#selfie {
-	display: block;
-	margin: 11px auto;
-	
-	box-shadow: 1px -3px 3px 3px $pink;
-}
-img.img-responsive {
-	display: block;
-	margin: auto;
-	width: 100%;
-	max-width: 50%;
-	height: auto;
-	
-}
+} // Blue Und Anim
 
 div#content {
 	min-height: calc(100vh - 72px);
-	padding: 18px 25px 18px 0;
+	padding: 15px 10px 15px 0;
 }
 	@media all and (max-width: 500px) {
 		div#content {
@@ -138,65 +117,42 @@ div#content {
 			min-height: 0;
 		}
 	}
-	
-form.newsletter {
-	border: 1px solid $blue;
-	padding: 3px;
-	text-align: center;
-}
 
 div#content h1 {
 	margin: 0 auto;
 }
-div#content h1 span {
+div#content h1.hello span {
 	color: $blue;
 } //color
-div#content h2 {
-	margin: 0 auto;
-}
-
-div#content h1#post-title {
-	text-transform: capitalize;
-}
-div#content p#post-date {
-	display: inline-block;
-	margin: 0 auto;
-	color: $brown;
-	
-	padding: 3px 0;
+div#content p.about-me {
+  margin: 0 auto;
 }
 
 div#content ul#blog-list {
 	margin-top: 2em;
 }
 div#content ul#blog-list li {
-	width: 75%;
+	max-width: 95vh;
 	padding-left: 1em;
+  margin: 0 0 10px 0;
+  
 	border-left-color: $white;
 	border-left-style: solid;
 	border-left-width: 1px;
-}
-	@media all and (max-width: 500px) {
-		div#content ul#blog-list li {
-			width: 100%;
-		}
-	}
-	@media all and (max-width: 800px) {
-		div#content ul#blog-list li {
-			width: 100%;
-		}
-	}
-div#content ul#blog-list li p.read-more {
-	text-align: left;
-	text-decoration: underline;
 }
 div#content ul#blog-list li h2 {
 	display: inline-block;
 	margin: 0 auto;
 }
+div#content ul#blog-list li p {
+  margin: 0 auto;
+}
+div#content ul#blog-list li p.read-more {
+	text-align: left;
+	text-decoration: underline;
+}
 div#content ul#blog-list li p.date {
 	display: inline-block;
-	margin: 0 auto;
 	color: $brown;
 	
 	padding: 5px 0.5em;
@@ -231,3 +187,42 @@ footer span {
 			padding: 5px 0 0 0;
 		}
 	}
+
+/* ABOUT PAGE */
+
+
+img#selfie {
+	float: right;
+  margin: 0 15% 0 15%;
+
+	box-shadow: 1px -3px 3px 3px $pink;
+}
+
+form.newsletter {
+	border: 1px solid $blue;
+	padding: 3px;
+  margin: 5em auto;
+	text-align: center;
+}
+
+/* POST PAGE */
+
+img.img-responsive {
+	display: block;
+	margin: auto;
+	width: 100%;
+	max-width: 50%;
+	height: auto;
+	
+}
+
+div#content h1#post-title {
+	text-transform: capitalize;
+}
+div#content p#post-date {
+	display: inline-block;
+	margin: 0 auto;
+	color: $brown;
+	
+	padding: 3px 0;
+}

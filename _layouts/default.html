@@ -1,16 +1,16 @@
 <!doctype html>
 <html>
-	<head>
-		{% include pagetitles.html %}
-		<link rel="stylesheet" href="/assets/css/styles.css">
-		{% include faviconpackage.html %}
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		{% feed_meta %}
-		{% seo %}
-	</head>
-	<body>
-		{% include navigation.html %}
+  <head>
+    {%- include faviconpackage.html -%}
+    {%- include pagetitles.html -%}
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- feed_meta -%}
+    {%- seo -%}
+  </head>
+  <body>
+    {% include navigation.html %}
 		<div id="content">
 			{{ content }}
 		</div>
