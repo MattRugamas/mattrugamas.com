@@ -44,6 +44,19 @@ body {
   
 	margin-left: 40px;
 }
+  @media all and (max-width: 500px) {
+  	body {
+      padding-left: 5px;
+  		margin-left: 0;
+  	}
+  }
+  @media all and (max-width: 800px) {
+  	body {
+      padding-left: 5px;
+  		margin-left: 0;
+  	}
+  }
+  
 
 div h2 {
 	text-transform: capitalize;
@@ -121,12 +134,21 @@ div#content {
 div#content h1 {
 	margin: 0 auto;
 }
-div#content h1.hello span {
+  @media all and (max-width: 500px) {
+  	div#content h1 {
+  		text-align: center;
+      margin-bottom: 5px;
+  	}
+  }
+  @media all and (max-width: 800px) {
+  	div#content h1 {
+  		text-align: center;
+      margin-bottom: 5px;
+  	}
+  }
+div#content h1 span {
 	color: $blue;
 } //color
-div#content p.about-me {
-  margin: 0 auto;
-}
 
 div#content ul#blog-list {
 	margin-top: 2em;
@@ -190,18 +212,37 @@ footer span {
 
 /* ABOUT PAGE */
 
-
+div#content div#about-me {
+  display: flex;
+  flex-flow: row wrap-reverse;
+  justify-content: space-between;
+}
+div#content p.about-me {
+  max-width: 50vw;
+  margin: 0;
+}
+  @media all and (max-width: 500px) {
+    div#content p.about-me {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+  @media all and (max-width: 800px) {
+    div#content p.about-me {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+  }
+div#content div#about-me > a {
+  margin: 0 auto;
+}
 img#selfie {
-	float: right;
-  margin: 0 15% 0 15%;
-
 	box-shadow: 1px -3px 3px 3px $pink;
 }
-
 form.newsletter {
 	border: 1px solid $blue;
 	padding: 3px;
-  margin: 5em auto;
+  margin: 1em auto;
 	text-align: center;
 }
 
