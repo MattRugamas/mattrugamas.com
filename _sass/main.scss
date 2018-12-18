@@ -248,7 +248,6 @@ div#content {
     margin: 0 auto;
   }
 }
-
 img#selfie {
 	box-shadow: 1px -3px 3px 3px $pink;
 }
@@ -281,14 +280,24 @@ div#content {
 	}
 }
 @media all and (max-width: 500px) {
-	div#content p#post-date {
-		display: block;
-		text-align: center;
+	div#content {
+		p {
+			text-align: center;
+		}
+		p#post-date {
+			display: block;
+			text-align: center;
+		}
 	}
 }
 @media all and (max-width: 800px) {
-	div#content p#post-date {
-		display: block;
-		text-align: center;
+	div#content {
+		p {
+			text-align: center;
+		}
+		p#post-date {
+			display: block;
+			text-align: center;
+		}
 	}
 }
