@@ -44,18 +44,18 @@ body {
   
 	margin-left: 40px;
 }
-  @media all and (max-width: 500px) {
-  	body {
-      padding-left: 5px;
-  		margin-left: 0;
-  	}
+@media all and (max-width: 500px) {
+  body {
+    padding-left: 5px;
+  	margin-left: 0;
   }
-  @media all and (max-width: 800px) {
-  	body {
-      padding-left: 5px;
-  		margin-left: 0;
-  	}
+}
+@media all and (max-width: 800px) {
+  body {
+    padding-left: 5px;
+  	margin-left: 0;
   }
+}
   
 
 div h2 {
@@ -65,14 +65,12 @@ div h2 {
 
 nav {
   box-shadow: 0 1px 0 $white;
-} // Nav box-shadow styling
-nav ul {
+	ul {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: flex-start;
 	margin: 0 auto;
-} // Nav flexbox setup
-nav ul li a {
+		li a {
 	position: relative; // Affects blue underline animation
   display: block; // Affects box boundaries of nav <a> elements
   padding: 15px 5px;
@@ -81,26 +79,21 @@ nav ul li a {
 	text-transform: uppercase;
   text-decoration: none;
 	font-weight: 900;
-}
-
-nav ul li a.current {
+		}
+		li a.current {
 	color: $blue;
 	box-shadow: 0px 1px 0px $blue;
-} // Colors & Blue Underline
-nav ul li a.not-current {
+		} // Colors & Blue Underline
+		li a.not-current {
 	color: $white;
-}
-
-nav ul li a,
-nav ul li a:after,
-nav ul li a:before {
+		}
+		li a,li a:after,li a:before {
   transition: all .5s;
-} // Transitions
-
-nav ul li a.not-current:hover {
+		} // Transitions
+		li a.not-current:hover {
   color: $yellow;
-} // Nav Link Hover Color
-nav ul li a.not-current:after {
+		} // Nav Link Hover Color
+		li a.not-current:after {
   position: absolute;
   bottom: -1px;
   left: 0;
@@ -111,76 +104,72 @@ nav ul li a.not-current:after {
   color: transparent;
   background: $yellow;
   height: 1px;
-} // Sets up blue und anim for 'not-cur'
-nav ul li a.not-current:hover:after {
+		} // Sets up blue und anim for 'not-cur'
+		li a.not-current:hover:after {
   width: 100%;
-} // Blue Und Anim
+		} // Blue Und Anim
+	}
+}
 
 div#content {
 	min-height: calc(100vh - 72px);
 	padding: 15px 10px 15px 0;
-}
-	@media all and (max-width: 500px) {
-		div#content {
-			min-height: 0;
+	h1 {
+		margin: 0 auto;
+		span {
+			color: $blue;
+		} //color
+	}
+	ul#blog-list {
+		margin-top: 2em;
+		li {
+			max-width: 95vh;
+			padding-left: 1em;
+			margin: 0 0 10px 0;
+			
+			border-left-color: $white;
+			border-left-style: solid;
+			border-left-width: 1px;
+			h2 {
+				display: inline-block;
+				margin: 0 auto;
+			}
+			p {
+				margin: 0 auto;
+			}
+			p.read-more {
+				text-align: left;
+				text-decoration: underline;
+			}
+			p.date {
+				display: inline-block;
+				color: $brown;
+				
+				padding: 5px 0.5em;
+				border-left-color: $white;
+				border-left-style: dotted;
+				border-left-width: 1px;
+			}
 		}
 	}
-	@media all and (max-width: 800px) {
-		div#content {
-			min-height: 0;
-		}
+}
+@media all and (max-width: 500px) {
+	div#content {
+		min-height: 0;
 	}
-
-div#content h1 {
-	margin: 0 auto;
-}
-  @media all and (max-width: 500px) {
-  	div#content h1 {
-  		text-align: center;
-      margin-bottom: 5px;
-  	}
+	div#content h1 {
+  	text-align: center;
+    margin-bottom: 5px;
   }
-  @media all and (max-width: 800px) {
-  	div#content h1 {
-  		text-align: center;
-      margin-bottom: 5px;
-  	}
+}
+@media all and (max-width: 800px) {
+	div#content {
+		min-height: 0;
+	}
+	div#content h1 {
+  	text-align: center;
+    margin-bottom: 5px;
   }
-div#content h1 span {
-	color: $blue;
-} //color
-
-div#content ul#blog-list {
-	margin-top: 2em;
-}
-div#content ul#blog-list li {
-	max-width: 95vh;
-	padding-left: 1em;
-  margin: 0 0 10px 0;
-  
-	border-left-color: $white;
-	border-left-style: solid;
-	border-left-width: 1px;
-}
-div#content ul#blog-list li h2 {
-	display: inline-block;
-	margin: 0 auto;
-}
-div#content ul#blog-list li p {
-  margin: 0 auto;
-}
-div#content ul#blog-list li p.read-more {
-	text-align: left;
-	text-decoration: underline;
-}
-div#content ul#blog-list li p.date {
-	display: inline-block;
-	color: $brown;
-	
-	padding: 5px 0.5em;
-	border-left-color: $white;
-	border-left-style: dotted;
-	border-left-width: 1px;
 }
 
 footer {
@@ -189,53 +178,56 @@ footer {
 	text-align: center;
 	background-color: $black;
 	box-shadow: 0 -1px 0 $white;
-}
-footer p {
-	margin: 0 auto;
-	color: $white;
-}
-footer span {
-	padding: 6px 0 0 0;
-	color: $blue;
-	box-shadow: 0 -1px 0 $blue;
-}
-	@media all and (max-width: 500px) {
-		footer span {
-			padding: 5px 0 0 0;
-		}
+	p {
+		margin: 0 auto;
+		color: $white;
 	}
-	@media all and (max-width: 800px) {
-		footer span {
-			padding: 5px 0 0 0;
-		}
+	span {
+		padding: 6px 0 0 0;
+		color: $blue;
+		box-shadow: 0 -1px 0 $blue;
 	}
+}
+@media all and (max-width: 500px) {
+	footer span {
+		padding: 5px 0 0 0;
+	}
+}
+@media all and (max-width: 800px) {
+	footer span {
+		padding: 5px 0 0 0;
+	}
+}
 
 /* ABOUT PAGE */
 
-div#content div#about-me {
-  display: flex;
-  flex-flow: row wrap-reverse;
-  justify-content: space-between;
+div#content {
+	div#about-me {
+  	display: flex;
+  	flex-flow: row wrap-reverse;
+  	justify-content: space-between;
+	}
+	div#about-me > a {
+		margin: 0 auto;
+	}
+	p.about-me {
+  	max-width: 50vw;
+  	margin: 0;
+	}
 }
-div#content p.about-me {
-  max-width: 50vw;
-  margin: 0;
-}
-  @media all and (max-width: 500px) {
-    div#content p.about-me {
-      max-width: 100%;
-      margin: 0 auto;
-    }
+@media all and (max-width: 500px) {
+  div#content p.about-me {
+    max-width: 100%;
+    margin: 0 auto;
   }
-  @media all and (max-width: 800px) {
-    div#content p.about-me {
-      max-width: 100%;
-      margin: 0 auto;
-    }
-  }
-div#content div#about-me > a {
-  margin: 0 auto;
 }
+@media all and (max-width: 800px) {
+  div#content p.about-me {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
 img#selfie {
 	box-shadow: 1px -3px 3px 3px $pink;
 }
@@ -256,14 +248,15 @@ img.img-responsive {
 	height: auto;
 	
 }
-
-div#content h1#post-title {
-	text-transform: capitalize;
-}
-div#content p#post-date {
-	display: inline-block;
-	margin: 0 auto;
-	color: $brown;
+div#content {
+	h1#post-title {
+		text-transform: capitalize;
+	}
+	p#post-date {
+		display: inline-block;
+		margin: 0 auto;
+		color: $brown;
 	
-	padding: 3px 0;
+		padding: 3px 0;
+	}
 }

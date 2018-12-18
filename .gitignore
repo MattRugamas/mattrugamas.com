@@ -1,6 +1,9 @@
 *~
 *swp
 .tm_properties
+.vscode
+.ruby-version
+2018-12-17*
 .DS_Store
 Gemfile.lock
 .jekyll-metadata
