@@ -176,7 +176,7 @@ div#content {
 					text-align: center;
 				}
 				p.read-more {
-					text-align: center;
+					display: none;
 				}
 			}
 		}
@@ -185,12 +185,15 @@ div#content {
 @media all and (max-width: 800px) {
 	div#content {
 		min-height: 0;
+		h1 {
+  		text-align: center;
+			margin-bottom: 5px;
+			margin-left: 10px;
+		}
+		ul#blog-list li p.read-more {
+			display: none;
+		}
 	}
-	div#content h1 {
-  	text-align: center;
-		margin-bottom: 5px;
-		margin-left: 10px;
-  }
 }
 
 footer {
