@@ -156,11 +156,31 @@ div#content {
 @media all and (max-width: 500px) {
 	div#content {
 		min-height: 0;
+		h1 {
+  		text-align: center;
+			margin-bottom: 5px;
+			margin-left: 10px;
+		}
+		ul#blog-list {
+			li {
+				h2 {
+					display: block;
+					text-align: center;
+				}
+				p {
+					text-align: center;
+				}
+				p.date {
+					display: block;
+					border: 0ch;
+					text-align: center;
+				}
+				p.read-more {
+					text-align: center;
+				}
+			}
+		}
 	}
-	div#content h1 {
-  	text-align: center;
-    margin-bottom: 5px;
-  }
 }
 @media all and (max-width: 800px) {
 	div#content {
@@ -168,7 +188,8 @@ div#content {
 	}
 	div#content h1 {
   	text-align: center;
-    margin-bottom: 5px;
+		margin-bottom: 5px;
+		margin-left: 10px;
   }
 }
 
@@ -253,10 +274,21 @@ div#content {
 		text-transform: capitalize;
 	}
 	p#post-date {
-		display: inline-block;
-		margin: 0 auto;
+		margin: 0;
 		color: $brown;
 	
 		padding: 3px 0;
+	}
+}
+@media all and (max-width: 500px) {
+	div#content p#post-date {
+		display: block;
+		text-align: center;
+	}
+}
+@media all and (max-width: 800px) {
+	div#content p#post-date {
+		display: block;
+		text-align: center;
 	}
 }
