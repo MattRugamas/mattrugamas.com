@@ -12,102 +12,111 @@ $pink: #DA727E;
 * {
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
-	        box-sizing: border-box;
-}
+          box-sizing: border-box;
+          
+  -webkit-hyphens: auto;
+     -moz-hyphens: auto;
+          hyphens: auto;
+} // everythings a border box
 *:before, *:after {
 	box-sizing: border-box;
-}
-
+} // everythings a border box pt II
 a {
 	text-decoration: none;
 	color: $yellow;
-} //colors
+} // set link colors
 a:visited {
 	color: $pink;
-}
-
+} // set link colors
 ul {
 	list-style-type: none;
 	padding-inline-start: 0;
 	-webkit-padding-start: 0; 
-} // left-padding in user script hack
+} // reset default list styles
 
 html {
 	font-family: $font-stack;
 	background-color: $black;
 	color: $white;
-}
-
+} // font family / theme colors
 body {
 	display: flex;
 	flex-flow: column nowrap;
   
 	margin-left: 40px;
-}
+} // body is a flex column with a left-marg 40px
 @media all and (max-width: 500px) {
   body {
-    padding-left: 5px;
   	margin-left: 0;
   }
-}
+} // reset left-marg 40px desktop theme for mobile
 @media all and (max-width: 800px) {
   body {
-    padding-left: 5px;
   	margin-left: 0;
   }
-}
-  
-
-div h2 {
-	text-transform: capitalize;
-	padding: 0 1px;
-} // left margin for type hack
+} // same-ish
 
 nav {
   box-shadow: 0 1px 0 $white;
 	ul {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: flex-start;
-	margin: 0 auto;
-		li a {
-	position: relative; // Affects blue underline animation
-  display: block; // Affects box boundaries of nav <a> elements
-  padding: 15px 5px;
-  margin: 0 5px auto;
-	
-	text-transform: uppercase;
-  text-decoration: none;
-	font-weight: 900;
-		}
+	  display: flex;
+	  flex-flow: row nowrap;
+	  justify-content: flex-start;
+	  margin: 0 auto;
+	  li a {
+	    position: relative; // Affects blue underline animation
+      display: block; // Affects box boundaries of nav <a> elements
+      padding: 15px 5px;
+      margin: 0 5px auto;
+
+	    text-transform: uppercase;
+      text-decoration: none;
+	    font-weight: 900;
+	  }
 		li a.current {
-	color: $blue;
-	box-shadow: 0px 1px 0px $blue;
+	    color: $blue;
+	    box-shadow: 0px 1px 0px $blue;
 		} // Colors & Blue Underline
 		li a.not-current {
-	color: $white;
+	    color: $white;
 		}
 		li a,li a:after,li a:before {
-  transition: all .5s;
+      transition: all .5s;
 		} // Transitions
 		li a.not-current:hover {
-  color: $yellow;
+      color: $yellow;
 		} // Nav Link Hover Color
 		li a.not-current:after {
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 0%;
-  content: '.';
-  color: transparent;
-  background: $yellow;
-  height: 1px;
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 0%;
+      content: '.';
+      color: transparent;
+      background: $yellow;
+      height: 1px;
 		} // Sets up blue und anim for 'not-cur'
 		li a.not-current:hover:after {
-  width: 100%;
+      width: 100%;
 		} // Blue Und Anim
+	}
+}
+@media all and (max-width: 500px) {
+  nav {
+    ul {
+      justify-content: center;
+    }
+  }
+}
+@media all and (max-width: 800px) {
+	div#content {
+		
+		p#post-date {
+			display: block;
+			text-align: center;
+		}
 	}
 }
 
@@ -121,16 +130,21 @@ div#content {
 		} //color
 	}
 	ul#blog-list {
-		margin-top: 2em;
+    margin-top: 5vh;
+    margin-bottom: 0;
 		li {
 			max-width: 95vh;
-			padding-left: 1em;
-			margin: 0 0 10px 0;
+      margin: 0 0 3vh 0;
+      padding-left: 10px;
 			
 			border-left-color: $white;
 			border-left-style: solid;
 			border-left-width: 1px;
+			&:last-child{
+				margin: 0;
+			}
 			h2 {
+        text-transform: capitalize;
 				display: inline-block;
 				margin: 0 auto;
 			}
@@ -155,25 +169,22 @@ div#content {
 }
 @media all and (max-width: 500px) {
 	div#content {
-		min-height: 0;
+    min-height: 0;
+    padding-left: 10px;
 		h1 {
-  		text-align: center;
-			margin-bottom: 5px;
-			margin-left: 10px;
+			text-align: center;
 		}
 		ul#blog-list {
 			li {
+				border: 0vw;
 				h2 {
 					display: block;
-					text-align: center;
-				}
-				p {
-					text-align: center;
+					//padding-left: 10px;
 				}
 				p.date {
 					display: block;
 					border: 0ch;
-					text-align: center;
+					padding: 0px;
 				}
 				p.read-more {
 					display: none;
@@ -184,16 +195,15 @@ div#content {
 }
 @media all and (max-width: 800px) {
 	div#content {
-		min-height: 0;
-		h1 {
-  		text-align: center;
-			margin-bottom: 5px;
-			margin-left: 10px;
-		}
-		ul#blog-list li p.read-more {
-			display: none;
-		}
-	}
+    min-height: 0;
+    padding-left: 10px;
+		ul#blog-list li {
+      border: 0;
+      p.read-more {
+			  display: none;
+      }
+	  }
+  }
 }
 
 footer {
@@ -284,9 +294,6 @@ div#content {
 }
 @media all and (max-width: 500px) {
 	div#content {
-		p {
-			text-align: center;
-		}
 		p#post-date {
 			display: block;
 			text-align: center;
@@ -295,9 +302,6 @@ div#content {
 }
 @media all and (max-width: 800px) {
 	div#content {
-		p {
-			text-align: center;
-		}
 		p#post-date {
 			display: block;
 			text-align: center;
