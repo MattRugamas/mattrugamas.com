@@ -119,10 +119,12 @@ nav {
 }
 
 div#content {
+	display: flex;
+	flex-flow: column nowrap;
 	min-height: calc(100vh - 72px);
 	padding: 15px 10px 15px 0;
 	h1 {
-		margin: 0 auto;
+		margin: 0;
 		span {
 			color: $blue;
 		} //color
@@ -235,20 +237,11 @@ footer {
 
 /* ABOUT PAGE */
 
-img#selfie {
-	box-shadow: 1px -3px 3px 3px $pink;
-}
-form.newsletter {
-	border: 1px solid $blue;
-	padding: 3px;
-  margin: 1em auto;
-	text-align: center;
-}
 div#content {
 	div#about-me {
-  	display: flex;
+		display: flex;
   	flex-flow: row wrap-reverse;
-  	justify-content: space-between;
+		justify-content: space-between;
 	}
 	div#about-me > a {
 		margin: 0 auto;
@@ -256,6 +249,15 @@ div#content {
 	p.about-me {
   	max-width: 50vw;
   	margin: 0;
+	}
+	img#selfie {
+		box-shadow: 1px -3px 3px 3px $pink;
+	}
+	form.newsletter {
+		border: 1px solid $blue;
+		padding: 3px;
+		margin-top: auto;
+		text-align: center;
 	}
 }
 @media all and (max-width: 500px) {
@@ -272,7 +274,8 @@ div#content {
 @media all and (max-width: 800px) {
   div#content {
     h1#about-hello {
-      margin-bottom: 15px;
+			margin-bottom: 15px;
+			text-align: center;
     }
     p.about-me {
       max-width: 100%;
@@ -312,8 +315,12 @@ div#content {
 }
 @media all and (max-width: 800px) {
 	div#content {
+		h1#post-title {
+			text-align: center;
+		}
 		p#post-date {
 			display: block;
+			text-align: center;
 		}
 	}
 }
