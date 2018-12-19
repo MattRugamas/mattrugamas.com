@@ -111,13 +111,11 @@ nav {
   }
 }
 @media all and (max-width: 800px) {
-	div#content {
-		
-		p#post-date {
-			display: block;
-			text-align: center;
-		}
-	}
+	nav {
+    ul {
+      justify-content: center;
+    }
+  }
 }
 
 div#content {
@@ -176,7 +174,8 @@ div#content {
 		}
 		ul#blog-list {
 			li {
-				border: 0vw;
+        border: 0vw;
+        padding-left: 0;
 				h2 {
 					display: block;
 					//padding-left: 10px;
@@ -199,6 +198,7 @@ div#content {
     padding-left: 10px;
 		ul#blog-list li {
       border: 0;
+      padding-left: 0;
       p.read-more {
 			  display: none;
       }
@@ -235,6 +235,15 @@ footer {
 
 /* ABOUT PAGE */
 
+img#selfie {
+	box-shadow: 1px -3px 3px 3px $pink;
+}
+form.newsletter {
+	border: 1px solid $blue;
+	padding: 3px;
+  margin: 1em auto;
+	text-align: center;
+}
 div#content {
 	div#about-me {
   	display: flex;
@@ -250,9 +259,14 @@ div#content {
 	}
 }
 @media all and (max-width: 500px) {
-  div#content p.about-me {
-    max-width: 100%;
-    margin: 0 auto;
+  div#content {
+    h1#about-hello {
+      margin-bottom: 15px;
+    }
+    p.about-me {
+      max-width: 100%;
+      margin: 0 auto;
+    }
   }
 }
 @media all and (max-width: 800px) {
@@ -260,15 +274,6 @@ div#content {
     max-width: 100%;
     margin: 0 auto;
   }
-}
-img#selfie {
-	box-shadow: 1px -3px 3px 3px $pink;
-}
-form.newsletter {
-	border: 1px solid $blue;
-	padding: 3px;
-  margin: 1em auto;
-	text-align: center;
 }
 
 /* POST PAGE */
@@ -304,7 +309,6 @@ div#content {
 	div#content {
 		p#post-date {
 			display: block;
-			text-align: center;
 		}
 	}
 }
