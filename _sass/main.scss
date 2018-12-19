@@ -270,9 +270,14 @@ div#content {
   }
 }
 @media all and (max-width: 800px) {
-  div#content p.about-me {
-    max-width: 100%;
-    margin: 0 auto;
+  div#content {
+    h1#about-hello {
+      margin-bottom: 15px;
+    }
+    p.about-me {
+      max-width: 100%;
+      margin: 0 auto;
+    }
   }
 }
 
