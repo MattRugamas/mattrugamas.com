@@ -33,12 +33,12 @@ ul {
 	padding-inline-start: 0;
 	-webkit-padding-start: 0; 
 } // reset default list styles
-
 html {
 	font-family: $font-stack;
 	background-color: $black;
 	color: $white;
 } // font family / theme colors
+
 body {
 	display: flex;
 	flex-flow: column nowrap;
@@ -197,7 +197,10 @@ div#content {
 @media all and (max-width: 800px) {
 	div#content {
     min-height: 0;
-    padding-left: 10px;
+		padding-left: 10px;
+		h1 {
+			text-align: center;
+		}
 		ul#blog-list li {
       border: 0;
       padding-left: 0;
@@ -286,14 +289,6 @@ div#content {
 
 /* POST PAGE */
 
-img.img-responsive {
-	display: block;
-	margin: auto;
-	width: 100%;
-	max-width: 50%;
-	height: auto;
-	
-}
 div#content {
 	h1#post-title {
 		text-transform: capitalize;
@@ -304,12 +299,22 @@ div#content {
 	
 		padding: 3px 0;
 	}
+	img.img-responsive {
+		display: block;
+		margin: auto;
+		width: 100%;
+		max-width: 50%;
+		height: auto;
+	}
 }
 @media all and (max-width: 500px) {
 	div#content {
 		p#post-date {
 			display: block;
 			text-align: center;
+		}
+		img.img-responsive {
+			max-width: 100%;
 		}
 	}
 }
@@ -321,6 +326,9 @@ div#content {
 		p#post-date {
 			display: block;
 			text-align: center;
+		}
+		img.img-responsive {
+			max-width: 100%;
 		}
 	}
 }
