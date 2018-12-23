@@ -1,4 +1,5 @@
 ---
+title: Getting Ready For The Web
 ---
 My experience with web tools fell exponentially after high school, when computer science courses intrigued me with *'actual'* programming languages like C++ and Java, with a little Python mixed in with discrete math curriculum.
 

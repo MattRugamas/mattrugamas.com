@@ -1,18 +1,18 @@
 <nav>
-	<ul>{% for item in site.data.navigation %}
-		<li>
-			<a href="{{ item.link }}" class="
-				{%- if page.url == item.link -%}
-					current
-				{%- else -%}
-					not-current
-				{%- endif -%}
-			">{{ item.name }}</a>
-		</li>
-		{%- endfor -%}
-		{%- if page.layout == 'post' -%}
-		<li>
-			<a href="/" class="current">Blog</a>
-		</li>{% endif %}
-	</ul>
+  <ul>{% for item in site.data.navigation %}
+    <li>
+      <a href="{{ item.link }}" class="
+        {%- if page.url == item.link -%}
+          current
+        {%- else -%}
+          not-current
+        {%- endif -%}
+      ">{{ item.name }}</a>
+    </li>
+    {%- endfor -%}
+    {%- if page.layout == 'post' -%}
+    <li>
+      <a href="/" class="current">Blog</a>
+    </li>{% endif %}
+  </ul>
 </nav>
