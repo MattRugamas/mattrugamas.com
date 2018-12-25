@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        "**/_site": true,
+        "**/.sass-cache": true,
+        "**/.swp": true,
+        "**/.tm_properties": true,
+        "**/android*.png": true,
+        "**/apple-touch-icon.png": true,
+        "**/browserconfig.xml": true,
+        "**/mstile*": true,
+        "**/safari-pinned-tab.svg": true,
+        "**/site.webmanifest": true,
+        "favicon-*": true,
+        "favicon.ico": true,
+        "LICENSE": true
+    }
+}
