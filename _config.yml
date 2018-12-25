@@ -9,6 +9,7 @@ twitter_username: matthewrugamas
 github_username: samagurtam
 
 # Build settings
+repository: samagurtam/samagurtam.github.io
 markdown: kramdown
 plugins:
   - jekyll-feed
