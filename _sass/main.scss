@@ -2,41 +2,57 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $font-stack: 'Roboto', Helvetica, sans-serif;
-$black: #2A2D33;
-$white: #FFF4E0;
-$blue: #00ADB5;
-$yellow: #F8B500;
-$brown: #99927B;
-$pink: #DA727E;
+$base: #2A2D33;
+$basecomp: #FFF4E0;
+$links: #DA727E;
+$highlight: #00ADB5;
+$dates: #9FCBCC;
+
+@mixin box-sizing($property) {
+  -webkit-box-sizing: $property;
+     -moz-box-sizing: $property;
+          box-sizing: $property;
+}
+@mixin hyphens($property) {
+  -webkit-hyphens: $property;
+     -moz-hyphens: $property;
+          hyphens: $property;
+}
+%content-base {
+  display: flex;
+  flex-flow: column nowrap;
+  min-height: calc(100vh - 72px);
+  h1 {
+    margin: 0;
+    span {
+      color: $highlight;
+    } //color
+  }
+}
 
 * {
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-          
-  -webkit-hyphens: auto;
-     -moz-hyphens: auto;
-          hyphens: auto;
+  @include box-sizing(border-box);
+  @include hyphens(auto);
 } // everythings a border box
 *:before, *:after {
-  box-sizing: border-box;
+  @include box-sizing(border-box);
 } // everythings a border box pt II
 a {
   text-decoration: none;
-  color: $yellow;
+  color: $links;
+  transition: all .5s;
+  &:hover {
+    color: $base;
+    background-color: $links;
+  }
+  &:after,&:before {
+    transition: all .5s;
+  }
 } // set link colors
-a:visited {
-  color: $pink;
-} // set link colors
-ul {
-  list-style-type: none;
-  padding-inline-start: 0;
-  -webkit-padding-start: 0; 
-} // reset default list styles
 html {
   font-family: $font-stack;
-  background-color: $black;
-  color: $white;
+  background-color: $base;
+  color: $basecomp;
 } // font family / theme colors
 
 body {
@@ -57,50 +73,49 @@ body {
 } // same-ish
 
 nav {
-  box-shadow: 0 1px 0 $white;
+  box-shadow: 0 1px 0 $basecomp;
   ul {
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
     margin: 0 auto;
-    li a {
-      position: relative; // Affects blue underline animation
-      display: block; // Affects box boundaries of nav <a> elements
-      padding: 15px 5px;
-      margin: 0 5px auto;
+    li {
+      a {
+        position: relative; // Affects highlight underline animation
+        display: block; // Affects box boundaries of nav <a> elements
+        padding: 15px 5px;
+        margin: 0 5px auto;
 
-      text-transform: uppercase;
-      text-decoration: none;
-      font-weight: 900;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: 900;
+        &:hover {
+          background-color: transparent;
+        }
+        &.current {
+          color: $highlight;
+          box-shadow: 0px 1px 0px $highlight;
+        } // Colors & highlight Underline
+        &.not-current {
+          color: $basecomp;
+        }
+        &.not-current:after {
+          position: absolute;
+          bottom: -1px;
+          left: 0;
+          right: 0;
+          margin: auto;
+          width: 0%;
+          content: '.';
+          color: transparent;
+          background: $highlight;
+          height: 1px;
+        } // Sets up highlight und anim for 'not-cur'
+        &.not-current:hover:after {
+          width: 100%;
+        } // highlight Und Anim
+      }
     }
-    li a.current {
-      color: $blue;
-      box-shadow: 0px 1px 0px $blue;
-    } // Colors & Blue Underline
-    li a.not-current {
-      color: $white;
-    }
-    li a,li a:after,li a:before {
-      transition: all .5s;
-    } // Transitions
-    li a.not-current:hover {
-      color: $yellow;
-    } // Nav Link Hover Color
-    li a.not-current:after {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: 0%;
-      content: '.';
-      color: transparent;
-      background: $yellow;
-      height: 1px;
-    } // Sets up blue und anim for 'not-cur'
-    li a.not-current:hover:after {
-      width: 100%;
-    } // Blue Und Anim
   }
 }
 @media all and (max-width: 500px) {
@@ -118,26 +133,17 @@ nav {
   }
 }
 
-div#content {
-  display: flex;
-  flex-flow: column nowrap;
-  min-height: calc(100vh - 72px);
+div#base-content {
   padding: 15px 10px 15px 0;
-  h1 {
-    margin: 0;
-    span {
-      color: $blue;
-    } //color
-  }
+  @extend %content-base;
   ul#blog-list {
-    margin-top: 5vh;
-    margin-bottom: 0;
+    margin: 5vh 0 0 0;
+    max-width: 800px;
     li {
-      max-width: 95vh;
       margin: 0 0 3vh 0;
       padding-left: 10px;
-      
-      border-left-color: $white;
+
+      border-left-color: $basecomp;
       border-left-style: solid;
       border-left-width: 1px;
       &:last-child{
@@ -157,10 +163,10 @@ div#content {
       }
       p.date {
         display: inline-block;
-        color: $brown;
+        color: $dates;
         
         padding: 5px 0.5em;
-        border-left-color: $white;
+        border-left-color: $basecomp;
         border-left-style: dotted;
         border-left-width: 1px;
       }
@@ -168,13 +174,14 @@ div#content {
   }
 }
 @media all and (max-width: 500px) {
-  div#content {
+  div#base-content {
     min-height: 0;
     padding-left: 10px;
     h1 {
       text-align: center;
     }
     ul#blog-list {
+      margin-top: 3vh;
       li {
         border: 0vw;
         padding-left: 0;
@@ -195,7 +202,7 @@ div#content {
   }
 }
 @media all and (max-width: 800px) {
-  div#content {
+  div#base-content {
     min-height: 0;
     padding-left: 10px;
     h1 {
@@ -215,16 +222,16 @@ footer {
   padding: 5px 0 0 0;
   font-size: 25%;
   text-align: center;
-  background-color: $black;
-  box-shadow: 0 -1px 0 $white;
+  background-color: $base;
+  box-shadow: 0 -1px 0 $basecomp;
   p {
     margin: 0 auto;
-    color: $white;
+    color: $basecomp;
   }
   span {
     padding: 6px 0 0 0;
-    color: $blue;
-    box-shadow: 0 -1px 0 $blue;
+    color: $highlight;
+    box-shadow: 0 -1px 0 $highlight;
   }
 }
 @media all and (max-width: 500px) {
@@ -238,9 +245,11 @@ footer {
   }
 }
 
+/////////////////
 /* ABOUT PAGE */
+////////////////
 
-div#content {
+div#base-content {
   div#about-me {
     display: flex;
     flex-flow: row wrap-reverse;
@@ -254,17 +263,24 @@ div#content {
     margin: 0;
   }
   img#selfie {
-    box-shadow: 1px -3px 3px 3px $pink;
+    border-radius: 3px;
+    border: 1px solid $highlight;
+    box-shadow : 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
   }
   form.newsletter {
-    border: 1px solid $blue;
-    padding: 3px;
+    border-radius: 25px;
+    border: 1px solid $highlight;
+    box-shadow : 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
+    padding: 15px;
     margin-top: auto;
     text-align: center;
+    p {
+      margin: 5px;
+    }
   }
 }
 @media all and (max-width: 500px) {
-  div#content {
+  div#base-content {
     h1#about-hello {
       margin-bottom: 15px;
     }
@@ -275,7 +291,7 @@ div#content {
   }
 }
 @media all and (max-width: 800px) {
-  div#content {
+  div#base-content {
     h1#about-hello {
       margin-bottom: 15px;
       text-align: center;
@@ -287,17 +303,24 @@ div#content {
   }
 }
 
+////////////////
 /* POST PAGE */
+///////////////
 
-div#content {
+div#post-content {
+  padding: 15px 5em 15px 0;
+  @extend %content-base;
   h1#post-title {
     text-transform: capitalize;
   }
   p#post-date {
     margin: 0;
-    color: $brown;
+    color: $dates;
   
     padding: 3px 0;
+  }
+  p {
+    margin: 5px 0;
   }
   img.img-responsive {
     display: block;
@@ -308,7 +331,8 @@ div#content {
   }
 }
 @media all and (max-width: 500px) {
-  div#content {
+  div#post-content {
+    padding: 15px 0;
     p#post-date {
       display: block;
       text-align: center;
@@ -319,7 +343,8 @@ div#content {
   }
 }
 @media all and (max-width: 800px) {
-  div#content {
+  div#post-content {
+    padding: 15px 10px;
     h1#post-title {
       text-align: center;
     }
