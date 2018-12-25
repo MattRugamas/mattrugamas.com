@@ -11,14 +11,9 @@ github_username: samagurtam
 # Build settings
 markdown: kramdown
 plugins:
-  - jekyll-paginate
   - jekyll-feed
   - jekyll-sitemap # I added this to automatically generate a sitemap.xml
   - jekyll-seo-tag
-
-paginate: 1
-paginate_path: "/page:num/"
-
 
 defaults:
   - scope:
