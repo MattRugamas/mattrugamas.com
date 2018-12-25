@@ -1,0 +1,8 @@
+---
+title: Travis CI and Jekyll
+---
+In my previous post I wrote about Jekyll and it's integration with Github Pages, and I mentioned how Github Pages whitelists Jekyll plugins, essentially building our Jekyll site with the `--safe` mode flag. As I pondered how we might go around this, I thought about switching over to [Netlify](https://www.netlify.com) so I could get comments and syntax highlights going. I also realized I could just build the site locally and push my static pages over to the Github repo for my site.
+
+A couple revealing blog posts later, enter [Travis CI](https://travis-ci.org). With Travis CI, not only can we test our Jekyll builds but we can use any dependencies or versions of Jekyll that we like! I have my Travis CI set up so that it looks for changes on my release branch, builds and tests my site from that branch, and if it passes, pushes my resulting static pages to the master branch where it is hosted on Github Pages. Then, I just created a develop branch for development. When I have something working, I push to release for testing and if it passes, on to master!
+
+The set up really couldn't have been easier. I set up a Travis CI account by signing in with my Github credentials, and simply flipped a switch like Drake on my page repo to get it going. I added a `.travis.yml` file to the root to set up Travis' build configs. Before getting that started, I also had to create a personal token and set that up in Travis. Here's a quick primer on that just in case!
