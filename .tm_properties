@@ -1,5 +1,0 @@
-include = "{$include,.gitignore}"
-exclude = "{$exclude,*.ico,*.svg,LICENSE,site.webmanifest,browserconfig.xml,android-chrome*.png,favicon*.png,apple-touch-icon.png,mstile*.png}"
-excludeDirectories = "{$exclude,_site,}"
-windowTitle = "$TM_FILEPATH"
-scmStatus = enabled
