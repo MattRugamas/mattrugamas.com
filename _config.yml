@@ -12,6 +12,7 @@ github_username: samagurtam
 repository: samagurtam/samagurtam.github.io
 markdown: kramdown
 plugins:
+  - jekyll-tidy
   - jekyll-feed
   - jekyll-sitemap # I added this to automatically generate a sitemap.xml
   - jekyll-seo-tag
