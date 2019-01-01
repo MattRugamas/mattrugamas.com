@@ -11,10 +11,15 @@ github_username: samagurtam
 # Build settings
 repository: samagurtam/samagurtam.github.io
 markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 plugins:
+  - rouge
   - jekyll-tidy
   - jekyll-feed
-  - jekyll-sitemap # I added this to automatically generate a sitemap.xml
+  - jekyll-sitemap
   - jekyll-seo-tag
 
 defaults:

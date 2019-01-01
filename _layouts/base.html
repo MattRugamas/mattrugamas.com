@@ -1,19 +1,19 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
     {% include faviconpackage.html %}
-    {% include pagetitles.html %}
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {%- feed_meta -%}
-    {%- seo -%}
+    {% feed_meta %}
+    {% seo %}
   </head>
   <body>
     {% include navigation.html %}
     {{ content }}
     <footer>
-      <p>Made with ❤️ on <span><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></span> by Matt R.
+      <p>Made with ❤️ on <span><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></span>.
       </p>
     </footer>
   </body>
