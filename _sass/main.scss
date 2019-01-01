@@ -1,11 +1,16 @@
+/////////////
+/* GLOBALZ */
+/////////////
+
 @import "reset";
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $font-stack: 'Roboto', Helvetica, sans-serif;
 $base: #2A2D33;
 $basecomp: #FFF4E0;
+$inactive: #E5DCCA;
 $links: #DA727E;
-$highlight: #00ADB5; //wtf m8
+$highlight: #00ADB5;
 $dates: #9FCBCC;
 
 @mixin box-sizing($property) {
@@ -55,6 +60,25 @@ html {
   color: $basecomp;
 } // font family / theme colors
 
+////////////////////
+/* Code Blocks Yo */
+////////////////////
+
+pre.highlight {
+  max-width: 800px;
+  max-height: 250px;
+  padding: 1vmin;
+
+  overflow-x: scroll;
+
+  box-shadow: 0 1px 2px black, 0 1px 3px black;
+  border-radius: 3px;
+}
+
+//////////////////////
+/* The Actual Page */
+/////////////////////
+
 body {
   display: flex;
   flex-flow: column nowrap;
@@ -97,23 +121,26 @@ nav {
           box-shadow: 0px 1px 0px $highlight;
         } // Colors & highlight Underline
         &.not-current {
-          color: $basecomp;
+          color: $inactive;
+          &:hover {
+            color: $basecomp;
+            &:after {
+              width: 100%;
+            }
+          }
+          &:after {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 0%;
+            content: '.';
+            color: transparent;
+            background: $highlight;
+            height: 1px;
+          }
         }
-        &.not-current:after {
-          position: absolute;
-          bottom: -1px;
-          left: 0;
-          right: 0;
-          margin: auto;
-          width: 0%;
-          content: '.';
-          color: transparent;
-          background: $highlight;
-          height: 1px;
-        } // Sets up highlight und anim for 'not-cur'
-        &.not-current:hover:after {
-          width: 100%;
-        } // highlight Und Anim
       }
     }
   }
@@ -245,7 +272,7 @@ footer {
   }
 }
 
-/////////////////
+////////////////
 /* ABOUT PAGE */
 ////////////////
 
@@ -303,7 +330,7 @@ div#base-content {
   }
 }
 
-////////////////
+///////////////
 /* POST PAGE */
 ///////////////
 
@@ -315,7 +342,7 @@ div#post-content {
     text-transform: capitalize;
   }
   p#post-date {
-    margin: 0;
+    margin: 0 0 3vh 0;
     color: $dates;
   
     padding: 3px 0;
