@@ -457,7 +457,7 @@ justify-content: space-between; }
 div#base-content div#about-me > a {
 margin: 0 auto; }
 div#base-content p.about-me {
-max-width: 50vw;
+max-width: 800px;
 margin: 0; }
 div#base-content img#selfie {
 border-radius: 3px;
