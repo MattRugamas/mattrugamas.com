@@ -277,6 +277,9 @@ display: none; }
 */
 [hidden] {
 display: none; }
+div#base-content img#selfie, div#base-content div.findme {
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46);
+text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46); }
 div#base-content, div#post-content {
 display: flex;
 flex-flow: column nowrap;
@@ -452,39 +455,65 @@ padding: 5px 0 0 0; } }
 /* ABOUT PAGE */
 div#base-content div#about-me {
 display: flex;
-flex-flow: row wrap-reverse;
-justify-content: space-between; }
-div#base-content div#about-me > a {
-margin: 0 auto; }
+flex-flow: row;
+justify-content: space-between;
+margin-bottom: 5vh; }
 div#base-content p.about-me {
 max-width: 800px;
 margin: 0; }
 div#base-content img#selfie {
+margin: 0 auto 5vh auto;
 border-radius: 3px;
-border: 1px solid #00ADB5;
-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46); }
-div#base-content form.newsletter {
-border-radius: 25px;
-border: 1px solid #00ADB5;
-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46);
-padding: 15px;
+border: 1px solid #DA727E; }
+div#base-content div.findme {
+max-width: 500px;
 margin-top: auto;
-text-align: center; }
-div#base-content form.newsletter p {
-margin: 5px; }
+border: 2px solid #DA727E;
+border-radius: 3px; }
+div#base-content div.findme h1 {
+margin-top: 1vh;
+text-align: center;
+color: #00ADB5; }
+div#base-content div.findme ul li {
+padding: 10px;
+text-align: center;
+background-color: #2A2D33; }
+div#base-content div.findme ul li:hover {
+transition-duration: 0.3s;
+background-color: #343840; }
+div#base-content div.findme ul li a {
+display: block;
+color: #FFF4E0; }
+div#base-content div.findme ul li a:hover {
+background-color: transparent; }
 @media all and (max-width: 500px) {
+div#base-content div#about-me {
+flex-flow: row wrap-reverse; }
 div#base-content h1#about-hello {
 margin-bottom: 15px; }
 div#base-content p.about-me {
 max-width: 100%;
-margin: 0 auto; } }
+margin: 0 auto; }
+div#base-content div.findme ul li {
+border-top: 1px solid #343840; }
+div#base-content div.findme ul li:last-child {
+border-bottom: 1px solid #343840; } }
 @media all and (max-width: 800px) {
+div#base-content div#about-me {
+flex-flow: row wrap-reverse; }
 div#base-content h1#about-hello {
 margin-bottom: 15px;
 text-align: center; }
 div#base-content p.about-me {
 max-width: 100%;
-margin: 0 auto; } }
+margin: 0 auto; }
+div#base-content div.findme {
+width: 300px;
+margin: 0 auto; }
+div#base-content div.findme ul li {
+border-top: 1px solid #343840; }
+div#base-content div.findme ul li:last-child {
+border-bottom: 1px solid #343840; } }
 /* POST PAGE */
 div#post-content {
 max-width: 1100px;
