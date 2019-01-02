@@ -7,6 +7,7 @@
 
 $font-stack: 'Roboto', Helvetica, sans-serif;
 $base: #2A2D33;
+$tehlulz: #343840;
 $basecomp: #FFF4E0;
 $inactive: #E5DCCA;
 $links: #DA727E;
@@ -22,6 +23,10 @@ $dates: #9FCBCC;
   -webkit-hyphens: $property;
      -moz-hyphens: $property;
           hyphens: $property;
+}
+%ui-shadow {
+  box-shadow : 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
 }
 %content-base {
   display: flex;
@@ -279,35 +284,61 @@ footer {
 div#base-content {
   div#about-me {
     display: flex;
-    flex-flow: row wrap-reverse;
+    flex-flow: row;
     justify-content: space-between;
-  }
-  div#about-me > a {
-    margin: 0 auto;
+    margin-bottom: 5vh;
   }
   p.about-me {
     max-width: 800px;
     margin: 0;
   }
   img#selfie {
+    margin: 0 auto 5vh auto;
+
+    @extend %ui-shadow;
     border-radius: 3px;
-    border: 1px solid $highlight;
-    box-shadow : 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
+    border: 1px solid $links;
   }
-  form.newsletter {
-    border-radius: 25px;
-    border: 1px solid $highlight;
-    box-shadow : 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
-    padding: 15px;
+  div.findme {
+    max-width: 500px;
     margin-top: auto;
-    text-align: center;
-    p {
-      margin: 5px;
+
+    @extend %ui-shadow;
+    border: 2px solid $links;
+    border-radius: 3px;
+    h1 {
+      margin-top: 1vh;
+      text-align: center;
+
+      color: $highlight;
+    }
+    ul {
+      li {
+        padding: 10px;
+        text-align: center;
+
+        background-color: $base;
+        &:hover {
+          transition-duration: 0.3s;
+          background-color: $tehlulz;
+        }
+        a {
+          display: block;
+
+          color: $basecomp;
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
     }
   }
 }
 @media all and (max-width: 500px) {
   div#base-content {
+    div#about-me {
+      flex-flow: row wrap-reverse;
+    }
     h1#about-hello {
       margin-bottom: 15px;
     }
@@ -315,10 +346,23 @@ div#base-content {
       max-width: 100%;
       margin: 0 auto;
     }
+    div.findme {
+      ul {
+        li {
+          border-top: 1px solid $tehlulz;
+          &:last-child {
+            border-bottom: 1px solid $tehlulz;
+          }
+        }
+      }
+    }
   }
 }
 @media all and (max-width: 800px) {
   div#base-content {
+    div#about-me {
+      flex-flow: row wrap-reverse;
+    }
     h1#about-hello {
       margin-bottom: 15px;
       text-align: center;
@@ -326,6 +370,18 @@ div#base-content {
     p.about-me {
       max-width: 100%;
       margin: 0 auto;
+    }
+    div.findme {
+      width: 300px;
+      margin: 0 auto;
+      ul {
+        li {
+          border-top: 1px solid $tehlulz;
+          &:last-child {
+            border-bottom: 1px solid $tehlulz;
+          }
+        }
+      }
     }
   }
 }
