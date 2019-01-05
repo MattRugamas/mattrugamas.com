@@ -226,6 +226,9 @@ div#base-content {
       li {
         border: 0vw;
         padding-left: 0;
+        &:hover {
+          border-left: none;
+        }
         h2 {
           display: block;
           //padding-left: 10px;
@@ -249,6 +252,9 @@ div#base-content {
     ul#blog-list li {
       border: 0;
       padding-left: 0;
+      &:hover {
+        border-left: none;
+      }
     }
   }
 }
@@ -265,13 +271,18 @@ footer {
   }
   span {
     padding: 6px 0 0 0;
-    color: $highlight;
-    box-shadow: 0 -1px 0 $highlight;
+    transition: all 0.5s ease;
+    &:hover {
+      box-shadow: 0 -1px 0 $highlight;
+    }
+    a {
+      &:hover {
+        background-color: transparent;
+        box-shadow: none;
+        color: $links;
+      }
+    }
   }
-}
-@media all and (max-width: 500px) {
-}
-@media all and (max-width: 800px) {
 }
 
 ////////////////
