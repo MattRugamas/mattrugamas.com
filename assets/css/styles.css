@@ -418,6 +418,8 @@ margin-top: 3vh; }
 div#base-content ul#blog-list li {
 border: 0vw;
 padding-left: 0; }
+div#base-content ul#blog-list li:hover {
+border-left: none; }
 div#base-content ul#blog-list li h2 {
 display: block; }
 div#base-content ul#blog-list li p.date {
@@ -432,7 +434,9 @@ div#base-content h1 {
 text-align: center; }
 div#base-content ul#blog-list li {
 border: 0;
-padding-left: 0; } }
+padding-left: 0; }
+div#base-content ul#blog-list li:hover {
+border-left: none; } }
 footer {
 padding: 5px 0 0 0;
 font-size: 8px;
@@ -443,8 +447,13 @@ footer p {
 margin: 0; }
 footer span {
 padding: 6px 0 0 0;
-color: #00ADB5;
+transition: all 0.5s ease; }
+footer span:hover {
 box-shadow: 0 -1px 0 #00ADB5; }
+footer span a:hover {
+background-color: transparent;
+box-shadow: none;
+color: #DA727E; }
 /* ABOUT PAGE */
 div#base-content div#about-me {
 display: flex;
