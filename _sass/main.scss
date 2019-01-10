@@ -7,8 +7,8 @@
 
 $font-stack: 'Roboto', Helvetica, sans-serif;
 $base: #2A2D33;
-$tehlulz: #343840;
-$basecomp: #FFF4E0;
+$selected: #343840;
+$text: #FFF4E0;
 $inactive: #E5DCCA;
 $links: #DA727E;
 $highlight: #00ADB5;
@@ -41,12 +41,12 @@ $dates: #9FCBCC;
 
 * {
   @include box-sizing(border-box);
-} // everythings a border box
+}
 html {
   font-family: $font-stack;
   background-color: $base;
-  color: $basecomp;
-} // font family / theme colors
+  color: $text;
+}
 
 ////////////////////
 /* Code Blocks Yo */
@@ -83,20 +83,20 @@ body {
       background-color: $links;
     }
   } // set link colors
-} // body is a flex column with a left-marg 40px
+}
 @media all and (max-width: 500px) {
   body {
     margin-left: 0;
   }
-} // reset left-marg 40px desktop theme for mobile
+}
 @media all and (max-width: 800px) {
   body {
     margin-left: 0;
   }
-} // same-ish
+}
 
 nav {
-  box-shadow: 0 1px 0 $basecomp;
+  box-shadow: 0 1px 0 $text;
   ul {
     display: flex;
     flex-flow: row nowrap;
@@ -123,11 +123,11 @@ nav {
         &.current {
           color: $highlight;
           box-shadow: 0px 1px 0px $highlight;
-        } // Colors & highlight Underline
+        }
         &.not-current {
           color: $inactive;
           &:hover {
-            color: $basecomp;
+            color: $text;
             &:after {
               width: 100%;
             }
@@ -177,7 +177,7 @@ div#base-content {
       z-index: 1;
 
       transition: all 0.3s ease-out;
-      border-left: 1px solid $basecomp;
+      border-left: 1px solid $text;
       &::before {
         content: "";
         position: absolute;
@@ -190,7 +190,7 @@ div#base-content {
       }
       &:hover {
         border-left: 1px solid $highlight;
-        background: $tehlulz;
+        background: $selected;
       }
       &:last-child{
         margin: 0;
@@ -206,7 +206,7 @@ div#base-content {
         padding: 5px;
 
         color: $dates;
-        border-left: 1px dotted $basecomp;
+        border-left: 1px dotted $text;
       }
       p {
         margin: 0 auto;
@@ -265,7 +265,7 @@ footer {
   font-size: 8px;
   text-align: center;
   background-color: $base;
-  box-shadow: 0 -1px 0 $basecomp;
+  box-shadow: 0 -1px 0 $text;
   p {
     margin: 0;
   }
@@ -307,12 +307,13 @@ div#base-content {
     border-radius: 3px;
   }
   div.findme {
-    width: 500px;
+    width: 400px;
     margin: auto auto 0;
     ul {
       margin: 0;
 
       @extend %text-shadow;
+      @extend %ui-shadow;
       border: 2px solid $links;
       border-radius: 3px;
       li {
@@ -321,13 +322,13 @@ div#base-content {
         background-color: $base;
         &:hover {
           transition-duration: 0.3s;
-          background-color: $tehlulz;
+          background-color: $selected;
         }
         a {
           display: block;
           padding: 10px;
 
-          color: $basecomp;
+          color: $text;
           &:hover {
             background-color: transparent;
             box-shadow: none;
@@ -350,12 +351,12 @@ div#base-content {
       margin: 3vh auto;
     }
     div.findme {
-      width: 300px;
+      width: 97vw;
       ul {
         li {
-          border-top: 1px solid $tehlulz;
+          border-top: 1px solid $selected;
           &:last-child {
-            border-bottom: 1px solid $tehlulz;
+            border-bottom: 1px solid $selected;
           }
         }
       }
@@ -375,11 +376,12 @@ div#base-content {
       margin: 3vh auto;
     }
     div.findme {
+      width: 350px;
       ul {
         li {
-          border-top: 1px solid $tehlulz;
+          border-top: 1px solid $selected;
           &:last-child {
-            border-bottom: 1px solid $tehlulz;
+            border-bottom: 1px solid $selected;
           }
         }
       }
