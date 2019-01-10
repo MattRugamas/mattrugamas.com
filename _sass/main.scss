@@ -123,7 +123,7 @@ nav {
         &.current {
           color: $highlight;
           box-shadow: 0px 1px 0px $highlight;
-        } // Colors & highlight Underline
+        }
         &.not-current {
           color: $inactive;
           &:hover {
@@ -307,12 +307,13 @@ div#base-content {
     border-radius: 3px;
   }
   div.findme {
-    width: 500px;
+    width: 400px;
     margin: auto auto 0;
     ul {
       margin: 0;
 
       @extend %text-shadow;
+      @extend %ui-shadow;
       border: 2px solid $links;
       border-radius: 3px;
       li {
@@ -350,7 +351,7 @@ div#base-content {
       margin: 3vh auto;
     }
     div.findme {
-      width: 300px;
+      width: 97vw;
       ul {
         li {
           border-top: 1px solid $selected;
@@ -375,6 +376,7 @@ div#base-content {
       margin: 3vh auto;
     }
     div.findme {
+      width: 350px;
       ul {
         li {
           border-top: 1px solid $selected;
