@@ -1,14 +1,14 @@
 title: Matt's Weblog
 description: >
   Matt Rugamas (@MatthewRugamas): Designer and Frontend Dev Student
-url: "https://samagurtam.github.io"
+url: "mattrugamas.com"
 permalink: /:title
 
 # Google Analytics
 google_analytics: UA-131785558-1
 
 # Social
-twitter_username: matthewrugamas
+twitter_username: mattrugamas
 github_username: samagurtam
 
 # Build settings
