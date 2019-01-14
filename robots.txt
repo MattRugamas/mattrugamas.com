@@ -1,1 +1,1 @@
-Sitemap: https://samagurtam.github.io/sitemap.xml
+Sitemap: mattrugamas.com/sitemap.xml
