@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-      <loc>www.mattrugamas.com/Test-Run</loc>
+      <loc>mattrugamas.com/Test-Run</loc>
       <lastmod>2018-12-06T00:00:00+00:00</lastmod>
     </url>
     <url>
-      <loc>www.mattrugamas.com/Getting-Ready-for-the-Web</loc>
+      <loc>mattrugamas.com/Getting-Ready-for-the-Web</loc>
       <lastmod>2018-12-14T00:00:00+00:00</lastmod>
     </url>
     <url>
-      <loc>www.mattrugamas.com/Playing-With-Jekyll</loc>
+      <loc>mattrugamas.com/Playing-With-Jekyll</loc>
       <lastmod>2018-12-24T00:00:00+00:00</lastmod>
     </url>
     <url>
-      <loc>www.mattrugamas.com/Travis-CI-and-Jekyll</loc>
+      <loc>mattrugamas.com/Travis-CI-and-Jekyll</loc>
       <lastmod>2018-12-25T00:00:00+00:00</lastmod>
     </url>
     <url>
-      <loc>www.mattrugamas.com/about</loc>
+      <loc>mattrugamas.com/about</loc>
     </url>
     <url>
-      <loc>www.mattrugamas.com/</loc>
+      <loc>mattrugamas.com/</loc>
     </url>
   </urlset>

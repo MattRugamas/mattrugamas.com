@@ -1,1 +1,1 @@
-Sitemap: www.mattrugamas.com/sitemap.xml
+Sitemap: mattrugamas.com/sitemap.xml
