@@ -1,5 +1,6 @@
 @import "reset";
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
 
 /////////////
 /* GLOBALZ */
@@ -42,10 +43,21 @@ $dates: #9FCBCC;
 * {
   @include box-sizing(border-box);
 }
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 html {
   font-family: $font-stack;
   background-color: $base;
   color: $text;
+}
+figure {
+  figcaption {
+    font-family: 'Source Code Pro';
+    font-size: 10px;
+    color: $dates;
+  }
 }
 
 ////////////////////
@@ -53,7 +65,7 @@ html {
 ////////////////////
 
 pre.highlight {
-  max-width: 800px;
+  max-width: 650px;
   max-height: 250px;
   padding: 1vmin;
 
@@ -61,6 +73,10 @@ pre.highlight {
 
   box-shadow: 0 1px 2px black, 0 1px 3px black;
   border-radius: 3px;
+  code {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 13px;
+  }
 }
 
 //////////////////////
@@ -298,6 +314,9 @@ div#base-content {
       max-width: 65vw;
       margin: 0;
     }
+    figure {
+      margin: 0 auto;
+    }
   }
   img#selfie {
     margin: 0 auto;
@@ -347,7 +366,7 @@ div#base-content {
         margin: 0 0 3vh;
       }
     }
-    img#selfie {
+    figure {
       margin: 3vh auto;
     }
     div.findme {
@@ -372,7 +391,7 @@ div#base-content {
         margin: 0 0 3vh;
       }
     }
-    img#selfie {
+    figure {
       margin: 3vh auto;
     }
     div.findme {
@@ -407,12 +426,17 @@ div#post-content {
   p {
     margin: 5px 0;
   }
-  img.img-responsive {
-    display: block;
-    margin: auto;
-    width: 100%;
-    max-width: 50%;
-    height: auto;
+  figure.shadow_image {
+    margin: 3vh auto;
+    img.img-responsive {
+      width: 100%;
+      max-width: 650px;
+      height: auto;
+    }
+    figcaption {
+      margin-top: -7%;
+      text-align: center;
+    }
   }
 }
 @media all and (max-width: 500px) {
