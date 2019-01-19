@@ -159,7 +159,10 @@
         </div>
       </div>
       <p>I’m using a <a href="https://codepen.io/samagurtam/pen/oQOwOv">navigation bar style</a> that I forked from user <a href="https://codepen.io/shahjehan/pen/BzLKRm">shahjehan</a> over on <a href="https://codepen.io/shahjehan/">CodePen</a>. I took the animation he was using in one of the nav styles and modified it to match the barebones minimal style I wanted to approach for the site. I also needed something simple that I could style and scale gracefully to smaller viewports. Much of this project turned out to be learning CSS, SCSS and how they work. Jekyll made the site building process much simpler such that I only really needed to focus on that.</p>
-      <p><img src="/assets/img/DirectoryLayout.png" alt="DirectoryLayout" class="img-responsive" /></p>
+      <figure class="shadow_image">
+        <img src="/assets/img/DirectoryLayout.png" alt="DirectoryLayout" class="img-responsive" />
+        <figcaption>Finder Window showing Directory Layout</figcaption>
+      </figure>
       <p>We’re hosting on Github Pages because a) it’s free, and b) works well with Jekyll. Pros and cons of course, one being that <a href="https://pages.github.com/versions/">Github Pages has a whitelist</a> on dependencies/plugins such that we are forced to use Jekyll 3.7.4 along with other not quite up-to-date wares (With Jekyll we need to use the <code class="highlighter-rouge">bundle exec</code> command as a prefix before any jekyll commands if we’re running a newer Jekyll than the one GitHub currently has whitelisted). A pro on the other hand is that we don’t build! We push our commits over to our remote repo on GitHub and they build our site and serve, meaning we can add <code class="highlighter-rouge">_site</code> directory to our <code class="highlighter-rouge">.gitignore</code>. We can start this process by using GitHub’s web interface to create a new repo titled <code class="highlighter-rouge">&lt;username&gt;.github.io</code> and pushing our updates to the master branch of this new repo.</p>
       <p>That’s basically it. There’s a lot of little details that I think I’ll make another post about if necessary, but this is the gist of the current setup. Until next time…</p>
     </div>
