@@ -23,9 +23,14 @@ kramdown:
 plugins:
   - rouge
   - jekyll-tidy
+  - jekyll-figure
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+
+# Plugin Settings
+jekyll-figure:
+  paragraphs: false
 
 defaults:
   - scope:
