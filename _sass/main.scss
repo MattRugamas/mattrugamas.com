@@ -29,8 +29,8 @@ $dates: #9FCBCC;
 %content-base {
   display: flex;
   flex-flow: column nowrap;
-  min-height: calc(100vh - 72px);
-  padding: 15px 10px 15px 0;
+  min-height: calc(100vh - 20px);
+  padding: 60px 0 15px;
   h1 {
     margin: 0;
     span {
@@ -65,13 +65,8 @@ figure {
 ////////////////////
 
 pre.highlight {
-  max-width: 650px;
-  max-height: 250px;
   padding: 1vmin;
-
   overflow-x: scroll;
-
-  box-shadow: 0 1px 2px black, 0 1px 3px black;
   border-radius: 3px;
   code {
     font-family: 'Source Code Pro', monospace;
@@ -112,7 +107,12 @@ body {
 }
 
 nav {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+
   box-shadow: 0 1px 0 $text;
+  background-color: $base;
   ul {
     display: flex;
     flex-flow: row nowrap;
@@ -184,7 +184,7 @@ nav {
 div#base-content {
   @extend %content-base;
   ul#blog-list {
-    margin: 5vh 0 0;
+    margin: 3vh 0 0;
     max-width: 900px;
     li {
       margin: 0 0 3vh 0;
@@ -234,6 +234,7 @@ div#base-content {
   div#base-content {
     min-height: 0;
     padding-left: 10px;
+    padding-right: 10px;
     h1 {
       text-align: center;
     }
@@ -262,6 +263,7 @@ div#base-content {
   div#base-content {
     min-height: 0;
     padding-left: 10px;
+    padding-right: 10px;
     h1 {
       text-align: center;
     }
@@ -278,7 +280,7 @@ div#base-content {
 footer {
   padding: 5px 0 0 0;
   
-  font-size: 8px;
+  font-size: 9px;
   text-align: center;
   background-color: $base;
   box-shadow: 0 -1px 0 $text;
@@ -311,7 +313,7 @@ div#base-content {
     flex-flow: row;
     justify-content: space-between;
     p.about-me {
-      max-width: 65vw;
+      max-width: 50vw;
       margin: 0;
     }
     figure {
@@ -362,6 +364,7 @@ div#base-content {
     div#about-me {
       flex-flow: row wrap-reverse;
       p.about-me {
+        text-align: justify;
         max-width: 97vw;
         margin: 0 0 3vh;
       }
@@ -387,6 +390,7 @@ div#base-content {
     div#about-me {
       flex-flow: row wrap-reverse;
       p.about-me {
+        text-align: justify;
         max-width: 97vw;
         margin: 0 0 3vh;
       }
@@ -414,6 +418,8 @@ div#base-content {
 
 div#post-content {
   @extend %content-base;
+  max-width: 650px;
+  margin: 0 auto;
   h1#post-title {
     text-transform: capitalize;
   }
@@ -441,7 +447,9 @@ div#post-content {
 }
 @media all and (max-width: 500px) {
   div#post-content {
-    padding: 15px 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
     p#post-date {
       display: block;
       text-align: center;
@@ -453,7 +461,9 @@ div#post-content {
 }
 @media all and (max-width: 800px) {
   div#post-content {
-    padding: 15px 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0;
     h1#post-title {
       text-align: center;
     }
