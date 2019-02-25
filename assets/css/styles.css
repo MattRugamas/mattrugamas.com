@@ -299,7 +299,8 @@ div#base-content ul#blog-list {
 margin-top: 3vh; }
 div#base-content ul#blog-list li {
 border: 0vw;
-padding-left: 0; }
+padding-left: 0;
+padding-right: 0; }
 div#base-content ul#blog-list li:hover {
 border-left: none; }
 div#base-content ul#blog-list li h2 {
@@ -317,7 +318,8 @@ div#base-content h1 {
 text-align: center; }
 div#base-content ul#blog-list li {
 border: 0;
-padding-left: 0; }
+padding-left: 0;
+padding-right: 0; }
 div#base-content ul#blog-list li:hover {
 border-left: none; } }
 footer {
@@ -436,7 +438,7 @@ max-width: 100%; } }
 div#post-content {
 padding-left: 10px;
 padding-right: 10px;
-margin: 0; }
+margin: 0 auto; }
 div#post-content h1#post-title {
 text-align: center; }
 div#post-content p#post-date {
