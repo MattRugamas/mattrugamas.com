@@ -428,7 +428,7 @@ text-align: center; }
 div#post-content {
 padding-left: 10px;
 padding-right: 10px;
-margin: 0; }
+margin: 0 !important; }
 div#post-content p#post-date {
 display: block;
 text-align: center; }
