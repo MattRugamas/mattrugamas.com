@@ -243,6 +243,7 @@ div#base-content {
       li {
         border: 0vw;
         padding-left: 0;
+        padding-right: 0;
         &:hover {
           border-left: none;
         }
@@ -270,6 +271,7 @@ div#base-content {
     ul#blog-list li {
       border: 0;
       padding-left: 0;
+      padding-right: 0;
       &:hover {
         border-left: none;
       }
@@ -463,7 +465,7 @@ div#post-content {
   div#post-content {
     padding-left: 10px;
     padding-right: 10px;
-    margin: 0;
+    margin: 0 auto;
     h1#post-title {
       text-align: center;
     }
