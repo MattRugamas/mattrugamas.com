@@ -7,3 +7,9 @@ A personal site to begin diving into the web again. Built on a Jekyll/Travis CI/
 - [Jekyll-Tidy](https://github.com/apsislabs/jekyll-tidy)
 - [Jekyll-Figure](https://github.com/paulrobertlloyd/jekyll-figure)
 - [Rouge](http://rouge.jneen.net)
+
+## Goals
+
+- Theme Picker (Changes colors of the site)
+- Dynamic nav
+- 'Projects' page
