@@ -7,54 +7,41 @@
 /////////////
 
 $font-stack: 'Roboto', Helvetica, sans-serif;
-$base: #2A2D33;
-$selected: #343840;
-$text: #FFF4E0;
-$inactive: #E5DCCA;
-$links: #DA727E;
-$highlight: #00ADB5;
-$dates: #9FCBCC;
+$base: rgb(42, 45, 51);
+$selected: rgb(52, 56, 64);
+$text: rgb(255, 244, 224);
+$inactive: rgb(229, 220, 202);
+$links: rgb(218, 114, 126);
+$highlight: rgb(0, 173, 181);
+$dates: rgb(159, 203, 204);
 
 @mixin box-sizing($property) {
   -webkit-box-sizing: $property;
      -moz-box-sizing: $property;
           box-sizing: $property;
 }
-%ui-shadow {
-  box-shadow : 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
-}
-%text-shadow {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46);
-}
+%ui-shadow { box-shadow : 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46); }
+%text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.50), 0 1px 3px rgba(0, 0, 0, 0.46); }
 %content-base {
   display: flex;
   flex-flow: column nowrap;
   min-height: calc(100vh - 20px);
-  padding: 60px 0 15px;
+  padding: 5rem 0 3rem;
   h1 {
     margin: 0;
     span {
       color: $highlight;
       @extend %text-shadow;
-    } //color
+    }
   }
 }
 
-* {
-  @include box-sizing(border-box);
-}
-*:before,
-*:after {
-  box-sizing: inherit;
-}
-html {
-  font-family: $font-stack;
-  background-color: $base;
-  color: $text;
-}
+* { @include box-sizing(border-box); }
+*:before, *:after { @include box-sizing(inherit); }
+html { font-family: $font-stack; background-color: $base; color: $text; }
 figure {
   figcaption {
-    font-family: 'Source Code Pro';
+    font-family: 'Source Code Pro', monospace;
     font-size: 10px;
     color: $dates;
   }
@@ -93,7 +80,7 @@ body {
       color: $base;
       background-color: $links;
     }
-  } // set link colors
+  }
 }
 @media all and (max-width: 500px) {
   body {
@@ -185,7 +172,7 @@ div#base-content {
   @extend %content-base;
   ul#blog-list {
     margin: 3vh 0 0;
-    max-width: 900px;
+    max-width: 100%;
     li {
       margin: 0 0 3vh 0;
       padding: 0 25px 10px 10px;
@@ -225,7 +212,8 @@ div#base-content {
         border-left: 1px dotted $text;
       }
       p {
-        margin: 0 auto;
+        max-width: 900px;
+        margin: 0;
       }
     }
   }
@@ -331,7 +319,7 @@ div#base-content {
   }
   div.findme {
     width: 400px;
-    margin: auto auto 0;
+    margin: auto auto;
     ul {
       margin: 0;
 
@@ -364,11 +352,12 @@ div#base-content {
 @media all and (max-width: 500px) {
   div#base-content {
     div#about-me {
+      padding: 3vh 0;
       flex-flow: row wrap-reverse;
       p.about-me {
-        text-align: justify;
+        //text-align: justify;
         max-width: 97vw;
-        margin: 0 0 3vh;
+        margin: 3vh 0;
       }
     }
     figure {
@@ -390,11 +379,12 @@ div#base-content {
 @media all and (max-width: 800px) {
   div#base-content {
     div#about-me {
+      margin: 3vh 0;
       flex-flow: row wrap-reverse;
       p.about-me {
-        text-align: justify;
+        //text-align: justify;
         max-width: 97vw;
-        margin: 0 0 3vh;
+        margin: 3vh 0;
       }
     }
     figure {
