@@ -1,8 +1,12 @@
 title: Matt's Weblog
 description: >
-  Matt Rugamas (@MatthewRugamas): CS Student and Code Tinkerer
+  Matt Rugamas: CS Student and Code Tinkerer
 url: mattrugamas.com
 permalink: /:title
+
+# SASS/SCSS
+sass:
+  style: compressed
 
 # Google Analytics
 google_analytics: UA-131785558-1
