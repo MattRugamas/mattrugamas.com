@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik|Source+Code+Pro|Work+Sans" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
@@ -38,27 +39,30 @@
     <!-- End Jekyll SEO tag -->
   </head>
   <body>
-    <nav>
-      <ul>
-        <li>
-          <a href="/" class="not-current">Home</a>
-        </li>
-        <li>
-          <a href="/about" class="not-current">About</a>
-        </li>
-        <li>
-          <a href="/" class="current">Blog</a>
-        </li>
-      </ul>
-    </nav>
-    <div id="post-content">
-      <h1 id="post-title"><span>Playing With Jekyll</span></h1>
-      <p id="post-date">24 Dec 2018</p>
-      <p>Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I’ve gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with <a href="https://sass-lang.com">SCSS</a>, write posts in <a href="https://kramdown.gettalong.org/syntax.html">markdown</a> (kramdown), and do kinda-dynamic stuff using HTML with <a href="https://shopify.github.io/liquid/">Liquid</a>—sweet.</p>
-      <p><a href="https://jekyllrb.com/docs/step-by-step/01-setup/">Jekyll’s site tutorial</a> has many useful components built in that we’re going to keep. The blog component is very simple, and since we’re going to be writing, that stays over. There’s no staff and separate blog page on this site, So we’re going to remove the ‘authors’ collection and the whole ‘collection’ functionality until it is needed. The blog component can be easily migrated to the home page by getting familiar with <a href="https://shopify.github.io/liquid/">Liquid’s Syntax</a>. Liquid makes our posts available as static html pages that we can cycle through a format with HTML.</p>
-      <div class="language-html highlighter-rouge">
-        <div class="highlight">
-          <pre class="highlight"><code><span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"blog-list"</span><span class="nt">&gt;</span>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/" class="not-current">Home</a>
+          </li>
+          <li>
+            <a href="/about" class="not-current">About</a>
+          </li>
+          <li>
+            <a href="/" class="current">Blog</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <article>
+        <h1 id="post-title"><span>Playing With Jekyll</span></h1>
+        <p id="post-date">24 Dec 2018</p>
+        <p>Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I’ve gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with <a href="https://sass-lang.com">SCSS</a>, write posts in <a href="https://kramdown.gettalong.org/syntax.html">markdown</a> (kramdown), and do kinda-dynamic stuff using HTML with <a href="https://shopify.github.io/liquid/">Liquid</a>—sweet.</p>
+        <p><a href="https://jekyllrb.com/docs/step-by-step/01-setup/">Jekyll’s site tutorial</a> has many useful components built in that we’re going to keep. The blog component is very simple, and since we’re going to be writing, that stays over. There’s no staff and separate blog page on this site, So we’re going to remove the ‘authors’ collection and the whole ‘collection’ functionality until it is needed. The blog component can be easily migrated to the home page by getting familiar with <a href="https://shopify.github.io/liquid/">Liquid’s Syntax</a>. Liquid makes our posts available as static html pages that we can cycle through a format with HTML.</p>
+        <div class="language-html highlighter-rouge">
+          <div class="highlight">
+            <pre class="highlight"><code><span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">"blog-list"</span><span class="nt">&gt;</span>
 {% for post in site.posts %}
   <span class="nt">&lt;li&gt;</span>
     <span class="nt">&lt;h2&gt;&lt;a</span> <span class="na">href=</span><span class="s">"{{ post.url }}"</span><span class="nt">&gt;</span>{{ post.title }}<span class="nt">&lt;/a&gt;&lt;/h2&gt;</span>
@@ -69,12 +73,12 @@
 {% endfor %}
 <span class="nt">&lt;/ul&gt;</span>
 </code></pre>
+          </div>
         </div>
-      </div>
-      <p>I’m also going to set up a base layout that all other layouts are derived from in our <code class="highlighter-rouge">_layouts</code> folder. Our index layout inherits from this, as well as our post layout. I <a href="https://realfavicongenerator.net">set up a favicon package</a> to support a wide-range of devices and put the package in it’s own file in the <code class="highlighter-rouge">_include</code> folder. With includes, we can use Liquid to link to them from our layouts. In this case all my includes are for all the pages, and will be placed in the base layout that all are derived from.</p>
-      <div class="language-html highlighter-rouge">
-        <div class="highlight">
-          <pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
+        <p>I’m also going to set up a base layout that all other layouts are derived from in our <code class="highlighter-rouge">_layouts</code> folder. Our index layout inherits from this, as well as our post layout. I <a href="https://realfavicongenerator.net">set up a favicon package</a> to support a wide-range of devices and put the package in it’s own file in the <code class="highlighter-rouge">_include</code> folder. With includes, we can use Liquid to link to them from our layouts. In this case all my includes are for all the pages, and will be placed in the base layout that all are derived from.</p>
+        <div class="language-html highlighter-rouge">
+          <div class="highlight">
+            <pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge"</span> <span class="nt">/&gt;</span>
   <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1"</span> <span class="nt">/&gt;</span>
@@ -91,12 +95,12 @@
   <span class="nt">&lt;/footer&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
 </code></pre>
+          </div>
         </div>
-      </div>
-      <p>The navigation set up is also in an include. I used <a href="https://github.com/necolas/normalize.css/">Necolas’ reset</a> and started with plain HTML/CSS. I built up my own SCSS in <code class="highlighter-rouge">main.scss</code> and imported <code class="highlighter-rouge">main.scss</code> and <code class="highlighter-rouge">reset.scss</code> into styles.scss, which is where the base layout links to the stylsheet.</p>
-      <div class="language-scss highlighter-rouge">
-        <div class="highlight">
-          <pre class="highlight"><code><span class="nt">nav</span> <span class="p">{</span>
+        <p>The navigation set up is also in an include. I used <a href="https://github.com/necolas/normalize.css/">Necolas’ reset</a> and started with plain HTML/CSS. I built up my own SCSS in <code class="highlighter-rouge">main.scss</code> and imported <code class="highlighter-rouge">main.scss</code> and <code class="highlighter-rouge">reset.scss</code> into styles.scss, which is where the base layout links to the stylsheet.</p>
+        <div class="language-scss highlighter-rouge">
+          <div class="highlight">
+            <pre class="highlight"><code><span class="nt">nav</span> <span class="p">{</span>
   <span class="nl">box-shadow</span><span class="p">:</span> <span class="m">0</span> <span class="m">1px</span> <span class="m">0</span> <span class="nv">$basecomp</span><span class="p">;</span>
   <span class="nt">ul</span> <span class="p">{</span>
     <span class="nl">display</span><span class="p">:</span> <span class="n">flex</span><span class="p">;</span>
@@ -146,18 +150,19 @@
   <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+          </div>
         </div>
-      </div>
-      <p>I’m using a <a href="https://codepen.io/samagurtam/pen/oQOwOv">navigation bar style</a> that I forked from user <a href="https://codepen.io/shahjehan/pen/BzLKRm">shahjehan</a> over on <a href="https://codepen.io/shahjehan/">CodePen</a>. I took the animation he was using in one of the nav styles and modified it to match the barebones minimal style I wanted to approach for the site. I also needed something simple that I could style and scale gracefully to smaller viewports. Much of this project turned out to be learning CSS, SCSS and how they work. Jekyll made the site building process much simpler such that I only really needed to focus on that.</p>
-      <figure class="shadow_image">
-        <img src="/assets/img/DirectoryLayout.png" alt="DirectoryLayout" class="img-responsive" />
-        <figcaption>Finder Window showing Directory Layout</figcaption>
-      </figure>
-      <p>We’re hosting on Github Pages because a) it’s free, and b) works well with Jekyll. Pros and cons of course, one being that <a href="https://pages.github.com/versions/">Github Pages has a whitelist</a> on dependencies/plugins such that we are forced to use Jekyll 3.7.4 along with other not quite up-to-date wares (With Jekyll we need to use the <code class="highlighter-rouge">bundle exec</code> command as a prefix before any jekyll commands if we’re running a newer Jekyll than the one GitHub currently has whitelisted). A pro on the other hand is that we don’t build! We push our commits over to our remote repo on GitHub and they build our site and serve, meaning we can add <code class="highlighter-rouge">_site</code> directory to our <code class="highlighter-rouge">.gitignore</code>. We can start this process by using GitHub’s web interface to create a new repo titled <code class="highlighter-rouge">&lt;username&gt;.github.io</code> and pushing our updates to the master branch of this new repo.</p>
-      <p>That’s basically it. There’s a lot of little details that I think I’ll make another post about if necessary, but this is the gist of the current setup. Until next time…</p>
-    </div>
+        <p>I’m using a <a href="https://codepen.io/samagurtam/pen/oQOwOv">navigation bar style</a> that I forked from user <a href="https://codepen.io/shahjehan/pen/BzLKRm">shahjehan</a> over on <a href="https://codepen.io/shahjehan/">CodePen</a>. I took the animation he was using in one of the nav styles and modified it to match the barebones minimal style I wanted to approach for the site. I also needed something simple that I could style and scale gracefully to smaller viewports. Much of this project turned out to be learning CSS, SCSS and how they work. Jekyll made the site building process much simpler such that I only really needed to focus on that.</p>
+        <figure class="shadow_image">
+          <img src="/assets/img/DirectoryLayout.png" alt="DirectoryLayout" class="img-responsive" />
+          <figcaption>Finder Window showing Directory Layout</figcaption>
+        </figure>
+        <p>We’re hosting on Github Pages because a) it’s free, and b) works well with Jekyll. Pros and cons of course, one being that <a href="https://pages.github.com/versions/">Github Pages has a whitelist</a> on dependencies/plugins such that we are forced to use Jekyll 3.7.4 along with other not quite up-to-date wares (With Jekyll we need to use the <code class="highlighter-rouge">bundle exec</code> command as a prefix before any jekyll commands if we’re running a newer Jekyll than the one GitHub currently has whitelisted). A pro on the other hand is that we don’t build! We push our commits over to our remote repo on GitHub and they build our site and serve, meaning we can add <code class="highlighter-rouge">_site</code> directory to our <code class="highlighter-rouge">.gitignore</code>. We can start this process by using GitHub’s web interface to create a new repo titled <code class="highlighter-rouge">&lt;username&gt;.github.io</code> and pushing our updates to the master branch of this new repo.</p>
+        <p>That’s basically it. There’s a lot of little details that I think I’ll make another post about if necessary, but this is the gist of the current setup. Until next time…</p>
+      </article>
+    </main>
     <footer>
-      <p>Copyright © 2019 Matt Rugamas. Made with ❤️ on <span><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></span>.
+      <p>Copyright © 2019 Matt Rugamas. Made with ❤️ on <b><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></b>.
       </p>
     </footer>
   </body>

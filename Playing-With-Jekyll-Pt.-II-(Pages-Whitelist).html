@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik|Source+Code+Pro|Work+Sans" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=2">
@@ -38,28 +39,31 @@
     <!-- End Jekyll SEO tag -->
   </head>
   <body>
-    <nav>
-      <ul>
-        <li>
-          <a href="/" class="not-current">Home</a>
-        </li>
-        <li>
-          <a href="/about" class="not-current">About</a>
-        </li>
-        <li>
-          <a href="/" class="current">Blog</a>
-        </li>
-      </ul>
-    </nav>
-    <div id="post-content">
-      <h1 id="post-title"><span>Playing With Jekyll Pt. II (Pages Whitelist)</span></h1>
-      <p id="post-date">25 Dec 2018</p>
-      <p>In my previous post I wrote about Jekyll and it’s integration with Github Pages, and I mentioned how Github Pages whitelists Jekyll dependencies in your build, essentially building our Jekyll site with the <code class="highlighter-rouge">--safe</code> mode flag. As I thought about how we might go around this, switching over to <a href="https://www.netlify.com">Netlify</a> was a thought that came up that could get comments and syntax highlights going. I also realized I could just build the site locally and push my static pages over to the Github repo for my site, but seemed hacky.</p>
-      <p>A couple revealing blog posts later, enter <a href="https://travis-ci.org">Travis CI</a>. With Travis CI, not only can we test our Jekyll builds but we can use any dependencies or versions of Jekyll that we like! I have my Travis CI set up so that it looks for changes on my release branch, builds and tests my site from that branch, and if it passes, pushes my resulting static pages to the master branch where it is hosted on Github Pages. Then, I just created a develop branch for development. When I have something working, I push to release for testing and if it passes, on to master!</p>
-      <p>The set up really couldn’t have been easier. I set up a Travis CI account by signing in with my Github credentials, and simply flipped a switch—like Drake—on my page repo to get it going. I added a <code class="highlighter-rouge">.travis.yml</code> file to the root to set up Travis’ build configs. Before getting that started, I also had to create a personal token and set that up in Travis’ settings.</p>
-      <div class="language-yaml highlighter-rouge">
-        <div class="highlight">
-          <pre class="highlight"><code><span class="na">language</span><span class="pi">:</span> <span class="s">ruby</span>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <a href="/" class="not-current">Home</a>
+          </li>
+          <li>
+            <a href="/about" class="not-current">About</a>
+          </li>
+          <li>
+            <a href="/" class="current">Blog</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <article>
+        <h1 id="post-title"><span>Playing With Jekyll Pt. II (Pages Whitelist)</span></h1>
+        <p id="post-date">25 Dec 2018</p>
+        <p>In my previous post I wrote about Jekyll and it’s integration with Github Pages, and I mentioned how Github Pages whitelists Jekyll dependencies in your build, essentially building our Jekyll site with the <code class="highlighter-rouge">--safe</code> mode flag. As I thought about how we might go around this, switching over to <a href="https://www.netlify.com">Netlify</a> was a thought that came up that could get comments and syntax highlights going. I also realized I could just build the site locally and push my static pages over to the Github repo for my site, but seemed hacky.</p>
+        <p>A couple revealing blog posts later, enter <a href="https://travis-ci.org">Travis CI</a>. With Travis CI, not only can we test our Jekyll builds but we can use any dependencies or versions of Jekyll that we like! I have my Travis CI set up so that it looks for changes on my release branch, builds and tests my site from that branch, and if it passes, pushes my resulting static pages to the master branch where it is hosted on Github Pages. Then, I just created a develop branch for development. When I have something working, I push to release for testing and if it passes, on to master!</p>
+        <p>The set up really couldn’t have been easier. I set up a Travis CI account by signing in with my Github credentials, and simply flipped a switch—like Drake—on my page repo to get it going. I added a <code class="highlighter-rouge">.travis.yml</code> file to the root to set up Travis’ build configs. Before getting that started, I also had to create a personal token and set that up in Travis’ settings.</p>
+        <div class="language-yaml highlighter-rouge">
+          <div class="highlight">
+            <pre class="highlight"><code><span class="na">language</span><span class="pi">:</span> <span class="s">ruby</span>
 <span class="na">cache</span><span class="pi">:</span> <span class="s">bundler</span>
 <span class="na">branches</span><span class="pi">:</span>
   <span class="na">only</span><span class="pi">:</span>
@@ -78,13 +82,14 @@
   <span class="na">on</span><span class="pi">:</span>
     <span class="na">branch</span><span class="pi">:</span> <span class="s">release</span>
 </code></pre>
+          </div>
         </div>
-      </div>
-      <p>With this workflow, we build on a local branch of our Git repository. We can then merge these changes into a remote release branch. Travis keeps track of our release branch, builds on change, and if it passes the tests we’ve set up in <code class="highlighter-rouge">.travis.yml</code>, travis pushes the release branch to the master branch of the GitHub repository. GitHub will then serve this master branch as the site when users visit your .io site.</p>
-      <p>This is perfect for using plugins that aren’t on the GitHub Pages Dependecy whitelist. It’s also an ideal solutions for unit tests and the like. Travis CI has many diverse functions that will keep me busy for much time to come.</p>
-    </div>
+        <p>With this workflow, we build on a local branch of our Git repository. We can then merge these changes into a remote release branch. Travis keeps track of our release branch, builds on change, and if it passes the tests we’ve set up in <code class="highlighter-rouge">.travis.yml</code>, travis pushes the release branch to the master branch of the GitHub repository. GitHub will then serve this master branch as the site when users visit your .io site.</p>
+        <p>This is perfect for using plugins that aren’t on the GitHub Pages Dependecy whitelist. It’s also an ideal solutions for unit tests and the like. Travis CI has many diverse functions that will keep me busy for much time to come.</p>
+      </article>
+    </main>
     <footer>
-      <p>Copyright © 2019 Matt Rugamas. Made with ❤️ on <span><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></span>.
+      <p>Copyright © 2019 Matt Rugamas. Made with ❤️ on <b><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></b>.
       </p>
     </footer>
   </body>

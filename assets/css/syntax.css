@@ -1,8 +1,10 @@
 .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
+pre.highlight { border: 1px solid rgb(218, 114, 126); }
+code.highlighter-rouge { border: 1px solid rgb(52, 56, 64); }
 pre.highlight, code.highlighter-rouge, .highlight .w {
-  color: #d0d0d0;
-  background-color: #151515;
+  color: rgb(255, 244, 224);
+  background-color: rgba(29, 29, 29, 0.5);
 }
 .highlight .err {
   color: #151515;
