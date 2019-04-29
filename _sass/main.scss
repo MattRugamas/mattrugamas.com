@@ -24,6 +24,7 @@ body {
     border-radius: 5px;
     code {
       font-family: $fonts-source;
+      white-space: pre-wrap;
       font-size: 15px;
     }
   }
@@ -52,6 +53,8 @@ nav {
 
 main {
   @extend %content-base;
+  display: flex;
+  flex-flow: column nowrap;
   ul#blog-list {
     margin: 3vh 0 0;
     max-width: 900px;
@@ -163,8 +166,6 @@ footer {
 ////////////////
 
 main {
-  display: flex;
-  flex-flow: column nowrap;
   div#about-me {
     display: flex;
     flex-flow: row;
@@ -219,7 +220,7 @@ main {
   }
 }
 @media all and (max-width: 500px) {
-  div#base-content {
+  main {
     div#about-me {
       padding: 3vh 0;
       flex-flow: row wrap-reverse;
@@ -246,7 +247,7 @@ main {
   }
 }
 @media all and (max-width: 800px) {
-  div#base-content {
+  main {
     div#about-me {
       margin: 3vh 0;
       flex-flow: row wrap-reverse;
@@ -311,7 +312,7 @@ article {
   }
 }
 @media all and (max-width: 500px) {
-  div#post-content {
+  article {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0 !important;
@@ -325,7 +326,7 @@ article {
   }
 }
 @media all and (max-width: 800px) {
-  div#post-content {
+  article {
     padding-left: 10px;
     padding-right: 10px;
     margin: 0 auto;
