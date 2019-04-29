@@ -53,8 +53,6 @@ nav {
 
 main {
   @extend %content-base;
-  display: flex;
-  flex-flow: column nowrap;
   ul#blog-list {
     margin: 3vh 0 0;
     max-width: 900px;
@@ -85,9 +83,7 @@ main {
       }
     }
   }
-}
-@media all and (max-width: 500px) {
-  main {
+  @media all and (max-width: 500px) {
     min-height: 0;
     padding-left: 10px;
     padding-right: 10px;
@@ -115,9 +111,7 @@ main {
       }
     }
   }
-}
-@media all and (max-width: 800px) {
-  main {
+  @media all and (max-width: 800px) {
     min-height: 0;
     padding-left: 10px;
     padding-right: 10px;
@@ -166,7 +160,7 @@ footer {
 ////////////////
 
 main {
-  div#about-me {
+  section.aboutMe {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
@@ -186,7 +180,7 @@ main {
     border: 1px solid $links;
     border-radius: 3px;
   }
-  div.findme {
+  section.findme {
     width: 400px;
     margin: auto auto;
     font-family: $fonts-body;
@@ -221,7 +215,7 @@ main {
 }
 @media all and (max-width: 500px) {
   main {
-    div#about-me {
+    section.aboutMe {
       padding: 3vh 0;
       flex-flow: row wrap-reverse;
       p.about-me {
@@ -233,7 +227,7 @@ main {
     figure {
       margin: 3vh auto;
     }
-    div.findme {
+    section.findme {
       width: 97vw;
       ul {
         li {
@@ -248,7 +242,7 @@ main {
 }
 @media all and (max-width: 800px) {
   main {
-    div#about-me {
+    section.aboutMe {
       margin: 3vh 0;
       flex-flow: row wrap-reverse;
       p.about-me {
@@ -260,7 +254,7 @@ main {
     figure {
       margin: 3vh auto;
     }
-    div.findme {
+    section.findme {
       width: 300px;
       ul {
         li {

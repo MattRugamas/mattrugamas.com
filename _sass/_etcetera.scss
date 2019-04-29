@@ -20,6 +20,8 @@ $dates: rgb(159, 203, 204);
 %text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46); }
 
 %content-base {
+  display: flex;
+  flex-flow: column nowrap;
   min-height: calc(100vh - 20px);
   padding: 5rem 0 2rem;
   h1 {
