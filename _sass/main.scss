@@ -336,3 +336,57 @@ article {
     }
   }
 }
+
+///////////////
+/* RESU PAGE */
+///////////////
+#resumeContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  h2, h3 {
+    font-family: $fonts-titles;
+  }
+  h2 {
+    color: $highlight;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  strong {
+    color: $dates;
+  }
+  p, li {
+    font-family: $fonts-body;
+  }
+  ul {
+    list-style-type: disc;
+    padding-inline-start: 40px;
+  }
+  #resumeHead {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    @media all and (min-width: 768px) { 
+      flex-flow: row;
+    }
+    figure img {
+      border-radius: 5px;
+      box-shadow: 0 0 15px 3px $links;
+    }
+    #contactInfo {
+      flex-grow: 1;
+      h2 {
+        text-align: center;
+      }
+      .infoFlex {
+        display: flex;
+        flex-flow: row wrap;
+        p {
+          width: 50%;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
