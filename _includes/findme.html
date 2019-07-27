@@ -1,0 +1,8 @@
+<section class="findme">
+    <h1><b>Elsewhere</b></h1>
+    <ul>{% for item in site.data.findme %}
+      <li>
+        <a href="{{ item.link }}">{{ item.name }}</a>
+      </li>{%- endfor -%}
+    </ul>
+  </section>

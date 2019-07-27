@@ -1,0 +1,10 @@
+*~
+*swp
+.tm_properties
+.vscode
+.ruby-version
+.DS_Store
+.jekyll-metadata
+.jekyll-cache/
+.sass-cache/
+_site/
