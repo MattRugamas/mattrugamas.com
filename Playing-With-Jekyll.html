@@ -21,9 +21,9 @@
     <meta name="msapplication-TileColor" content="#00ADB5">
     <meta name="theme-color" content="#ffffff">
     <link type="application/atom+xml" rel="alternate" href="mattrugamas.com/feed.xml" title="Matt's Weblog" />
-    <!-- Begin Jekyll SEO tag v2.6.1 -->
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
     <title>Playing With Jekyll | Matt’s Weblog</title>
-    <meta name="generator" content="Jekyll v3.8.6" />
+    <meta name="generator" content="Jekyll v4.2.0" />
     <meta property="og:title" content="Playing With Jekyll" />
     <meta property="og:locale" content="en_US" />
     <meta name="description" content="Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I’ve gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with SCSS, write posts in markdown (kramdown), and do kinda-dynamic stuff using HTML with Liquid—sweet." />
@@ -33,8 +33,10 @@
     <meta property="og:site_name" content="Matt’s Weblog" />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2018-12-24T00:00:00+00:00" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Playing With Jekyll" />
     <script type="application/ld+json">
-      {"description":"Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I’ve gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with SCSS, write posts in markdown (kramdown), and do kinda-dynamic stuff using HTML with Liquid—sweet.","mainEntityOfPage":{"@type":"WebPage","@id":"mattrugamas.com/Playing-With-Jekyll"},"@type":"BlogPosting","url":"mattrugamas.com/Playing-With-Jekyll","headline":"Playing With Jekyll","dateModified":"2018-12-24T00:00:00+00:00","datePublished":"2018-12-24T00:00:00+00:00","@context":"https://schema.org"}
+      {"description":"Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I’ve gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with SCSS, write posts in markdown (kramdown), and do kinda-dynamic stuff using HTML with Liquid—sweet.","@type":"BlogPosting","headline":"Playing With Jekyll","dateModified":"2018-12-24T00:00:00+00:00","datePublished":"2018-12-24T00:00:00+00:00","url":"mattrugamas.com/Playing-With-Jekyll","mainEntityOfPage":{"@type":"WebPage","@id":"mattrugamas.com/Playing-With-Jekyll"},"@context":"https://schema.org"}
     </script>
     <!-- End Jekyll SEO tag -->
   </head>
@@ -75,7 +77,7 @@
 </code></pre>
           </div>
         </div>
-        <p>I’m also going to set up a base layout that all other layouts are derived from in our <code class="highlighter-rouge">_layouts</code> folder. Our index layout inherits from this, as well as our post layout. I <a href="https://realfavicongenerator.net">set up a favicon package</a> to support a wide-range of devices and put the package in it’s own file in the <code class="highlighter-rouge">_include</code> folder. With includes, we can use Liquid to link to them from our layouts. In this case all my includes are for all the pages, and will be placed in the base layout that all are derived from.</p>
+        <p>I’m also going to set up a base layout that all other layouts are derived from in our <code class="language-plaintext highlighter-rouge">_layouts</code> folder. Our index layout inherits from this, as well as our post layout. I <a href="https://realfavicongenerator.net">set up a favicon package</a> to support a wide-range of devices and put the package in it’s own file in the <code class="language-plaintext highlighter-rouge">_include</code> folder. With includes, we can use Liquid to link to them from our layouts. In this case all my includes are for all the pages, and will be placed in the base layout that all are derived from.</p>
         <div class="language-html highlighter-rouge">
           <div class="highlight">
             <pre class="highlight"><code><span class="nt">&lt;head&gt;</span>
@@ -97,7 +99,7 @@
 </code></pre>
           </div>
         </div>
-        <p>The navigation set up is also in an include. I used <a href="https://github.com/necolas/normalize.css/">Necolas’ reset</a> and started with plain HTML/CSS. I built up my own SCSS in <code class="highlighter-rouge">main.scss</code> and imported <code class="highlighter-rouge">main.scss</code> and <code class="highlighter-rouge">reset.scss</code> into styles.scss, which is where the base layout links to the stylsheet.</p>
+        <p>The navigation set up is also in an include. I used <a href="https://github.com/necolas/normalize.css/">Necolas’ reset</a> and started with plain HTML/CSS. I built up my own SCSS in <code class="language-plaintext highlighter-rouge">main.scss</code> and imported <code class="language-plaintext highlighter-rouge">main.scss</code> and <code class="language-plaintext highlighter-rouge">reset.scss</code> into styles.scss, which is where the base layout links to the stylsheet.</p>
         <div class="language-scss highlighter-rouge">
           <div class="highlight">
             <pre class="highlight"><code><span class="nt">nav</span> <span class="p">{</span>
@@ -157,7 +159,7 @@
           <img src="/assets/img/DirectoryLayout.png" alt="DirectoryLayout" class="img-responsive" />
           <figcaption>Finder Window showing Directory Layout</figcaption>
         </figure>
-        <p>We’re hosting on Github Pages because a) it’s free, and b) works well with Jekyll. Pros and cons of course, one being that <a href="https://pages.github.com/versions/">Github Pages has a whitelist</a> on dependencies/plugins such that we are forced to use Jekyll 3.7.4 along with other not quite up-to-date wares (With Jekyll we need to use the <code class="highlighter-rouge">bundle exec</code> command as a prefix before any jekyll commands if we’re running a newer Jekyll than the one GitHub currently has whitelisted). A pro on the other hand is that we don’t build! We push our commits over to our remote repo on GitHub and they build our site and serve, meaning we can add <code class="highlighter-rouge">_site</code> directory to our <code class="highlighter-rouge">.gitignore</code>. We can start this process by using GitHub’s web interface to create a new repo titled <code class="highlighter-rouge">&lt;username&gt;.github.io</code> and pushing our updates to the master branch of this new repo.</p>
+        <p>We’re hosting on Github Pages because a) it’s free, and b) works well with Jekyll. Pros and cons of course, one being that <a href="https://pages.github.com/versions/">Github Pages has a whitelist</a> on dependencies/plugins such that we are forced to use Jekyll 3.7.4 along with other not quite up-to-date wares (With Jekyll we need to use the <code class="language-plaintext highlighter-rouge">bundle exec</code> command as a prefix before any jekyll commands if we’re running a newer Jekyll than the one GitHub currently has whitelisted). A pro on the other hand is that we don’t build! We push our commits over to our remote repo on GitHub and they build our site and serve, meaning we can add <code class="language-plaintext highlighter-rouge">_site</code> directory to our <code class="language-plaintext highlighter-rouge">.gitignore</code>. We can start this process by using GitHub’s web interface to create a new repo titled <code class="language-plaintext highlighter-rouge">&lt;username&gt;.github.io</code> and pushing our updates to the master branch of this new repo.</p>
         <p>That’s basically it. There’s a lot of little details that I think I’ll make another post about if necessary, but this is the gist of the current setup. Until next time…</p>
       </article>
     </main>
