@@ -38,8 +38,8 @@ $dates: rgb(159, 203, 204);
 %content-base {
   display: flex;
   flex-flow: column nowrap;
-  min-height: calc(100vh - 20px);
-  padding: 5rem 0 2rem;
+  flex-grow: 1;
+  padding: 71px 15px 15px;
   h1 {
     margin: 0;
     font-family: $fonts-titles;
@@ -53,7 +53,6 @@ $dates: rgb(159, 203, 204);
 %link-setup {
   a {
     transition: all .2s;
-    // text-decoration: none;
     color: $links;
     &:hover {
       @extend %ui-shadow;
