@@ -1,0 +1,124 @@
+////////////////
+/* ABOUT PAGE */
+////////////////
+
+main {
+  section.aboutMe {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    font-family: $fonts-body;
+    div#aboutMeText {
+      max-width: 50vw;
+      p.about-me {
+        margin: 15px 0;
+      }
+    }
+    ul {
+      list-style-type: square;
+      padding-inline: 40px;
+    }
+    figure {
+      margin: 0 auto;
+    }
+  }
+  img#selfie {
+    margin: 0 auto;
+
+    @extend %ui-shadow;
+    border: 1px solid $links;
+    border-radius: 3px;
+  }
+  section.findme {
+    width: 400px;
+    margin: auto auto;
+    font-family: $fonts-body;
+    ul {
+      margin: 0;
+
+      @extend %text-shadow;
+      @extend %ui-shadow;
+      border: 2px solid $links;
+      border-radius: 3px;
+      li {
+        text-align: center;
+
+        background-color: $base;
+        &:hover {
+          transition-duration: 0.3s;
+          background-color: $selected;
+        }
+        a {
+          display: block;
+          padding: 10px;
+          text-decoration: none;
+          color: $text;
+          &:hover {
+            background-color: transparent;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+}
+@media all and (max-width: 500px) {
+  main {
+    section.aboutMe {
+      padding: 3vh 0;
+      flex-flow: column-reverse;
+      div#aboutMeText {
+        max-width: 100%;
+        p.about-me {
+          //text-align: justify;
+          max-width: 97vw;
+          margin: 3vh 0;
+        }
+      }
+    }
+    figure {
+      margin: 3vh auto;
+    }
+    section.findme {
+      width: 97vw;
+      ul {
+        li {
+          border-top: 1px solid $selected;
+          &:last-child {
+            border-bottom: 1px solid $selected;
+          }
+        }
+      }
+    }
+  }
+}
+@media all and (max-width: 800px) {
+  main {
+    section.aboutMe {
+      margin: 3vh 0;
+      flex-flow: column-reverse;
+      div#aboutMeText {
+        max-width: 100%;
+        p.about-me {
+          //text-align: justify;
+          max-width: 97vw;
+          margin: 3vh 0;
+        }
+      }
+    }
+    figure {
+      margin: 3vh auto;
+    }
+    section.findme {
+      width: 300px;
+      ul {
+        li {
+          border-top: 1px solid $selected;
+          &:last-child {
+            border-bottom: 1px solid $selected;
+          }
+        }
+      }
+    }
+  }
+}

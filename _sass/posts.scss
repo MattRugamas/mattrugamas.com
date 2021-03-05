@@ -1,0 +1,68 @@
+///////////////
+/* POST PAGE */
+///////////////
+
+article {
+    @extend %content-base;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0;
+    h1#post-title {
+      font-family: $fonts-titles;
+      text-transform: capitalize;
+    }
+    p#post-date {
+      margin: 0 0 3vh 0;
+      padding: 3px 0;
+      color: $dates;
+      font-family: $fonts-source;
+    }
+    p {
+      margin: 5px 0;
+      font-family: $fonts-body;
+    }
+    figure.shadow_image {
+      margin: 3vh auto;
+      width: fit-content;
+      img.img-responsive {
+        width: 100%;
+        max-width: 650px;
+        height: auto;
+      }
+      figcaption {
+        margin-top: -7%;
+        text-align: center;
+      }
+    }
+  }
+  @media all and (max-width: 500px) {
+    article {
+      padding-left: 10px;
+      padding-right: 10px;
+      margin: 0 !important;
+      p#post-date {
+        display: block;
+        text-align: center;
+      }
+      img.img-responsive {
+        max-width: 100%;
+      }
+    }
+  }
+  @media all and (max-width: 800px) {
+    article {
+      padding-left: 10px;
+      padding-right: 10px;
+      margin: 0 auto;
+      h1#post-title {
+        text-align: center;
+      }
+      p#post-date {
+        display: block;
+        text-align: center;
+      }
+      img.img-responsive {
+        max-width: 100%;
+      }
+    }
+  }

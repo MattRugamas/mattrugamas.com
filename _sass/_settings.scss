@@ -1,5 +1,5 @@
-$fonts-body: 'Rubik', sans-serif;
-$fonts-titles: 'Work Sans', sans-serif;
+$fonts-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+$fonts-titles: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 $fonts-source: 'Source Code Pro', monospace;
 
 $base: rgb(42, 45, 51);
@@ -9,6 +9,22 @@ $inactive: rgb(229, 220, 202);
 $links: rgb(218, 114, 126);
 $highlight: rgb(0, 172, 181);
 $dates: rgb(159, 203, 204);
+
+// $base: #474853;
+// $text: #EDF5E1;
+// $selected: #40414b;
+// $inactive: #AAA0A0;
+// $links: #86B3D1;
+// $highlight: #86B3D1;
+// $dates: $text;
+
+// $base: #2B2E36;
+// $text: #EDF5E1;
+// $selected: #40423C;
+// $inactive: $text;
+// $links: #72a3c8;
+// $highlight: #b695a1;
+// $dates: $highlight;
 
 @mixin box-sizing($property) {
   -webkit-box-sizing: $property;
@@ -27,7 +43,7 @@ $dates: rgb(159, 203, 204);
   h1 {
     margin: 0;
     font-family: $fonts-titles;
-    b {
+    strong {
       color: $highlight;
       @extend %text-shadow;
     }
@@ -37,7 +53,7 @@ $dates: rgb(159, 203, 204);
 %link-setup {
   a {
     transition: all .2s;
-    text-decoration: none;
+    // text-decoration: none;
     color: $links;
     &:hover {
       @extend %ui-shadow;
@@ -54,7 +70,7 @@ $dates: rgb(159, 203, 204);
   margin: 0 5px;
 
   font-size: 1.1rem;
-  font-weight: 900;
+  font-weight: normal;
   text-transform: uppercase;
   text-decoration: none;
   &:after,&:before {
@@ -105,7 +121,7 @@ $dates: rgb(159, 203, 204);
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(42,45,51,1), rgba(42,45,51,0));
+    background: linear-gradient(to right, $base, rgba(42,45,51,0));
     z-index: -1;
   }
   &:hover {
