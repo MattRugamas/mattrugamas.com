@@ -16,7 +16,7 @@ main {
     }
     ul {
       list-style-type: square;
-      padding-inline: 40px;
+      padding-inline-start: 40px;
     }
     figure {
       margin: 0 auto;
@@ -65,19 +65,19 @@ main {
 @media all and (max-width: 500px) {
   main {
     section.aboutMe {
-      padding: 3vh 0;
+      padding: 1vh 0;
       flex-flow: column-reverse;
       div#aboutMeText {
         max-width: 100%;
         p.about-me {
           //text-align: justify;
           max-width: 97vw;
-          margin: 3vh 0;
+          margin: 1vh 0;
         }
       }
     }
     figure {
-      margin: 3vh auto;
+      margin: 1vh auto;
     }
     section.findme {
       width: 97vw;
@@ -95,14 +95,14 @@ main {
 @media all and (max-width: 800px) {
   main {
     section.aboutMe {
-      margin: 3vh 0;
+      margin: 1vh 0;
       flex-flow: column-reverse;
       div#aboutMeText {
         max-width: 100%;
         p.about-me {
           //text-align: justify;
           max-width: 97vw;
-          margin: 3vh 0;
+          margin: 1vh 0;
         }
       }
     }
