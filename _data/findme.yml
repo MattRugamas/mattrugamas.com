@@ -1,3 +1,5 @@
+- name: LinkedIn
+  link: https://www.linkedin.com/in/mattrugamas/
 - name: GitHub
   link: https://github.com/MattRugamas
 - name: CodePen
@@ -6,5 +8,5 @@
   link: //steamcommunity.com/id/mattrugamas
 # - name: Twitter
 #   link: http://www.twitter.com/MattRugamas
-- name: Email
-  link: mailto:catasphere@outlook.com
+# - name: Email
+#   link: mailto:catasphere@outlook.com
