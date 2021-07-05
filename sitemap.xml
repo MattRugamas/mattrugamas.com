@@ -1,36 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-  <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version='1.0' encoding='UTF-8'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-      <loc>mattrugamas.com/Test-Run</loc>
-      <lastmod>2018-12-06T00:00:00+00:00</lastmod>
+        <loc>https://mattrugamas.com/</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/Getting-Ready-for-the-Web</loc>
-      <lastmod>2018-12-14T00:00:00+00:00</lastmod>
+        <loc>https://mattrugamas.com/Getting-Ready-for-the-Web</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/Playing-With-Jekyll</loc>
-      <lastmod>2018-12-24T00:00:00+00:00</lastmod>
+        <loc>https://mattrugamas.com/Hello-Again</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/Playing-With-Jekyll-Pt.-II-(Pages-Whitelist)</loc>
-      <lastmod>2018-12-25T00:00:00+00:00</lastmod>
+        <loc>https://mattrugamas.com/Playing-With-Jekyll</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/Update!</loc>
-      <lastmod>2019-02-13T00:00:00+00:00</lastmod>
+        <loc>https://mattrugamas.com/Playing-With-Jekyll-Pt.-II-(Pages-Whitelist)</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/Hello-Again</loc>
-      <lastmod>2021-03-09T00:00:00+00:00</lastmod>
+        <loc>https://mattrugamas.com/Test-Run</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/about</loc>
+        <loc>https://mattrugamas.com/Update!</loc>
     </url>
     <url>
-      <loc>mattrugamas.com/</loc>
+        <loc>https://mattrugamas.com/about</loc>
     </url>
-    <url>
-      <loc>mattrugamas.com/resume</loc>
-    </url>
-  </urlset>
+</urlset>
