@@ -3,6 +3,18 @@ html {
    background-color: $base;
    color: $text;
 
+   #skipToMainContent {
+      position: absolute;
+      top: 0;
+      &:hover,
+      &:focus {
+         z-index: 999999;
+         background-color: black;
+         color: white;
+         font-size: 1.5rem;
+      }
+   }
+
    -ms-text-size-adjust: 100%;
    -webkit-text-size-adjust: 100%;
    -moz-osx-font-smoothing: grayscale;
@@ -140,7 +152,7 @@ html {
          padding: 5px 0 0 0;
          background-color: $base;
          font-family: $fonts-body;
-         font-size: 9px;
+         font-size: 12px;
          box-shadow: 0 -1px 0 $text;
          text-align: center;
          p {
