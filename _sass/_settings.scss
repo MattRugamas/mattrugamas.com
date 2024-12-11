@@ -2,13 +2,13 @@ $fonts-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
 $fonts-titles: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 $fonts-source: 'Source Code Pro', monospace;
 
-$base: rgb(25, 25, 35);          // A dark, moody navy to create a rich background.
-$selected: rgb(58, 68, 102);     // A strong, muted indigo for a standout selection color.
-$text: rgb(245, 245, 250);       // Soft white with a hint of blue for easy readability.
-$inactive: rgb(191, 181, 173);   // Warm gray-beige to contrast with the cool tones in the base.
-$links: rgb(255, 105, 120);      // A vivid coral pink to add energy and draw attention to links.
-$highlight: rgb(115, 194, 251);  // A bright sky blue for a refreshing highlight color.
-$dates: rgb(140, 160, 175);      // A cool slate blue for date text, subtle yet noticeable.
+$base: rgb(36, 56, 60);
+$selected: rgb(58, 68, 102);
+$text: rgb(219, 201, 187);
+$inactive: rgb(191, 181, 173);
+$links: rgb(255, 105, 120);
+$highlight: rgb(115, 194, 251);
+$dates: rgb(140, 160, 175);
 
 // $base: #474853;
 // $text: #EDF5E1;
