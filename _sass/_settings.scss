@@ -2,25 +2,25 @@ $fonts-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue"
 $fonts-titles: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 $fonts-source: 'Source Code Pro', monospace;
 
-$base: rgb(36, 56, 60);
-$selected: rgb(70, 100, 105);
-$text: rgb(219, 201, 187);
-$inactive: rgb(165, 155, 145);
-$links: rgb(220, 110, 125);
-$highlight: rgb(95, 180, 230);
-$dates: rgb(120, 140, 155);
+// $base: rgb(36, 56, 60);
+// $selected: rgb(70, 100, 105);
+// $text: rgb(219, 201, 187);
+// $inactive: rgb(165, 155, 145);
+// $links: rgb(220, 110, 125);
+// $highlight: rgb(95, 180, 230);
+// $dates: rgb(120, 140, 155);
 
-// $base: #474853;
-// $text: #EDF5E1;
-// $selected: #40414b;
-// $inactive: #AAA0A0;
-// $links: #86B3D1;
-// $highlight: #86B3D1;
-// $dates: $text;
+$base: #474853;
+$selected: #40414b;
+$text: #EDF5E1;
+$inactive: #AAA0A0;
+$links: #86B3D1;
+$highlight: #86B3D1;
+$dates: $text;
 
 // $base: #2B2E36;
-// $text: #EDF5E1;
 // $selected: #40423C;
+// $text: #EDF5E1;
 // $inactive: $text;
 // $links: #72a3c8;
 // $highlight: #b695a1;
