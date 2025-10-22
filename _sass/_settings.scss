@@ -10,21 +10,21 @@ $fonts-source: 'Source Code Pro', monospace;
 // $highlight: rgb(95, 180, 230);
 // $dates: rgb(126, 153, 163);
 
-$base: #474853;
-$selected: #40414b;
-$text: #EDF5E1;
-$inactive: #AAA0A0;
-$links: #86B3D1;
-$highlight: #86B3D1;
-$dates: $text;
-
-// $base: #2B2E36;
-// $selected: #40423C;
+// $base: #474853;
+// $selected: #40414b;
 // $text: #EDF5E1;
-// $inactive: $text;
-// $links: #72a3c8;
-// $highlight: #b695a1;
-// $dates: $highlight;
+// $inactive: #AAA0A0;
+// $links: #86B3D1;
+// $highlight: #86B3D1;
+// $dates: $text;
+
+$base: #2B2E36;
+$selected: #40423C;
+$text: #EDF5E1;
+$inactive: $text;
+$links: #72a3c8;
+$highlight: #b695a1;
+$dates: $highlight;
 
 @mixin box-sizing($property) {
   -webkit-box-sizing: $property;
