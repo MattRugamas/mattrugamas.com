@@ -18,13 +18,21 @@ $fonts-source: 'Source Code Pro', monospace;
 // $highlight: #86B3D1;
 // $dates: $text;
 
-$base: #2B2E36;
-$selected: #40423C;
-$text: #EDF5E1;
-$inactive: $text;
-$links: #72a3c8;
-$highlight: #b695a1;
-$dates: $highlight;
+// $base: #2B2E36;
+// $selected: #40423C;
+// $text: #EDF5E1;
+// $inactive: $text;
+// $links: #72a3c8;
+// $highlight: #b695a1;
+// $dates: $highlight;
+
+$base: rgb(42, 45, 51);
+$selected: rgb(52, 56, 64);
+$text: rgb(255, 244, 224);
+$inactive: rgb(229, 220, 202);
+$links: rgb(255, 159, 170);
+$highlight: rgb(0, 206, 217);
+$dates: rgb(159, 203, 204);
 
 @mixin box-sizing($property) {
   -webkit-box-sizing: $property;
