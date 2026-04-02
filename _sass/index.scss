@@ -43,7 +43,7 @@ html {
     @extend %link-setup;
 
     figure figcaption {
-      font-family: $fonts-source;
+      font-family: $fonts-body;
       font-size: var(--text-sm);
       color: var(--color-dates);
     }
@@ -207,7 +207,8 @@ html {
             display: block;
             margin: 0;
             font-family: $fonts-titles;
-            text-transform: capitalize;
+            font-size: var(--text-base);
+            font-weight: var(--font-weight-semi);
           }
 
           p {
@@ -262,7 +263,7 @@ html {
       padding: 5px 0 0;
       background-color: var(--color-base);
       font-family: $fonts-body;
-      font-size: 12px;
+      font-size: var(--text-sm);
       box-shadow: 0 -1px 0 var(--color-text);
       text-align: center;
 
