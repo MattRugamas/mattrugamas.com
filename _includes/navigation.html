@@ -1,7 +1,8 @@
 <header>
   <a id="skipToMainContent" href="#mainContent">Skip to Main Content</a>
   <nav>
-    <ul>{% for item in site.data.navigation %}
+    <ul>
+      {% for item in site.data.navigation %}
       <li>
         <a href="{{ item.link }}" class="
           {%- if page.url == item.link -%}
@@ -15,7 +16,19 @@
       {%- if page.layout == 'post' -%}
       <li>
         <a href="/" class="current">Blog</a>
-      </li>{% endif %}
+      </li>
+      {%- endif -%}
     </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" aria-label="Toggle light/dark mode">
+        <span class="icon-to-light" aria-hidden="true">☀</span>
+        <span class="icon-to-dark" aria-hidden="true">☽</span>
+      </button>
+      <button id="nav-toggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </nav>
 </header>

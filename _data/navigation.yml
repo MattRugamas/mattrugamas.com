@@ -2,5 +2,7 @@
   link: /
 - name: About
   link: /about
-# - name: Resumé
-#   link: /resume
+- name: Music
+  link: /music
+- name: Resumé
+  link: /resume

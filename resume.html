@@ -1,66 +1,133 @@
 ---
 title: Resumé
 ---
-<div id="resumeContainer">
-    <section id="resumeHead">
-        <figure>
-            <img src="/assets/img/default.jpeg" alt="Selfie" height="192" width="188" />
-        </figure>
-        <section id="contactInfo">
-            <h2>Matthew Rugamas</h2>
-            <div class="infoFlex">
-                <p>(626) 817-3862</p>
-                <p><a href="https://mattrugamas.com">mattrugamas.com</a></p>
-                <p>Azusa, CA 91702</p>
-                <p><a href="mailto:craigsrelay@icloud.com">myemail@icloud.com</a></p>
-            </div>
-        </section>
-    </section>
+<div class="cv">
 
-    <section id="resumeProfile">
-        <h2 class="profileIcon">Profile</h2>
-        <p>Highly motivated Computer Science student with experience in IT, Help Desk, computer diagnostic/repair, technical support and customer service. I aim to leverage a strong sense of situational assessment, conﬂict resolution and efﬁcient communication along with my work experience and skills to provide my employers more than just metrics.</p>
-    </section>
+  <header class="cv-header">
+    <div class="cv-header-name">
+      <h1>Matthew Rugamas</h1>
+      <p class="cv-tagline">Support Engineer · Los Angeles, CA</p>
+    </div>
+    <div class="cv-header-contact">
+      <a href="https://linkedin.com/in/mattrugamas" target="_blank" rel="noopener">linkedin.com/in/mattrugamas</a>
+    </div>
+  </header>
 
-    <section id="resumeExperience">
-        <h2>Experience</h2>
-        <h3><strong>TECHNICAL SUPPORT MEMBER, EDLIO INC; CULVER CITY, CA — 2019-CURRENT</strong></h3>
-        <ul>
-            <li>Supporting a full-featured CMS product used by thousands of clients daily!</li>
-        </ul>
-        <h3><strong>ADVANCED REPAIR AGENT, BEST BUY’S GEEK SQUAD; CITY OF INDUSTRY, CA — 2018</strong></h3>
-        <ul>
-            <li>Provided end-users with troubleshooting, repair and support services within Windows and Macintosh environments.</li>
-            <li>Installed, managed, and updated operating systems and their supported applications.</li>
-            <li>Assembled, maintained and repaired system hardware.</li>
-            <li>Engaged with team members to ensure that every client’s issue was resolved in timely fashion.</li>
-        </ul>
-        <h3><strong>CONSULTATION AGENT, BEST BUY’S GEEK SQUAD; CITY OF INDUSTRY, CA — 2017-2018</strong></h3>
-        <ul>
-            <li>Provided support for a range of electronic devices including computers, cell phones, tablets, TVs, home audio, and accessories.</li>
-            <li>Provided knowledge and conﬂict resolution skills to ensure every client is educated and conﬁdent while using their devices.</li>
-            <li>Managed client expectations and experiences to a high degree of client satisfaction.</li>
-        </ul>
-        <h3><strong>TEAM MEMBER, CALIFORNIA SUNRISE INC; AZUSA, CA — 2014-2017</strong></h3>
-        <ul>
-            <li>Analyzed and calculated inventory needs based on sales metrics.</li>
-            <li>Promoted a positive atmosphere to guarantee each client received exceptional food and service.</li>
-            <li>Built relationships with customers to increase repeat business.</li>
-        </ul>
-        <h3><strong>COMPUTER LAB ASSISTANT, MT. SAN ANTONIO COLLEGE; WALNUT, CA — 2012-2013</strong></h3>
-        <ul>
-            <li>Processed intakes of malfunctioning systems, documented progress of repairs while ensuring quality of work.</li>
-            <li>Completed new PC/MacOS setups, data transfers, basic repairs.</li>
-            <li>Performed student education on aspects of technology in terms they could understand.</li>
-        </ul>
-    </section>
+  <section class="cv-section">
+    <h2>Profile</h2>
+    <p>Support engineer with 6+ years of experience operating at the intersection of support, engineering, and product in SaaS environments. I specialize in diagnosing complex issues end-to-end — tracing failures across APIs, authentication systems, logs, databases, and application code to reach root cause. Known for translating ambiguous customer problems into clear, actionable insights and for improving how support teams operate through better workflows, knowledge systems, and cross-functional collaboration.</p>
+  </section>
 
-    <section id="resumeEducation">
-        <h2>Education</h2>
-        <ul>
-            <li><strong>Santa Monica College</strong>, Santa Monica, CA — Web Programming, 2021</li>
-            <li><strong>Mount San Antonio College</strong>, Walnut, CA — Computer Science Associates, 2019</li>
-            <li><strong>Gladstone High School</strong>, Covina, CA — High School Diploma, 2012</li>
-        </ul>
-    </section>
+  <section class="cv-section">
+    <h2>Skills</h2>
+    <dl class="cv-skills">
+      <div class="cv-skill-row">
+        <dt>Technical Troubleshooting</dt>
+        <dd>APIs (REST, GraphQL), SAML/Auth, Splunk, MongoDB, log analysis, distributed systems debugging</dd>
+      </div>
+      <div class="cv-skill-row">
+        <dt>Tools &amp; Technologies</dt>
+        <dd>Postman, Jira / JSM, LaunchDarkly, Statsig, VS Code, React (debugging)</dd>
+      </div>
+      <div class="cv-skill-row">
+        <dt>Web &amp; Front-End</dt>
+        <dd>HTML, CSS, JavaScript, Accessibility (WCAG/ADA), screen reader &amp; assistive tech debugging</dd>
+      </div>
+      <div class="cv-skill-row">
+        <dt>Support &amp; Operations</dt>
+        <dd>Incident management (Sev-1/2), escalation handling, knowledge-centered support, UAT testing</dd>
+      </div>
+      <div class="cv-skill-row">
+        <dt>Collaboration &amp; Leadership</dt>
+        <dd>Cross-functional partnership (Engineering, Product, CS), mentorship, documentation &amp; SOP creation, process improvement</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="cv-section">
+    <h2>Experience</h2>
+
+    <article class="cv-role">
+      <header class="cv-role-header">
+        <h3>Senior Support Engineer</h3>
+        <div class="cv-role-meta">
+          <p class="cv-company">Atlassian</p>
+          <p class="cv-location">San Francisco, CA</p>
+          <p class="cv-dates">2022 – March 2026</p>
+        </div>
+      </header>
+      <p class="cv-role-summary">Supported the Halp platform through acquisition and its transition into Jira Service Management (JSM) Chat, operating at the intersection of support, engineering, and product to diagnose and resolve complex production issues.</p>
+
+      <h4>Core Responsibilities</h4>
+      <ul>
+        <li>Owned end-to-end resolution of complex Tier-2 escalations spanning SAML authentication, REST APIs, Jira automations, and multi-system customer environments</li>
+        <li>Acted as a bridge between customers and engineering, translating ambiguous issues into reproducible bugs with clear technical analysis and actionable next steps</li>
+        <li>Investigated production issues using Splunk, MongoDB, and internal tooling, tracing requests across distributed services to identify root causes</li>
+        <li>Reproduced bugs locally by running full Halp environments, debugging the React/GraphQL codebase to isolate failure points</li>
+        <li>Partnered directly with engineering during Severity-1/2 incidents, contributing to live triage, customer communication, and service-level debugging</li>
+      </ul>
+
+      <h4>Product &amp; Engineering Partnership</h4>
+      <ul>
+        <li>Participated in 10+ UAT cycles using feature flagging tools (LaunchDarkly, Statsig), stress testing new functionality and influencing production releases through detailed feedback and bug discovery</li>
+        <li>Served as subject matter expert (SME) for JSM Chat during post-acquisition transition, working closely with a new engineering team to accelerate understanding and resolution</li>
+        <li>Collaborated in real time with engineers on escalations, providing deep context and technical validation to unblock development and clarify root causes</li>
+      </ul>
+
+      <h4>Process &amp; Impact</h4>
+      <ul>
+        <li>Assisted in producing a GROW workflow to identify and remediate outdated or missing knowledge base content, strengthening knowledge-centered support practices</li>
+        <li>Established recurring support–engineering huddles to improve escalation clarity and feedback loops</li>
+        <li>Reduced time to developer escalation resolution by 25% and improved CSAT on escalated tickets by 11%</li>
+        <li>Owned high-priority escalation paths and de-escalated critical customer situations through clear, empathetic communication</li>
+      </ul>
+
+      <h4>Team Enablement</h4>
+      <ul>
+        <li>Created SOPs and led internal sessions to standardize debugging practices for JSM Chat, defining tools, log patterns, and investigation workflows</li>
+        <li>Mentored engineers through pairing and swarm debugging, raising team capability in log analysis and escalation handling</li>
+        <li>Authored and maintained internal documentation for a rapidly evolving cloud product, becoming a go-to resource for complex investigations</li>
+      </ul>
+    </article>
+
+    <article class="cv-role">
+      <header class="cv-role-header">
+        <h3>Accessibility Lead</h3>
+        <div class="cv-role-meta">
+          <p class="cv-company">Edlio</p>
+          <p class="cv-location">Culver City, CA</p>
+          <p class="cv-dates">2020 – 2022</p>
+        </div>
+      </header>
+      <p class="cv-role-summary">Led accessibility initiatives for Edlio's CMS platform, improving usability and compliance for large-scale public school district websites.</p>
+      <ul>
+        <li>Owned accessibility strategy across 100+ district websites serving 10k–50k+ users, identifying and prioritizing WCAG and ADA compliance issues</li>
+        <li>Conducted audits and implemented fixes using HTML, CSS, and JavaScript, improving compatibility with assistive technologies</li>
+        <li>Partnered with district stakeholders to translate compliance requirements into actionable technical changes</li>
+        <li>Pioneered scalable accessibility auditing workflows using automated scanning tools and manual validation, increasing audit coverage and consistency</li>
+        <li>Introduced structured code-level customization practices, including traceable comments tied to support tickets, improving maintainability across environments</li>
+        <li>Increased overall support CSAT by 18% through faster resolution and improved site usability</li>
+      </ul>
+    </article>
+
+    <article class="cv-role">
+      <header class="cv-role-header">
+        <h3>Lead Technical Support Engineer</h3>
+        <div class="cv-role-meta">
+          <p class="cv-company">Edlio</p>
+          <p class="cv-location">Culver City, CA</p>
+          <p class="cv-dates">2019 – 2020</p>
+        </div>
+      </header>
+      <p class="cv-role-summary">Supported Edlio's CMS platform for school districts nationwide, troubleshooting production issues and guiding customers through technical challenges.</p>
+      <ul>
+        <li>Resolved 80–120 monthly support cases across CMS configuration, rendering issues, and user permissions</li>
+        <li>Diagnosed and fixed front-end issues using HTML, CSS, and JavaScript, restoring functionality and improving reliability</li>
+        <li>Escalated reproducible bugs with detailed technical analysis, improving engineering turnaround and product quality</li>
+        <li>Built strong relationships with non-technical administrators, translating complex issues into clear, actionable guidance</li>
+      </ul>
+    </article>
+
+  </section>
+
 </div>

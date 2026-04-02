@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      (function() {
+        var t = localStorage.getItem('theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
     {% if site.google_analytics and jekyll.environment == 'production' %}
       {% include GoogleAnalytics.html %}
     {% endif %}
@@ -9,7 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href="https://mattrugamas.com"/>
     <link rel="stylesheet" href="/assets/css/styles.css" />
-    <link href="https://fonts.googleapis.com/css?family=Rubik|Source+Code+Pro|Work+Sans" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
     {% include faviconpackage.html %}
     {% feed_meta %}
     {% seo %}
@@ -18,8 +26,43 @@
     {% include navigation.html %}
     {{ content }}
     <footer>
-      <p>2019-2025 — Made with ❤️ on <strong><a href="https://www.jekyllrb.com">Jekyll</a></span> and <span><a href="https://pages.github.com">GitHub Pages</a></strong>.
-      </p>
+      <p>2019–2026 — Made with ❤️ on <strong><a href="https://www.jekyllrb.com">Jekyll</a></strong> and <strong><a href="https://pages.github.com">GitHub Pages</a></strong>.</p>
     </footer>
+    <script>
+      (function() {
+        // Theme toggle
+        var btn = document.getElementById('theme-toggle');
+        if (btn) {
+          btn.addEventListener('click', function() {
+            var attr = document.documentElement.getAttribute('data-theme');
+            var isDark = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
+            var next = isDark ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+          });
+        }
+
+        // Hamburger nav toggle
+        var navToggle = document.getElementById('nav-toggle');
+        if (navToggle) {
+          navToggle.addEventListener('click', function() {
+            var nav = document.querySelector('nav');
+            var isOpen = nav.classList.toggle('open');
+            this.setAttribute('aria-expanded', isOpen.toString());
+            this.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+          });
+
+          // Close on outside click
+          document.addEventListener('click', function(e) {
+            var nav = document.querySelector('nav');
+            if (nav && nav.classList.contains('open') && !nav.contains(e.target)) {
+              nav.classList.remove('open');
+              navToggle.setAttribute('aria-expanded', 'false');
+              navToggle.setAttribute('aria-label', 'Open navigation');
+            }
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
