@@ -8,22 +8,48 @@ article {
     margin: 0 auto;
     padding: 0;
     align-items: flex-start;
+
     h1#post-title {
       font-family: $fonts-titles;
-      text-transform: capitalize;
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-semi);
+      line-height: 1.3;
+      margin-bottom: 0;
     }
+
     p#post-date {
-      margin: 0 0 3vh 0;
-      padding: 3px 0;
-      color: $dates;
-      font-family: $fonts-source;
-    }
-    p {
-      margin: 5px 0;
+      margin: var(--space-2) 0 var(--space-8);
       font-family: $fonts-body;
+      font-size: var(--text-sm);
+      font-weight: var(--font-weight-normal);
+      color: var(--color-dates);
     }
+
+    h2 {
+      font-family: $fonts-titles;
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-semi);
+      line-height: 1.4;
+      margin: var(--space-8) 0 var(--space-2);
+    }
+
+    h3 {
+      font-family: $fonts-titles;
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-semi);
+      line-height: 1.4;
+      margin: var(--space-6) 0 var(--space-2);
+    }
+
+    p {
+      margin: 0 0 var(--space-4);
+      font-family: $fonts-body;
+      font-size: var(--text-base);
+      line-height: 1.7;
+    }
+
     figure.shadow_image {
-      margin: 3vh auto;
+      margin: var(--space-8) auto;
       width: fit-content;
       img.img-responsive {
         width: 100%;
@@ -31,37 +57,17 @@ article {
         height: auto;
       }
       figcaption {
-        // margin-top: -7%;
         text-align: center;
       }
     }
   }
-  @media all and (max-width: 500px) {
-    article {
-      padding-left: 10px;
-      padding-right: 10px;
-      margin: 0 !important;
-      p#post-date {
-        display: block;
-        text-align: center;
-      }
-      img.img-responsive {
-        max-width: 100%;
-      }
-    }
-  }
+
   @media all and (max-width: 800px) {
     article {
-      padding-left: 10px;
-      padding-right: 10px;
+      padding-left: var(--space-4);
+      padding-right: var(--space-4);
       margin: 0 auto;
-      h1#post-title {
-        text-align: center;
-      }
-      p#post-date {
-        display: block;
-        text-align: center;
-      }
+
       img.img-responsive {
         max-width: 100%;
       }
