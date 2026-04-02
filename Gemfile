@@ -11,3 +11,7 @@ group :jekyll_plugins do
   gem 'jekyll-feed'
   gem 'jekyll-seo-tag'
 end
+
+gem "ffi", "~> 1.16"
+
+gem "sassc", "~> 2.4"

@@ -1,53 +1,201 @@
 ///////////////
-/* RESU PAGE */
+/* RESUME/CV  */
 ///////////////
-#resumeContainer {
-    max-width: 900px;
-    margin: 0 auto;
-    h2, h3 {
+
+.cv {
+  width: 100%;
+  max-width: 800px;
+  font-family: $fonts-body;
+
+  // ---- Header ----
+  .cv-header {
+    display: flex;
+    flex-flow: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 2px solid var(--color-highlight);
+    align-items: center;
+
+    @media (min-width: $bp-md) {
+      flex-flow: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    h1 {
       font-family: $fonts-titles;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--color-text);
     }
-    h2 {
-      color: $highlight;
+
+    .cv-tagline {
+      font-family: $fonts-source;
+      font-size: var(--text-sm);
+      color: var(--color-dates);
+      margin: var(--space-1) 0 0;
     }
-    h3 {
-      font-size: 16px;
-    }
-    strong {
-      color: $dates;
-    }
-    p, li {
-      font-family: $fonts-body;
-    }
-    ul {
-      list-style-type: disc;
-      padding-inline-start: 40px;
-    }
-    #resumeHead {
-      display: flex;
-      flex-flow: column;
-      justify-content: center;
-      align-items: center;
-      @media all and (min-width: 768px) { 
-        flex-flow: row;
-      }
-      figure img {
-        border-radius: 5px;
-        box-shadow: 0 0 15px 3px $links;
-      }
-      #contactInfo {
-        flex-grow: 1;
-        h2 {
-          text-align: center;
-        }
-        .infoFlex {
-          display: flex;
-          flex-flow: row wrap;
-          p {
-            width: 50%;
-            text-align: center;
-          }
+
+    .cv-header-contact {
+      a {
+        font-family: $fonts-source;
+        font-size: var(--text-sm);
+        color: var(--color-links);
+        text-decoration: none;
+        transition: color .2s;
+
+        &:hover {
+          color: var(--color-highlight);
+          background-color: transparent;
+          box-shadow: none;
         }
       }
     }
   }
+
+  // ---- Section ----
+  .cv-section {
+    margin-bottom: var(--space-12);
+
+    > h2 {
+      font-family: $fonts-titles;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-highlight);
+      margin: 0 0 var(--space-6);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-selected);
+    }
+
+    > p {
+      line-height: 1.7;
+      color: var(--color-text);
+      max-width: 680px;
+    }
+  }
+
+  // ---- Skills ----
+  .cv-skills {
+    margin: 0;
+  }
+
+  .cv-skill-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+
+    @media (min-width: $bp-md) {
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-4);
+    }
+
+    dt {
+      font-weight: 600;
+      font-size: var(--text-sm);
+      color: var(--color-text);
+    }
+
+    dd {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--color-inactive);
+      line-height: 1.6;
+    }
+  }
+
+  // ---- Role ----
+  .cv-role {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-12);
+    border-bottom: 1px solid var(--color-selected);
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .cv-role-header {
+    margin-bottom: var(--space-4);
+
+    h3 {
+      display: block;
+      width: 100%;
+      font-family: $fonts-titles;
+      font-size: var(--text-xl);
+      font-weight: 600;
+      margin: 0 0 var(--space-2);
+      color: var(--color-text);
+    }
+
+    .cv-tier {
+      font-size: var(--text-base);
+      font-weight: 400;
+      color: var(--color-dates);
+    }
+
+    .cv-role-meta {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      gap: var(--space-1) var(--space-3);
+
+      p {
+        margin: 0;
+        font-family: $fonts-source;
+        font-size: var(--text-sm);
+      }
+
+      p + p::before {
+        content: "·";
+        margin-right: var(--space-3);
+        color: var(--color-inactive);
+      }
+    }
+
+    .cv-company {
+      color: var(--color-highlight);
+    }
+
+    .cv-location,
+    .cv-dates {
+      color: var(--color-dates);
+    }
+  }
+
+  .cv-role-summary {
+    line-height: 1.7;
+    color: var(--color-inactive);
+    margin: var(--space-4) 0;
+    font-style: italic;
+  }
+
+  h4 {
+    font-family: $fonts-titles;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-dates);
+    margin: var(--space-6) 0 var(--space-3);
+  }
+
+  ul {
+    margin: 0 0 var(--space-4);
+    padding-left: var(--space-6);
+    list-style: disc;
+
+    li {
+      line-height: 1.7;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+      font-size: var(--text-base);
+    }
+  }
+}

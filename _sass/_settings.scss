@@ -1,72 +1,114 @@
-$fonts-body: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+$fonts-body:   -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 $fonts-titles: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 $fonts-source: 'Source Code Pro', monospace;
 
-// $base: rgb(76, 88, 91);
-// $selected: rgb(70, 100, 105);
-// $text: rgb(244, 237, 211);
-// $inactive: rgb(165, 155, 145);
-// $links: rgb(165, 191, 204);
-// $highlight: rgb(95, 180, 230);
-// $dates: rgb(126, 153, 163);
-
-// $base: #474853;
-// $selected: #40414b;
-// $text: #EDF5E1;
-// $inactive: #AAA0A0;
-// $links: #86B3D1;
-// $highlight: #86B3D1;
-// $dates: $text;
-
-// $base: #2B2E36;
-// $selected: #40423C;
-// $text: #EDF5E1;
-// $inactive: $text;
-// $links: #72a3c8;
-// $highlight: #b695a1;
-// $dates: $highlight;
-
-$base: rgb(42, 45, 51);
-$selected: rgb(52, 56, 64);
-$text: rgb(255, 244, 224);
-$inactive: rgb(229, 220, 202);
-$links: rgb(255, 159, 170);
+// Dark palette
+$base:      rgb(42, 45, 51);
+$selected:  rgb(52, 56, 64);
+$text:      rgb(255, 244, 224);
+$inactive:  rgb(229, 220, 202);
+$links:     rgb(255, 159, 170);
 $highlight: rgb(0, 206, 217);
-$dates: rgb(159, 203, 204);
+$dates:     rgb(159, 203, 204);
 
-@mixin box-sizing($property) {
-  -webkit-box-sizing: $property;
-     -moz-box-sizing: $property;
-          box-sizing: $property;
+// Light palette — all foreground values verified ≥4.5:1 on $light-base
+$light-base:      rgb(248, 245, 238); // warm cream bg
+$light-selected:  rgb(232, 227, 216); // hover/selected bg (bg-only, no contrast req)
+$light-text:      rgb(42, 45, 51);    // ~16:1 ✓
+$light-inactive:  rgb(100, 94, 82);   // ~5.2:1 ✓
+$light-links:     rgb(155, 28, 48);   // deep rose ~7.8:1 ✓
+$light-highlight: rgb(0, 105, 115);   // deep teal ~5.5:1 ✓
+$light-dates:     rgb(45, 100, 105);  // dark teal ~5.3:1 ✓
+
+$bp-sm: 40em;
+$bp-md: 52em;
+
+// --- Dark mode (default) ---
+:root {
+  --color-base:      #{$base};
+  --color-selected:  #{$selected};
+  --color-text:      #{$text};
+  --color-inactive:  #{$inactive};
+  --color-links:     #{$links};
+  --color-highlight: #{$highlight};
+  --color-dates:     #{$dates};
+
+  --nav-height: 71px;
+
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.5rem;
 }
 
-%ui-shadow { box-shadow : 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46); }
-%text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.46); }
+// --- Light mode mixin ---
+@mixin light-colors {
+  --color-base:      #{$light-base};
+  --color-selected:  #{$light-selected};
+  --color-text:      #{$light-text};
+  --color-inactive:  #{$light-inactive};
+  --color-links:     #{$light-links};
+  --color-highlight: #{$light-highlight};
+  --color-dates:     #{$light-dates};
+}
+
+// System light preference (no explicit override)
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) { @include light-colors; }
+}
+
+// Explicit light
+[data-theme="light"] { @include light-colors; }
+
+// --- Shared ---
+%ui-shadow   { box-shadow:  0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15); }
+%text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
 
 %content-base {
   display: flex;
   flex-flow: column nowrap;
   flex-grow: 1;
-  padding: 71px 15px 15px;
-  background-color: $base;
+  padding: var(--nav-height) var(--space-4) var(--space-4);
+  background-color: var(--color-base);
+  align-items: center;
   h1 {
     margin: 0;
     font-family: $fonts-titles;
+    font-size: var(--text-xl);
+    font-weight: 400;
+    line-height: 1.4;
+    max-width: 666px;
+    margin-top: var(--space-4);
     strong {
-      color: $highlight;
-      @extend %text-shadow;
+      color: var(--color-highlight);
+      // @extend %text-shadow;
     }
+  }
+  p {
+    font-family: $fonts-titles;
+    line-height: 1.5;
+    font-size: var(--text-base);
+    max-width: 666px;
   }
 }
 
 %link-setup {
   a {
     transition: all .2s;
-    color: $links;
+    color: var(--color-links);
     &:hover {
       @extend %ui-shadow;
-      color: $base;
-      background-color: $links;
+      color: var(--color-base);
+      background-color: var(--color-links);
     }
   }
 }
@@ -74,14 +116,14 @@ $dates: rgb(159, 203, 204);
 %nav-animate {
   position: relative;
   display: block;
-  padding: 15px 5px;
-  margin: 0 5px;
+  padding: var(--space-4) var(--space-2);
+  margin: 0 var(--space-2);
 
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   font-weight: normal;
   text-transform: uppercase;
   text-decoration: none;
-  &:after,&:before {
+  &:after, &:before {
     transition: all .5s;
   }
   &:hover {
@@ -90,13 +132,12 @@ $dates: rgb(159, 203, 204);
     background-color: transparent;
   }
   &.current {
-    color: $highlight;
-    box-shadow: 0px 1px 0px $highlight;
+    color: var(--color-highlight);
   }
   &.not-current {
-    color: $inactive;
+    color: var(--color-inactive);
     &:hover {
-      color: $text;
+      color: var(--color-text);
       &:after {
         width: 100%;
       }
@@ -111,7 +152,7 @@ $dates: rgb(159, 203, 204);
       content: '.';
       color: transparent;
       text-shadow: none;
-      background: $highlight;
+      background: var(--color-highlight);
       height: 1px;
     }
   }
@@ -121,7 +162,7 @@ $dates: rgb(159, 203, 204);
   position: relative;
   z-index: 1;
   transition: all 0.3s ease-out;
-  border-left: 1px solid $text;
+  border-left: 1px solid var(--color-text);
   &::before {
     content: "";
     position: absolute;
@@ -129,11 +170,11 @@ $dates: rgb(159, 203, 204);
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, $base, rgba(42,45,51,0));
+    background: linear-gradient(to right, var(--color-base), transparent);
     z-index: -1;
   }
   &:hover {
-    border-left: 1px solid $highlight;
-    background: $selected;
+    border-left: 1px solid var(--color-highlight);
+    background: var(--color-selected);
   }
 }

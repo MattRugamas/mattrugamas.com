@@ -7,6 +7,7 @@ article {
     max-width: 800px;
     margin: 0 auto;
     padding: 0;
+    align-items: flex-start;
     h1#post-title {
       font-family: $fonts-titles;
       text-transform: capitalize;

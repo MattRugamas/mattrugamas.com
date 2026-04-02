@@ -4,134 +4,152 @@
 
 main {
   section.aboutMe {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-between;
+    display: grid;
+    width: 100%;
     font-family: $fonts-body;
-    h2 {
-      color: $highlight;
-      @media all and (max-width: 500px) {
-        text-align: center;
-      }
-      @media all and (max-width: 800px) {
-        text-align: center;
-      }
-    }
-    div#aboutMeText {
-      max-width: 50vw;
-      p.about-me {
-        margin: 20px 0;
-      }
-    }
-    ul {
-      list-style-type: square;
-      padding-inline-start: 40px;
-    }
-    figure {
-      margin: 0 auto;
-    }
-  }
-  img#selfie {
-    margin: 0 auto;
 
-    @extend %ui-shadow;
-    border: 1px solid $links;
-    border-radius: 3px;
-  }
-  section.findme {
-    width: 400px;
-    margin: auto auto;
-    font-family: $fonts-body;
-    h2 {
-      color: $highlight;
-      @media all and (max-width: 500px) {
-        text-align: center;
-      }
-      @media all and (max-width: 800px) {
-        text-align: center;
+    // ---- Mobile: heading → photo → text ----
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "heading"
+      "image"
+      "text";
+    row-gap: var(--space-6);
+
+    // On mobile, dissolve .about-left so h1 and #aboutMeText
+    // become direct grid children and can be placed into named areas.
+    .about-left {
+      display: contents;
+    }
+
+    h1 {
+      grid-area: heading;
+      text-align: center;
+      max-width: none;
+      margin: 0;
+    }
+
+    img#selfie {
+      grid-area: image;
+      display: block;
+      margin: 0 auto;
+      @extend %ui-shadow;
+      border: 1px solid var(--color-links);
+      border-radius: 3px;
+    }
+
+    div#aboutMeText {
+      grid-area: text;
+
+      p.about-me {
+        margin: var(--space-4) 0;
+
+        &:first-child {
+          margin-top: 0;
+        }
       }
     }
+
+    .music-link {
+      margin-top: var(--space-6);
+      text-align: center;
+
+      a {
+        display: inline-block;
+        padding: var(--space-2) var(--space-4);
+        border: 1px solid var(--color-links);
+        border-radius: 3px;
+        color: var(--color-links);
+        text-decoration: none;
+        font-size: var(--text-base);
+        transition: all .2s;
+
+        &:hover {
+          background-color: var(--color-links);
+          color: var(--color-base);
+          box-shadow: none;
+        }
+      }
+    }
+
+    // ---- Desktop: text left (centered), image right (top) ----
+    @media (min-width: $bp-md) {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: "left image";
+      grid-template-rows: 1fr;
+      column-gap: var(--space-12);
+      max-width: 900px;
+      align-items: center;
+
+      // Restore .about-left as a flex column — h1 on top, text below
+      .about-left {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        grid-area: left;
+      }
+
+      h1 {
+        text-align: left;
+        margin-bottom: var(--space-4);
+      }
+
+      div#aboutMeText {
+        // grid-area assignment ignored — it's now a flex child of .about-left
+      }
+
+      img#selfie {
+        grid-area: image;
+        align-self: start;
+        justify-self: center;
+        margin: 0;
+      }
+
+      .music-link {
+        text-align: left;
+      }
+    }
+  }
+
+  section.findme {
+    width: 100%;
+    max-width: 400px;
+    margin: var(--space-8) auto 0;
+    font-family: $fonts-body;
+
+    h2 {
+      color: var(--color-highlight);
+    }
+
     ul {
       margin: 0;
-
-      @extend %text-shadow;
       @extend %ui-shadow;
-      border: 2px solid $links;
+      border: 2px solid var(--color-links);
       border-radius: 3px;
+
       li {
         text-align: center;
+        background-color: var(--color-base);
+        border-top: 1px solid var(--color-selected);
 
-        background-color: $base;
+        &:first-child {
+          border-top: none;
+        }
+
         &:hover {
           transition-duration: 0.3s;
-          background-color: $selected;
+          background-color: var(--color-selected);
         }
+
         a {
           display: block;
           padding: 10px;
           text-decoration: none;
-          color: $text;
+          color: var(--color-text);
+
           &:hover {
             background-color: transparent;
             box-shadow: none;
-          }
-        }
-      }
-    }
-  }
-}
-@media all and (max-width: 500px) {
-  main {
-    section.aboutMe {
-      padding: 10px 0;
-      flex-flow: column-reverse;
-      div#aboutMeText {
-        max-width: 100%;
-        p.about-me {
-          //text-align: justify;
-          max-width: 97vw;
-        }
-      }
-    }
-    figure {
-      margin: 10px auto;
-    }
-    section.findme {
-      width: 97vw;
-      ul {
-        li {
-          border-top: 1px solid $selected;
-          &:last-child {
-            border-bottom: 1px solid $selected;
-          }
-        }
-      }
-    }
-  }
-}
-@media all and (max-width: 800px) {
-  main {
-    section.aboutMe {
-      margin: 10px 0;
-      flex-flow: column-reverse;
-      div#aboutMeText {
-        max-width: 100%;
-        p.about-me {
-          //text-align: justify;
-          max-width: 97vw;
-        }
-      }
-    }
-    figure {
-      margin: 3vh auto;
-    }
-    section.findme {
-      width: 300px;
-      ul {
-        li {
-          border-top: 1px solid $selected;
-          &:last-child {
-            border-bottom: 1px solid $selected;
           }
         }
       }
