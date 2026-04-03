@@ -1,14 +1,28 @@
 ---
 ---
 
-<h1 class="hello"><strong>Matt Rugamas</strong> is a support engineer based in Los Angeles.</h1>
-<p>My work focuses on the intersection of customers, code and product, with a devotion to process, transparency and sharing what I learn. I debug complex systems end-to-end, translate messy problems into clear solutions and help engineering teams understand what's breaking and why.</p>
+<h1 class="hello"><strong>Matt Rugamas</strong> is a support engineer based in Los Ángeles.</h1>
+<p id="tagline">My work focuses on the intersection of customers, code and product, with a devotion to process, transparency and sharing what I learn.</p>
+{% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
 <ul id="blog-list">
-{% for post in site.posts %}
-  <li>
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
-    <p class="date">{{ post.date | date: "%m/%d/%Y" }}</p>
-    {{ post.excerpt }}
+{% for year_group in posts_by_year %}
+  <li class="year-group">
+    <h2 class="year-heading">{{ year_group.name }}</h2>
+    <ul class="year-posts">
+      {% for post in year_group.items %}
+      <li>
+        <article>
+          <aside>
+            <p class="date">{{ post.date | date: "%b %d" }}</p>
+          </aside>
+          <header>
+            <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+            {{ post.excerpt }}
+          </header>
+        </article>
+      </li>
+      {% endfor %}
+    </ul>
   </li>
 {% endfor %}
 </ul>

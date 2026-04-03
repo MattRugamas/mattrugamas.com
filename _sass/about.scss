@@ -1,3 +1,5 @@
+@use 'settings' as *;
+
 ////////////////
 /* ABOUT PAGE */
 ////////////////
@@ -33,7 +35,7 @@ main {
       grid-area: image;
       display: block;
       margin: 0 auto;
-      @extend %ui-shadow;
+      @include ui-shadow;
       border: 1px solid var(--color-links);
       border-radius: 3px;
     }
@@ -123,7 +125,7 @@ main {
 
     ul {
       margin: 0;
-      @extend %ui-shadow;
+      @include ui-shadow;
       border: 2px solid var(--color-links);
       border-radius: 3px;
 

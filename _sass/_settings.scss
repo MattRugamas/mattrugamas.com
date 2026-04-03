@@ -52,6 +52,10 @@ $bp-md: 52em;
   --text-base: 1rem;
   --text-lg:   1.125rem;
   --text-xl:   1.5rem;
+  --text-2xl:  2rem;
+  --text-3xl:  2.75rem;
+
+  --content-gap: var(--space-8);
 }
 
 // --- Light mode mixin ---
@@ -74,50 +78,48 @@ $bp-md: 52em;
 [data-theme="light"] { @include light-colors; }
 
 // --- Shared ---
-%ui-shadow   { box-shadow:  0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15); }
-%text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+@mixin ui-shadow   { box-shadow:  0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15); }
+@mixin text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
 
-%content-base {
+@mixin content-base {
   display: flex;
   flex-flow: column nowrap;
   flex-grow: 1;
-  padding: var(--nav-height) var(--space-4) var(--space-4);
+  padding: calc(var(--nav-height) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-8);
   background-color: var(--color-base);
   align-items: center;
   h1 {
     margin: 0;
     font-family: $fonts-titles;
     font-size: var(--text-xl);
-    font-weight: var(--font-weight-semi);
-    line-height: 1.3;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.4;
     max-width: 666px;
-    margin-top: var(--space-4);
     strong {
       color: var(--color-highlight);
-      // @extend %text-shadow;
     }
   }
   p {
     font-family: $fonts-titles;
     line-height: 1.5;
     font-size: var(--text-base);
-    max-width: 666px;
+    max-width: 1000px;
   }
 }
 
-%link-setup {
+@mixin link-setup {
   a {
     transition: all .2s;
     color: var(--color-links);
     &:hover {
-      @extend %ui-shadow;
+      @include ui-shadow;
       color: var(--color-base);
       background-color: var(--color-links);
     }
   }
 }
 
-%nav-animate {
+@mixin nav-animate {
   position: relative;
   display: block;
   padding: var(--space-4) var(--space-2);
@@ -132,7 +134,7 @@ $bp-md: 52em;
     transition: all .5s;
   }
   &:hover {
-    @extend %text-shadow;
+    @include text-shadow;
     box-shadow: none;
     background-color: transparent;
   }
@@ -163,7 +165,7 @@ $bp-md: 52em;
   }
 }
 
-%li-animate {
+@mixin li-animate {
   position: relative;
   z-index: 1;
   transition: all 0.3s ease-out;
