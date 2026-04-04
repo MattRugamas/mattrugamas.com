@@ -13,7 +13,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="canonical" href="https://mattrugamas.com"/>
+    <link rel="canonical" href="{{ page.url | prepend: site.url }}"/>
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,19 +26,27 @@
     {% include navigation.html %}
     {{ content }}
     <footer>
-      <p>2019–2026 — Made with ❤️ on <strong><a href="https://www.jekyllrb.com">Jekyll</a></strong> and <strong><a href="https://pages.github.com">GitHub Pages</a></strong>.</p>
+      <p>2019–2026 — Made with ❤️ on <strong><a href="https://www.jekyllrb.com">Jekyll</a></strong> and <strong><a href="https://pages.github.com">GitHub Pages</a></strong>. <a href="/feed.xml">RSS</a></p>
     </footer>
     <script>
       (function() {
         // Theme toggle
         var btn = document.getElementById('theme-toggle');
         if (btn) {
+          function updateToggleLabel(isDark) {
+            btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          }
+          var attr = document.documentElement.getAttribute('data-theme');
+          var isDark = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
+          updateToggleLabel(isDark);
+
           btn.addEventListener('click', function() {
             var attr = document.documentElement.getAttribute('data-theme');
             var isDark = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
             var next = isDark ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
+            updateToggleLabel(next === 'dark');
           });
         }
 

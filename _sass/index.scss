@@ -131,8 +131,8 @@ html {
         }
 
         // Dark mode (default): show sun to switch to light
-        .icon-to-dark { display: none; }
-        .icon-to-light { display: inline; }
+        .icon-moon { display: none; }
+        .icon-sun { display: inline; }
       }
 
       #nav-toggle {
@@ -164,19 +164,20 @@ html {
         }
       }
 
-      // System light preference — icon swap
-      @media (prefers-color-scheme: light) {
-        :root:not([data-theme="dark"]) & #theme-toggle {
-          .icon-to-dark { display: inline; }
-          .icon-to-light { display: none; }
-        }
-      }
     }
 
     // Explicit light mode — icon swap
-    [data-theme="light"] nav #theme-toggle {
-      .icon-to-dark { display: inline; }
-      .icon-to-light { display: none; }
+    @at-root html[data-theme="light"] nav #theme-toggle {
+      .icon-moon { display: inline; }
+      .icon-sun { display: none; }
+    }
+
+    // System light preference — icon swap
+    @media (prefers-color-scheme: light) {
+      @at-root html:not([data-theme="dark"]) nav #theme-toggle {
+        .icon-moon { display: inline; }
+        .icon-sun { display: none; }
+      }
     }
 
     main {
