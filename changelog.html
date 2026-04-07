@@ -1,0 +1,100 @@
+---
+title: Changelog
+---
+<div class="changelog">
+
+  <header class="changelog-header">
+    <h1>Changelog</h1>
+    <p class="changelog-subtitle">A running log of changes to mattrugamas.com since the April 2026 redesign.</p>
+  </header>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">Unreleased <span class="changelog-dot">·</span> <span class="changelog-since">April 6, 2026</span></h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>GA4 custom event tracking across all pages via <code>_includes/event-tracking.html</code>, injected through the base layout. Tracks: navigation link clicks (with desktop vs. hamburger context), theme toggle direction, blog post clicks from the homepage listing, music page external link clicks with platform detection (Spotify / YouTube / SoundCloud / Instagram), social link clicks from the Elsewhere section, the About page music CTA, the résumé LinkedIn link, footer links, the résumé print button, and scroll depth at 25 / 50 / 75 / 100%. All <code>gtag()</code> calls are guarded with a typeof check, making the script a no-op in local development.</li>
+        <li>Save/Print button on the résumé page. Triggers <code>window.print()</code> and fires a <code>resume_print_click</code> GA4 event. Styled to match the existing CTA pattern from the About page.</li>
+        <li><code>@media print</code> stylesheet for the résumé. Hides site chrome, resets to black-on-white, sets print-appropriate font sizes and spacing, avoids page breaks inside role entries, and appends full link URLs inline — suppressed on the contact link, which already displays as a URL.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Résumé <code>.cv-header</code> restructured from a flexbox row into a two-column CSS grid. Name and Save/Print button share the top row; tagline and LinkedIn link sit below. Mobile stacks all items centered.</li>
+        <li>Footer year is now rendered dynamically via <code>&#123;&#123; 'now' | date: '%Y' &#125;&#125;</code> instead of a hardcoded value.</li>
+        <li>All external links on the Music page and in the Elsewhere section on About now include <code>target="_blank" rel="noopener noreferrer"</code>. Previously, clicking any of them navigated away from the site with no new-tab behavior.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Hardcoded <code>&lt;link rel="canonical" href="https://mattrugamas.com"/&gt;</code> removed from <code>base.html</code>. Every page was incorrectly declaring the homepage as its canonical URL. The <code>jekyll-seo-tag</code> plugin already handles per-page canonicals correctly via the <code>&#123;% seo %&#125;</code> tag.</li>
+        <li>Print stylesheet was targeting <code>header { display: none }</code>, which hid all semantic <code>&lt;header&gt;</code> elements on the résumé — including the name/contact row and every job title header. Corrected to <code>body > header</code> to target only the site navigation wrapper.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 3, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">99181d7</span></h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Converted all SCSS placeholder selectors (<code>%content-base</code>, <code>%link-setup</code>, <code>%nav-animate</code>, etc.) to <code>@mixin</code> and added <code>@use 'settings' as *</code> imports to every SCSS partial, aligning with the Dart Sass module system.</li>
+        <li>Added <code>--text-2xl</code>, <code>--text-3xl</code>, and <code>--content-gap</code> to the design token set in <code>_settings.scss</code>.</li>
+        <li>Content area padding switched to <code>clamp()</code> for fluid responsive spacing instead of a fixed value.</li>
+        <li>Homepage blog listing redesigned: posts are now grouped by year, each row shows the date in a right-aligned aside alongside the post title and excerpt, and the full row gets a left-border highlight on hover at desktop widths. Markup in <code>index.html</code> restructured with <code>group_by_exp</code> to generate the year groups.</li>
+        <li><code>scrollbar-gutter: stable</code> added to the root to prevent layout shift when the scrollbar appears on long pages.</li>
+        <li>Site description in <code>_config.yml</code> updated to reflect current role and location.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 2, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">94e6ffa</span></h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Added <code>--font-weight-normal</code>, <code>--font-weight-semi</code>, and <code>--font-weight-bold</code> tokens; replaced all hardcoded <code>font-weight</code> values with token references.</li>
+        <li>Corrected <code>--text-sm</code> from <code>0.875rem</code> to <code>0.8125rem</code>.</li>
+        <li>Blog post typography overhauled: explicit h2/h3 styles with correct size, weight, and spacing; post date styled using <code>--color-dates</code> and body font; paragraph line-height set to 1.7; removed legacy breakpoint overrides that were fighting the new system.</li>
+        <li>Both blog posts converted from bold-text section headings (<code>**Bold**</code>) to proper Markdown H2s, which now render with the correct semantic hierarchy and visual treatment.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 2, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">c063f77</span></h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Music page (<code>music.html</code>) with a full archive of projects, roles, and links to Spotify, YouTube, SoundCloud, and Instagram.</li>
+        <li>Résumé page (<code>resume.html</code>) as a proper web CV: semantic HTML with <code>&lt;article&gt;</code> per role, a <code>&lt;dl&gt;</code> for skills, and full employment history replacing placeholder content.</li>
+        <li>Music and Résumé added to site navigation in <code>_data/navigation.yml</code>.</li>
+        <li>Light/dark mode theme toggle with <code>localStorage</code> persistence. A flash-prevention script in <code>&lt;head&gt;</code> reads the stored preference before first paint. System <code>prefers-color-scheme</code> is used as the default when no stored value exists.</li>
+        <li>Hamburger navigation for mobile viewports, with animated icon, <code>aria-expanded</code> state tracking, and close-on-outside-click behavior.</li>
+        <li>Skip-to-main-content link for keyboard and assistive technology navigation.</li>
+        <li>Two blog posts: <em>The Redesign</em> (March 31) and <em>Still on Jekyll, Probably Forever</em> (April 2).</li>
+        <li>Music-specific SCSS partial (<code>_sass/music.scss</code>) and corresponding <code>@use</code> import in <code>main.scss</code>.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Full CSS rebuild. All stylesheets converted to mobile-first, all color values replaced with CSS custom properties, a spacing scale and type scale established. Dark mode is the default; light mode maps the same palette to warm-background equivalents via a <code>data-theme</code> attribute on the root element.</li>
+        <li>About page rebuilt with CSS Grid (heading → photo → text on mobile; two-column on desktop) in place of the previous <code>column-reverse</code> flexbox approach.</li>
+        <li>Font stack simplified: removed Rubik and Work Sans, retained Source Code Pro for monospace use only. Body and UI text now use the system font stack.</li>
+        <li>Google Fonts loading updated to use <code>preconnect</code> hints and the modern <code>display=swap</code> API.</li>
+        <li>Jekyll updated from 4.2.0 to 4.4.1. <code>jekyll-sass-converter</code> updated from 2.x to 3.x (Dart Sass via <code>sass-embedded</code>). Rouge updated from 3.x to 4.x. Various other dependency bumps in <code>Gemfile.lock</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>

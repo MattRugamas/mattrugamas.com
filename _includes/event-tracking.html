@@ -1,0 +1,182 @@
+<script>
+(function () {
+  'use strict';
+
+  // Safe gtag wrapper — only fires when GA4 is loaded (production builds).
+  // In development gtag is undefined and all calls are silently skipped.
+  function track(eventName, params) {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', eventName, params || {});
+    }
+  }
+
+  // ─── 1. Navigation link clicks ────────────────────────────────────────────
+  document.querySelectorAll('nav ul a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var nav = document.querySelector('nav');
+      var isMobileOpen = nav && nav.classList.contains('open');
+      track('nav_click', {
+        nav_item_name:  this.textContent.trim(),
+        nav_item_url:   this.getAttribute('href'),
+        // desktop = wide viewport with always-visible nav
+        // hamburger = mobile nav that was explicitly opened
+        nav_context: isMobileOpen ? 'hamburger' : 'desktop'
+      });
+    });
+  });
+
+  // ─── 2. Theme toggle ──────────────────────────────────────────────────────
+  var themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      var attr    = document.documentElement.getAttribute('data-theme');
+      var isDark  = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
+      track('theme_toggle', {
+        theme_from: isDark ? 'dark' : 'light',
+        theme_to:   isDark ? 'light' : 'dark'
+      });
+    });
+  }
+
+  // ─── 3. Blog post clicks (home page listing) ──────────────────────────────
+  var blogList = document.getElementById('blog-list');
+  if (blogList) {
+    blogList.querySelectorAll('article h3 a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var article  = this.closest('article');
+        var dateEl   = article && article.querySelector('.date');
+        var yearEl   = this.closest('.year-group');
+        var yearHead = yearEl && yearEl.querySelector('.year-heading');
+        track('blog_post_click', {
+          post_title: this.textContent.trim(),
+          post_url:   this.getAttribute('href'),
+          post_date:  dateEl  ? dateEl.textContent.trim()  : '',
+          post_year:  yearHead ? yearHead.textContent.trim() : ''
+        });
+      });
+    });
+  }
+
+  // ─── 4. Music page external link clicks ───────────────────────────────────
+  document.querySelectorAll('.music-project').forEach(function (project) {
+    var h2          = project.querySelector('h2');
+    var projectName = h2 ? h2.textContent.trim() : 'unknown';
+
+    project.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var href     = this.getAttribute('href') || '';
+        var platform = 'other';
+        if      (href.includes('spotify.com'))                          platform = 'spotify';
+        else if (href.includes('youtube.com') || href.includes('youtu.be')) platform = 'youtube';
+        else if (href.includes('soundcloud.com'))                       platform = 'soundcloud';
+        else if (href.includes('instagram.com'))                        platform = 'instagram';
+        track('music_link_click', {
+          music_project: projectName,
+          platform:      platform,
+          link_text:     this.textContent.trim(),
+          link_url:      href
+        });
+      });
+    });
+  });
+
+  // ─── 5. "Elsewhere" social link clicks ────────────────────────────────────
+  var findme = document.querySelector('.findme');
+  if (findme) {
+    findme.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        track('social_link_click', {
+          social_platform: this.textContent.trim(),
+          link_url:        this.getAttribute('href')
+        });
+      });
+    });
+  }
+
+  // ─── 6. About page music CTA ("See what I've been playing →") ────────────
+  var musicCta = document.querySelector('.music-link a');
+  if (musicCta) {
+    musicCta.addEventListener('click', function () {
+      track('about_cta_click', {
+        cta_text:    this.textContent.trim(),
+        destination: this.getAttribute('href')
+      });
+    });
+  }
+
+  // ─── 7. Résumé print/save button ─────────────────────────────────────────
+  var printBtn = document.getElementById('resume-print-btn');
+  if (printBtn) {
+    printBtn.addEventListener('click', function () {
+      track('resume_print_click', {
+        page_path: window.location.pathname
+      });
+    });
+  }
+
+  // ─── 8. Résumé LinkedIn click ────────────────────────────────────────────
+  var cvContact = document.querySelector('.cv-header-contact a');
+  if (cvContact) {
+    cvContact.addEventListener('click', function () {
+      track('resume_linkedin_click', {
+        link_url: this.getAttribute('href')
+      });
+    });
+  }
+
+  // ─── 8. Footer link clicks ────────────────────────────────────────────────
+  var footer = document.querySelector('footer');
+  if (footer) {
+    footer.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        track('footer_link_click', {
+          link_text: this.textContent.trim(),
+          link_url:  this.getAttribute('href')
+        });
+      });
+    });
+  }
+
+  // ─── 9. Skip-to-content link ──────────────────────────────────────────────
+  var skipLink = document.getElementById('skipToMainContent');
+  if (skipLink) {
+    skipLink.addEventListener('click', function () {
+      track('skip_to_content_used', {
+        page_path: window.location.pathname
+      });
+    });
+  }
+
+  // ─── 10. Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────
+  var depthsFired  = {};
+  var depthMarkers = [25, 50, 75, 100];
+
+  function checkScrollDepth() {
+    var scrollTop  = window.scrollY || document.documentElement.scrollTop;
+    var docHeight  = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    ) - window.innerHeight;
+
+    if (docHeight <= 0) return;
+
+    var pct = Math.round((scrollTop / docHeight) * 100);
+
+    depthMarkers.forEach(function (marker) {
+      if (!depthsFired[marker] && pct >= marker) {
+        depthsFired[marker] = true;
+        track('scroll_depth', {
+          depth_percent: marker,
+          page_title:    document.title,
+          page_path:     window.location.pathname
+        });
+      }
+    });
+  }
+
+  window.addEventListener('scroll', checkScrollDepth, { passive: true });
+  // Catch pages that are already scrolled on load (e.g. hash anchors)
+  checkScrollDepth();
+
+}());
+</script>

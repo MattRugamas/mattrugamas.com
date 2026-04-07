@@ -1,0 +1,120 @@
+@use 'settings' as *;
+
+///////////////////
+/* CHANGELOG PAGE */
+///////////////////
+
+.changelog {
+  width: 100%;
+  max-width: 800px;
+  font-family: $fonts-body;
+
+  // ---- Header ----
+  .changelog-header {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 2px solid var(--color-highlight);
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 var(--space-2);
+      color: var(--color-text);
+    }
+  }
+
+  .changelog-subtitle {
+    font-family: $fonts-body;
+    font-size: var(--text-sm);
+    color: var(--color-inactive);
+    margin: 0;
+  }
+
+  // ---- Entry ----
+  .changelog-entry {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-12);
+    border-bottom: 1px solid var(--color-selected);
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  .changelog-date {
+    font-family: $fonts-titles;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .changelog-dot {
+    color: var(--color-selected);
+  }
+
+  .changelog-hash,
+  .changelog-since {
+    font-family: $fonts-source;
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--color-dates);
+  }
+
+  // ---- Group (Added / Changed / Fixed) ----
+  .changelog-group {
+    margin-bottom: var(--space-6);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-family: $fonts-titles;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-highlight);
+      margin: 0 0 var(--space-3);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: var(--space-6);
+      list-style: disc;
+
+      li {
+        font-family: $fonts-body;
+        font-size: var(--text-base);
+        line-height: 1.7;
+        color: var(--color-text);
+        margin-bottom: var(--space-3);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        code {
+          font-family: $fonts-source;
+          font-size: 0.85em;
+          color: var(--color-dates);
+          background: var(--color-selected);
+          padding: 1px 5px;
+          border-radius: 3px;
+        }
+
+        em {
+          color: var(--color-inactive);
+          font-style: italic;
+        }
+      }
+    }
+  }
+}
