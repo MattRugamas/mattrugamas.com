@@ -13,7 +13,6 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="canonical" href="https://mattrugamas.com"/>
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +25,7 @@
     {% include navigation.html %}
     {{ content }}
     <footer>
-      <p>2019–2026 — Made with ❤️ on <strong><a href="https://www.jekyllrb.com">Jekyll</a></strong> and <strong><a href="https://pages.github.com">GitHub Pages</a></strong>.</p>
+      <p>2019–{{ 'now' | date: '%Y' }} — Made with ❤️ on <strong><a href="https://www.jekyllrb.com">Jekyll</a></strong> and <strong><a href="https://pages.github.com">GitHub Pages</a></strong>.</p>
     </footer>
     <script>
       (function() {
@@ -64,5 +63,6 @@
         }
       })();
     </script>
+    {% include event-tracking.html %}
   </body>
 </html>
