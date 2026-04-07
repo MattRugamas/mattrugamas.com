@@ -9,14 +9,15 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
-    <h2 class="changelog-date">Unreleased <span class="changelog-dot">·</span> <span class="changelog-since">April 6, 2026</span></h2>
+    <h2 class="changelog-date">April 7, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">fa87257</span></h2>
 
     <div class="changelog-group">
       <h3>Added</h3>
       <ul>
         <li>GA4 custom event tracking across all pages via <code>_includes/event-tracking.html</code>, injected through the base layout. Tracks: navigation link clicks (with desktop vs. hamburger context), theme toggle direction, blog post clicks from the homepage listing, music page external link clicks with platform detection (Spotify / YouTube / SoundCloud / Instagram), social link clicks from the Elsewhere section, the About page music CTA, the résumé LinkedIn link, footer links, the résumé print button, and scroll depth at 25 / 50 / 75 / 100%. All <code>gtag()</code> calls are guarded with a typeof check, making the script a no-op in local development.</li>
-        <li>Save/Print button on the résumé page. Triggers <code>window.print()</code> and fires a <code>resume_print_click</code> GA4 event. Styled to match the existing CTA pattern from the About page.</li>
-        <li><code>@media print</code> stylesheet for the résumé. Hides site chrome, resets to black-on-white, sets print-appropriate font sizes and spacing, avoids page breaks inside role entries, and appends full link URLs inline — suppressed on the contact link, which already displays as a URL.</li>
+        <li>Save/Print button on the résumé page, placed inside the <code>cv-header</code> grid alongside the name. Triggers <code>window.print()</code> and fires a <code>resume_print_click</code> GA4 event. Styled to match the existing CTA button pattern from the About page. Hidden in print.</li>
+        <li><code>@media print</code> stylesheet for the résumé. Hides site chrome, resets to black-on-white, sets print-appropriate font sizes and spacing, and appends full link URLs inline — suppressed on the contact link, which already displays as a URL.</li>
+        <li>This changelog page (<code>/changelog</code>), styled in the site theme with a dedicated SCSS partial (<code>_sass/changelog.scss</code>).</li>
       </ul>
     </div>
 
@@ -34,6 +35,7 @@ title: Changelog
       <ul>
         <li>Hardcoded <code>&lt;link rel="canonical" href="https://mattrugamas.com"/&gt;</code> removed from <code>base.html</code>. Every page was incorrectly declaring the homepage as its canonical URL. The <code>jekyll-seo-tag</code> plugin already handles per-page canonicals correctly via the <code>&#123;% seo %&#125;</code> tag.</li>
         <li>Print stylesheet was targeting <code>header { display: none }</code>, which hid all semantic <code>&lt;header&gt;</code> elements on the résumé — including the name/contact row and every job title header. Corrected to <code>body > header</code> to target only the site navigation wrapper.</li>
+        <li>Résumé <code>.cv-role</code> entries had <code>break-inside: avoid</code> set, which caused the Atlassian role (the longest entry) to push entirely to page two, leaving a blank gap on page one. Removed the rule from roles; added <code>break-after: avoid</code> on <code>.cv-role-header</code> instead, keeping each role's title attached to its content without blocking mid-role page breaks.</li>
       </ul>
     </div>
   </section>
