@@ -13,10 +13,12 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/assets/css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link rel="stylesheet" href="/assets/css/syntax.css" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet"></noscript>
     {% include faviconpackage.html %}
     {% feed_meta %}
     {% seo %}
@@ -46,6 +48,14 @@
             document.documentElement.setAttribute('data-theme', next);
             localStorage.setItem('theme', next);
             updateToggleLabel(next === 'dark');
+            // Sync Giscus iframe theme if present
+            var giscusFrame = document.querySelector('iframe.giscus-frame');
+            if (giscusFrame) {
+              giscusFrame.contentWindow.postMessage(
+                { giscus: { setConfig: { theme: next } } },
+                'https://giscus.app'
+              );
+            }
           });
         }
 

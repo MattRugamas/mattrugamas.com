@@ -1,5 +1,5 @@
-$fonts-body:   -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-$fonts-titles: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+$fonts-body:   'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$fonts-titles: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 $fonts-source: 'Source Code Pro', monospace;
 
 // Dark palette
@@ -36,6 +36,7 @@ $bp-md: 52em;
   --nav-height: 71px;
 
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
   --font-weight-semi:   600;
   --font-weight-bold:   700;
 
@@ -94,7 +95,7 @@ $bp-md: 52em;
     font-size: var(--text-xl);
     font-weight: var(--font-weight-normal);
     line-height: 1.4;
-    max-width: 666px;
+    max-width: 675px;
     strong {
       color: var(--color-highlight);
     }
@@ -104,6 +105,9 @@ $bp-md: 52em;
     line-height: 1.5;
     font-size: var(--text-base);
     max-width: 1000px;
+    &#tagline {
+      max-width: 675px;
+    }
   }
 }
 

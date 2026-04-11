@@ -9,6 +9,70 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">April 11, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added <strong>Giscus</strong> reactions and comments to all blog posts, powered by GitHub Discussions. Visitors with a GitHub account can leave emoji reactions (👍 ❤️ 🎉 etc.) and comments directly on each post. The widget reads from <code>localStorage</code> on load and responds to the dark/light theme toggle via the Giscus <code>postMessage</code> API. Data lives entirely in the repository's Discussions tab — no third-party tracking.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Centered code blocks in blog posts and constrained them to the same 1000px max-width as prose content. Previously <code>pre.highlight</code> had no width constraint and appeared left-aligned relative to body text.</li>
+        <li>Changed <code>pre.highlight</code> from <code>overflow: scroll</code> to <code>overflow: auto</code> so scrollbars only appear when content actually overflows. On macOS this restores the native overlay scrollbar behavior — bars appear on scroll and fade when idle.</li>
+        <li>Constrained <code>.post-comments</code> (Giscus widget) to 1000px max-width so it aligns with post content rather than stretching to full container width.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Updated</h3>
+      <ul>
+        <li>Updated résumé: revised Skills section to use more concise, role-aligned categories (Debugging, Incidents, Enablement, Product, Tools, Web). Expanded Accessibility Lead role with a summary paragraph and additional detail bullets. Refreshed Lead Technical Support Engineer bullet wording. Updated Atlassian start date to March 2022.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 10, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Eliminated a chained CSS request that was adding ~120ms to the critical render path. <code>styles.scss</code> was using <code>@import "syntax.css"</code>, which SASS passes through as a literal CSS <code>@import</code> — causing the browser to download <code>syntax.css</code> sequentially after <code>styles.css</code>. Removed the <code>@import</code> and added <code>syntax.css</code> as a direct <code>&lt;link&gt;</code> in <code>base.html</code> so both files download in parallel.</li>
+        <li>Fixed render-blocking Google Fonts. Replaced <code>rel="stylesheet"</code> with the <code>rel="preload"</code> + <code>onload</code> non-blocking pattern (with a <code>&lt;noscript&gt;</code> fallback) in <code>base.html</code>. Fonts now load asynchronously and do not block initial render.</li>
+        <li>Moved <code>preconnect</code> hints for <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code> before the stylesheet links in <code>base.html</code> so connections warm up earlier in the page load sequence.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 9, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Switched the site font from the OS system stack to <strong>Inter</strong> (Google Fonts) across all pages. Both <code>$fonts-body</code> and <code>$fonts-titles</code> in <code>_sass/_settings.scss</code> now use Inter with the system stack as a fallback. Weights 400, 500, 600, and 700 are loaded via a single Google Fonts request in the base layout alongside Source Code Pro. Source Code Pro is retained as the monospace face for code and CV metadata. A <code>--font-weight-medium: 500</code> token was added to the design-token set in <code>:root</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 8, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Résumé content fully updated. Profile rewritten to position as Senior Support Engineer with 8 years of experience; split into two paragraphs leading with the value proposition. Header tagline updated from "Support Engineer" to "Senior Support Engineer".</li>
+        <li>Atlassian role rewritten with a new structure: opening summary paragraph, three high-signal overview bullets, then three sub-sections — <em>Debugging &amp; Incident Ownership</em>, <em>Product &amp; Engineering Impact</em>, and <em>Process &amp; Team Impact</em>. Dates simplified to 2022–2026. Old sub-sections (Core Responsibilities, Product &amp; Engineering Partnership, Process &amp; Impact, Team Enablement) removed.</li>
+        <li>Accessibility Lead and Lead Technical Support Engineer roles at Edlio condensed: removed summary paragraphs from both, updated bullets to match tighter, outcome-focused copy.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">April 7, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">fa87257</span></h2>
 
     <div class="changelog-group">
