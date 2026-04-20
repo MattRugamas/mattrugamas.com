@@ -57,6 +57,12 @@ $bp-md: 52em;
   --text-3xl:  2.75rem;
 
   --content-gap: var(--space-8);
+
+  --content-hero:  675px;
+  --content-prose: 720px;
+  --content-post:  760px;
+  --content-cv:    800px;
+  --content-wide:  1000px;
 }
 
 // --- Light mode mixin ---
@@ -95,7 +101,7 @@ $bp-md: 52em;
     font-size: var(--text-xl);
     font-weight: var(--font-weight-normal);
     line-height: 1.4;
-    max-width: 675px;
+    max-width: var(--content-hero);
     strong {
       color: var(--color-highlight);
     }
@@ -104,9 +110,9 @@ $bp-md: 52em;
     font-family: $fonts-titles;
     line-height: 1.5;
     font-size: var(--text-base);
-    max-width: 1000px;
+    max-width: var(--content-wide);
     &#tagline {
-      max-width: 675px;
+      max-width: var(--content-hero);
     }
   }
 }

@@ -6,43 +6,31 @@
 
 main {
   section.aboutMe {
-    display: grid;
+    display: flex;
+    flex-flow: column;
     width: 100%;
+    max-width: var(--content-prose);
     font-family: $fonts-body;
-
-    // ---- Mobile: heading → photo → text ----
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "heading"
-      "image"
-      "text";
     row-gap: var(--space-6);
 
-    // On mobile, dissolve .about-left so h1 and #aboutMeText
-    // become direct grid children and can be placed into named areas.
-    .about-left {
-      display: contents;
-    }
-
     h1 {
-      grid-area: heading;
-      text-align: center;
-      max-width: none;
       margin: 0;
+      max-width: none;
+      text-align: left;
     }
 
     img#selfie {
-      grid-area: image;
       display: block;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 480px;
+      align-self: center;
+      height: auto;
       @include ui-shadow;
       border: 1px solid var(--color-links);
       border-radius: 3px;
     }
 
     div#aboutMeText {
-      grid-area: text;
-
       p.about-me {
         margin: var(--space-4) 0;
 
@@ -52,63 +40,42 @@ main {
       }
     }
 
-    .music-link {
+    .about-cta {
+      display: flex;
+      flex-flow: row wrap;
+      gap: var(--space-3);
       margin-top: var(--space-6);
-      text-align: center;
 
       a {
         display: inline-block;
         padding: var(--space-2) var(--space-4);
-        border: 1px solid var(--color-links);
         border-radius: 3px;
-        color: var(--color-links);
-        text-decoration: none;
         font-size: var(--text-base);
+        text-decoration: none;
         transition: all .2s;
+      }
+
+      .cta-primary {
+        background-color: var(--color-links);
+        color: var(--color-base);
+        border: 1px solid var(--color-links);
+
+        &:hover {
+          background-color: transparent;
+          color: var(--color-links);
+          box-shadow: none;
+        }
+      }
+
+      .cta-secondary {
+        border: 1px solid var(--color-links);
+        color: var(--color-links);
 
         &:hover {
           background-color: var(--color-links);
           color: var(--color-base);
           box-shadow: none;
         }
-      }
-    }
-
-    // ---- Desktop: text left (centered), image right (top) ----
-    @media (min-width: $bp-md) {
-      grid-template-columns: 1fr auto;
-      grid-template-areas: "left image";
-      grid-template-rows: 1fr;
-      column-gap: var(--space-12);
-      max-width: 900px;
-      align-items: center;
-
-      // Restore .about-left as a flex column — h1 on top, text below
-      .about-left {
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        grid-area: left;
-      }
-
-      h1 {
-        text-align: left;
-        margin-bottom: var(--space-4);
-      }
-
-      div#aboutMeText {
-        // grid-area assignment ignored — it's now a flex child of .about-left
-      }
-
-      img#selfie {
-        grid-area: image;
-        align-self: start;
-        justify-self: center;
-        margin: 0;
-      }
-
-      .music-link {
-        text-align: left;
       }
     }
   }

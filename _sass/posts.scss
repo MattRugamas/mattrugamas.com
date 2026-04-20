@@ -4,11 +4,11 @@
 /* POST PAGE */
 ///////////////
 
-article {
+article.blogpost {
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
-    max-width: 1000px;
+    max-width: var(--content-post);
     align-items: flex-start;
 
     h1#post-title {
@@ -59,7 +59,8 @@ article {
       width: fit-content;
       img.img-responsive {
         width: 100%;
-        max-width: 1000px;
+        max-width: 100%;
+        max-height: 75vh;
         height: auto;
       }
       figcaption {
@@ -69,7 +70,7 @@ article {
   }
 
   @media all and (max-width: 800px) {
-    article {
+    article.blogpost {
       img.img-responsive {
         max-width: 100%;
       }

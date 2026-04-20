@@ -6,7 +6,7 @@
 
 .changelog {
   width: 100%;
-  max-width: 800px;
+  max-width: var(--content-cv);
   font-family: $fonts-body;
 
   // ---- Header ----

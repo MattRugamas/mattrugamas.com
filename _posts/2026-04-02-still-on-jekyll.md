@@ -6,6 +6,10 @@ date: 2026-04-02
 
 I've rebuilt this site a few times now. Not a full rebuild, more like the kind of thing where you touch one CSS file and end up rewriting three others. Each time I do it, I think about whether I should just... do it properly. Migrate to something modern. Maybe Next.js. Maybe Astro. Maybe whatever the new thing is by the time you're reading this.
 
+{% figure caption:"A Classic Case of Old Versus New" class:"shadow_image" %}
+![old-vs-new](/assets/img/oldvsnew.png){:class="img-responsive"}
+{% endfigure %}
+
 Each time, I end up back at the same place: a text editor, a folder of Markdown files, and a `git push` that deploys to GitHub Pages in about ninety seconds. No build server. No monthly bill. No framework to upgrade around. Just HTML and CSS, served from an edge node somewhere, loading fast on whatever connection you're on.
 
 I want to think out loud about why. It's not because I haven't looked at the alternatives.

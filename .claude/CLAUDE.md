@@ -1,0 +1,3 @@
+- Research the codebase before editing. Never change code you haven't read.
+- For any updates made to this project, make sure to keep `changelog.html` up to date.
+- The git setup for this project is as follows: all work is done on the "tmp-checkpoint" branch and when we're ready to push changes live, we push our local "tmp-checkpoint" changes to Github, then we checkout the "release" branch and merge in "tmp-checkpoint" changes into "release". We then push our "release" branch to Github, which then has a Github Action configured to build and deploy the changes to the site. When I tell you to "push our latest changes", follow the workflow I just mentioned and help me write up a succinct and eloquent commit message for the release branch changes.

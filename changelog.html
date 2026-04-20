@@ -9,6 +9,55 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">April 20, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Tightened wording across five résumé <strong>Skills</strong> rows for clarity and industry-standard terminology: <em>Frontend</em> now reads "step-through debugging" instead of "live breakpoint tracing," <em>Local development</em> replaced the task-description phrasing with "Full-stack local environments, codebase navigation, feature branch UAT," <em>Observability</em> splits out "distributed tracing" as its own keyword, <em>Incidents</em> leads with "Critical incidents (Sev-1/2)" for context, and <em>Product</em> uses "Pre-release validation" and "release readiness" instead of the redundant "UAT (pre-release testing)" and vague "release feedback."</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 16, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Rebuilt the <strong>About</strong> page as a single-column layout on all viewports. The previous CSS grid (text-left / image-right on desktop) was replaced with a simple flex column ordered H1 → photo → body. The hero photo now spans the full container width and preserves its native 4:3 aspect ratio at every breakpoint. Container max-width is 900px.</li>
+        <li>Updated the About page H1 to "Hey, I'm Matthew Rugamas," and lightly polished the body copy: combined the opener into a value-forward sentence, surfaced a quantified outcome from the Atlassian role (15% YoY escalation reduction), and added a one-line tools/keywords mention (Splunk, Jira, Postman, LaunchDarkly, MongoDB).</li>
+        <li>Revised the <strong>Résumé</strong> across most sections: tightened the profile opener to match the About page voice, broadened the tagline with a "debugging, escalations, customer engineering" keyword bridge, dropped a page-specific SEO <code>description</code> into the front matter, tightened the Atlassian role summary to remove duplication with the first bullet, reordered the Atlassian summary bullets so enterprise customer impact leads, trimmed long bullets on incidents and product-influence, and swept verbs so <em>Reduced</em> no longer opens consecutive bullets.</li>
+        <li>Specific dates across the résumé are now month + year on every role for consistency: <strong>Atlassian</strong> March 2022 – March 2026, <strong>Accessibility Lead</strong> (Edlio) February 2020 – February 2022, <strong>Lead Technical Support Engineer</strong> (Edlio) February 2019 – January 2020. Tenure framing on both the résumé profile and the About page moved from "8 years" to "nearly a decade" to match the actual timeline.</li>
+        <li>Expanded the résumé <strong>Skills</strong> section with a clearer breakdown that surfaces work done on Halp / JSM Chat: added <em>Languages</em> (TypeScript, JavaScript, HTML, CSS, SQL, Bash), <em>Frontend</em> (React, GraphQL, Chrome DevTools, live breakpoint tracing), <em>Local development</em> (running product instances locally, tracing through code, UAT against feature branches), and <em>Observability</em> rows, and split <em>Accessibility</em> (WCAG 2.1 AA, ADA, ARIA) out of the old "Web" row so a full role of accessibility work isn't undersold.</li>
+        <li>Consolidated the <strong>Accessibility Lead</strong> bullets from 8 to 5, merged overlap, and folded in concrete scale (50+ templates, 100+ audits, 100+ districts).</li>
+        <li>Flipped the <strong>Lead Technical Support Engineer</strong> opener so ownership of the hardest escalations leads and case volume (80–120 / month) trails as a qualifier. Named the stakeholder type ("non-technical school district administrators and IT staff") on the translation bullet for Customer/Solutions Engineer keyword coverage.</li>
+        <li>Constrained the résumé <code>.cv-tagline</code> to <code>max-width: 75%</code> at the <code>md</code> breakpoint and above so the now-longer tagline ("Senior Support Engineer · Debugging, escalations, customer engineering · Los Angeles, CA") no longer runs the full header width on desktop. Mobile layout is unchanged.</li>
+        <li>Narrowed prose containers to portfolio-standard widths: <strong>About</strong> page container <code>900px → 720px</code>, and blog <strong>post article</strong> container <code>1000px → 760px</code>. The Giscus <code>.post-comments</code> widget was re-pegged to match the article body. The About hero photo (<code>#selfie</code>) is now capped at <code>max-width: 480px</code> and centered via <code>align-self: center</code>, so it no longer pushes the body copy below the fold on desktop. Post images (<code>figure.shadow_image img.img-responsive</code>) got a <code>max-height: 75vh</code> cap so tall screenshots can't dominate the viewport.</li>
+        <li>Introduced <strong>content-width design tokens</strong> as CSS custom properties in <code>:root</code>: <code>--content-hero</code> (675px), <code>--content-prose</code> (720px), <code>--content-post</code> (760px), <code>--content-cv</code> (800px), <code>--content-wide</code> (1000px). Replaced all magic-number <code>max-width</code> values across <code>_settings.scss</code>, <code>about.scss</code>, <code>posts.scss</code>, <code>index.scss</code>, <code>resume.scss</code>, and <code>changelog.scss</code> with the corresponding token. Content widths are now defined in one place and reusable sitewide.</li>
+        <li>Scoped <code>posts.scss</code> from bare <code>article</code> selectors to <code>article.blogpost</code> so blog-post styles no longer bleed into homepage article cards. The <code>.blogpost</code> class was added to the <code>&lt;article&gt;</code> element in <code>post.html</code>. Backfilled explicit <code>font-size</code> and <code>line-height</code> on the homepage <code>article header p</code> rule in <code>index.scss</code> to replace values that were previously leaking from the unscoped <code>posts.scss</code>.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added a primary <strong>"Get in touch →"</strong> CTA (mailto:) and a secondary <strong>LinkedIn</strong> button to the About page so visitors hiring out of the page have an unambiguous next action.</li>
+        <li>Added a <strong>print-only</strong> expanded contact row to the résumé header (email, site URL, GitHub) so the saved/printed PDF stands on its own even though screen viewers already have those links on the About page. Implemented via a <code>.print-only</code> utility that's hidden on screen and inline inside <code>@media print</code>.</li>
+        <li>Added two short <strong>testimonial</strong> blocks to the résumé, pulled from LinkedIn recommendations. The first (Don Pierce, Manager of Cloud Growth Products, Atlassian) sits between Profile and Skills as an opening hook. The second (Al Lawlor, Director / Sr. Manager, CX &amp; Support Operations, Atlassian) closes the page after Experience, introducing a concrete project reference — legacy product sunset ownership and customer migration — that doesn't appear elsewhere on the page. Styled as left-bordered blockquotes on screen with a tightened variant in print. Each citation links to the LinkedIn recommendations page (<code>view on LinkedIn</code>) so readers can verify the quotes; the URL suffix otherwise appended to print links is suppressed for these to keep the printed attribution line readable.</li>
+        <li>Added an <code>@page { margin: 0.6in; }</code> rule and <code>break-inside: avoid</code> on testimonials to keep print margins comfortable and prevent quotes from orphaning across a page break.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Removed</h3>
+      <ul>
+        <li>Removed the "See what I've been playing →" music link from the About page. The Music page is already reachable from the nav, and the contact CTAs now occupy that visual slot.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">April 11, 2026</h2>
 
     <div class="changelog-group">

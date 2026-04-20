@@ -6,6 +6,10 @@ date: 2026-03-31
 
 I've been sitting on a version of this site that I built sometime around 2018 or 2019, back when I was learning more front-end seriously and wanted a place to practice. It worked, mostly. The bones were fine. But it had the kind of accumulated debt that happens when you build something to learn and then never really go back to treat it like a real project.
 
+{% figure caption:"Original Site Design Circa 2019" class:"shadow_image" %}
+![original-design](/assets/img/original-design.png){:class="img-responsive"}
+{% endfigure %}
+
 A few weeks ago I decided to try and change that.
 
 ## What It Was
