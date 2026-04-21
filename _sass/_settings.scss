@@ -25,6 +25,7 @@ $bp-md: 52em;
 
 // --- Dark mode (default) ---
 :root {
+  color-scheme: light dark;
   --color-base:      #{$base};
   --color-selected:  #{$selected};
   --color-text:      #{$text};
@@ -193,5 +194,16 @@ $bp-md: 52em;
   &:hover {
     border-left: 1px solid var(--color-highlight);
     background: var(--color-selected);
+  }
+}
+
+// --- Print: force light palette so dark custom-property values
+//     never leak into the printed page (fixes iOS Safari) ---
+@media print {
+  :root {
+    color-scheme: light;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    @include light-colors;
   }
 }

@@ -19,6 +19,13 @@ title: Changelog
     </div>
 
     <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Fixed résumé print output on iOS Safari rendering with a black background and black text when the device is in dark mode. Added <code>color-scheme</code> declarations and forced light-palette CSS custom properties in the print media query.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
       <h3>Changed</h3>
       <ul>
         <li>Tightened wording across five résumé <strong>Skills</strong> rows for clarity and industry-standard terminology: <em>Frontend</em> now reads "step-through debugging" instead of "live breakpoint tracing," <em>Local development</em> replaced the task-description phrasing with "Full-stack local environments, codebase navigation, feature branch UAT," <em>Observability</em> splits out "distributed tracing" as its own keyword, <em>Incidents</em> leads with "Critical incidents (Sev-1/2)" for context, and <em>Product</em> uses "Pre-release validation" and "release readiness" instead of the redundant "UAT (pre-release testing)" and vague "release feedback."</li>
