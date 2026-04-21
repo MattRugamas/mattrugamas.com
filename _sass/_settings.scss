@@ -197,13 +197,19 @@ $bp-md: 52em;
   }
 }
 
-// --- Print: force light palette so dark custom-property values
-//     never leak into the printed page (fixes iOS Safari) ---
+// --- Print: paper-optimized palette so no tinted backgrounds
+//     or screen-only colours leak into the printed page ---
 @media print {
   :root {
     color-scheme: light;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    @include light-colors;
+    --color-base:      #fff;
+    --color-selected:  transparent;
+    --color-text:      #000;
+    --color-inactive:  #555;
+    --color-links:     #000;
+    --color-highlight: #000;
+    --color-dates:     #555;
   }
 }
