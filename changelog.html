@@ -9,6 +9,50 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">April 23, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added a <strong>post footer</strong> below Giscus comments on every blog post with two columns: Navigate (next/previous/random post links) and Elsewhere (RSS, about page, reply via email).</li>
+        <li>Added <strong>tag system infrastructure</strong>: tag filter bar include, tag archive page layout, and inline tag display on posts and homepage. Ready to use once tags are assigned to posts.</li>
+        <li>Added <strong>email obfuscation</strong> across the site. Contact email is now constructed at runtime via JavaScript data attributes, keeping it out of the HTML source to deter scrapers. Falls back to the about page for no-JS visitors.</li>
+        <li>Added event tracking for tag filter clicks and post footer link clicks.</li>
+        <li>Added an <strong>RSS icon</strong> (SVG) to the navigation bar actions, to the left of the theme toggle. Visible on all screen sizes.</li>
+        <li>Added a <strong>"MR" home wordmark</strong> on the left side of the mobile navigation bar for quick tap-to-home navigation. Hidden on desktop where the full nav is visible.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Replaced the plaintext <code>mailto:</code> link on the about page with the new obfuscated email include.</li>
+        <li>Replaced the sun/moon theme toggle icons with an <strong>iOS-style toggle switch</strong>. Pill-shaped track with a sliding circular thumb; track highlights on light mode.</li>
+        <li>Moved the RSS link from the site footer to the navigation bar.</li>
+        <li>Scoped site navigation CSS from bare <code>nav</code> to <code>header > nav</code> to prevent styles leaking into the tag filter <code>&lt;nav&gt;</code> element.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Fixed the nav link hover underline animation appearing on touch devices (phones/tablets) where hover is not supported. Wrapped the <code>::after</code> underline in <code>@media (hover: hover)</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">April 21, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Browser URL bar now matches the active color scheme. The <code>theme-color</code> meta tag updates on page load (from stored preference) and on every toggle click, so the chrome reflects dark or light mode in real time.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">April 20, 2026</h2>
 
     <div class="changelog-group">

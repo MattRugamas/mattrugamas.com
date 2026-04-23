@@ -31,6 +31,10 @@ article.blogpost {
       color: var(--color-dates);
     }
 
+    .post-tags {
+      margin: 0 0 var(--space-6);
+    }
+
     h2 {
       font-family: $fonts-titles;
       font-size: var(--text-lg);

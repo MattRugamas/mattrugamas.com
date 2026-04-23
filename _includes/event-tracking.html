@@ -124,7 +124,32 @@
     });
   }
 
-  // ─── 8. Footer link clicks ────────────────────────────────────────────────
+  // ─── 9. Tag filter clicks ──────────────────────────────────────────────────
+  document.querySelectorAll('.tag-filter .tag-badge').forEach(function (link) {
+    link.addEventListener('click', function () {
+      track('tag_filter_click', {
+        tag_name:  this.textContent.trim(),
+        tag_url:   this.getAttribute('href'),
+        page_path: window.location.pathname
+      });
+    });
+  });
+
+  // ─── 10. Post footer link clicks ─────────────────────────────────────────
+  var postFooter = document.querySelector('.post-footer');
+  if (postFooter) {
+    postFooter.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        track('post_footer_click', {
+          link_text: this.textContent.trim(),
+          link_url:  this.getAttribute('href'),
+          page_path: window.location.pathname
+        });
+      });
+    });
+  }
+
+  // ─── 11. Footer link clicks ───────────────────────────────────────────────
   var footer = document.querySelector('footer');
   if (footer) {
     footer.querySelectorAll('a').forEach(function (link) {
@@ -137,7 +162,7 @@
     });
   }
 
-  // ─── 9. Skip-to-content link ──────────────────────────────────────────────
+  // ─── 12. Skip-to-content link ─────────────────────────────────────────────
   var skipLink = document.getElementById('skipToMainContent');
   if (skipLink) {
     skipLink.addEventListener('click', function () {
@@ -147,7 +172,7 @@
     });
   }
 
-  // ─── 10. Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────
+  // ─── 13. Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────
   var depthsFired  = {};
   var depthMarkers = [25, 50, 75, 100];
 

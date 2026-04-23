@@ -69,7 +69,7 @@ html {
     }
 
 
-    nav {
+    header > nav {
       position: fixed;
       z-index: 2;
       width: 100%;
@@ -79,6 +79,25 @@ html {
       display: flex;
       flex-flow: row wrap;
       align-items: center;
+
+      // Mobile home wordmark — hidden on desktop
+      .nav-home {
+        padding: var(--space-4) var(--space-2) var(--space-4) clamp(var(--space-4), 8vw, var(--space-16));
+        font-size: var(--text-base);
+        font-weight: var(--font-weight-bold);
+        letter-spacing: 0.05em;
+        text-decoration: none;
+        color: var(--color-text);
+
+        &:hover {
+          background: transparent;
+          box-shadow: none;
+        }
+
+        @media (min-width: $bp-md) {
+          display: none;
+        }
+      }
 
       // Nav links — hidden on mobile, always visible on desktop
       ul {
@@ -106,7 +125,7 @@ html {
         display: flex;
       }
 
-      // Theme toggle + hamburger — always on the right
+      // RSS, theme toggle + hamburger — always on the right
       .nav-actions {
         display: flex;
         align-items: center;
@@ -122,23 +141,47 @@ html {
         }
       }
 
-      #theme-toggle {
-        background: none;
-        border: none;
-        cursor: pointer;
+      #rss-link {
+        display: flex;
+        align-items: center;
         padding: var(--space-4) var(--space-2);
-        font-size: var(--text-lg);
-        line-height: 1;
         color: var(--color-inactive);
         transition: color .2s;
 
         &:hover {
           color: var(--color-text);
+          background: transparent;
+          box-shadow: none;
+        }
+      }
+
+      #theme-toggle {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: var(--space-4) var(--space-2);
+        line-height: 1;
+
+        .toggle-track {
+          display: block;
+          position: relative;
+          width: 36px;
+          height: 20px;
+          border-radius: 10px;
+          background-color: var(--color-inactive);
+          transition: background-color 0.3s ease;
         }
 
-        // Dark mode (default): show sun to switch to light
-        .icon-moon { display: none; }
-        .icon-sun { display: inline; }
+        .toggle-thumb {
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background-color: var(--color-base);
+          transition: transform 0.3s ease;
+        }
       }
 
       #nav-toggle {
@@ -172,17 +215,17 @@ html {
 
     }
 
-    // Explicit light mode — icon swap
-    @at-root html[data-theme="light"] nav #theme-toggle {
-      .icon-moon { display: inline; }
-      .icon-sun { display: none; }
+    // Explicit light mode — slide thumb right, highlight track
+    @at-root html[data-theme="light"] header > nav #theme-toggle {
+      .toggle-track { background-color: var(--color-highlight); }
+      .toggle-thumb { transform: translateX(16px); }
     }
 
-    // System light preference — icon swap
+    // System light preference — slide thumb right, highlight track
     @media (prefers-color-scheme: light) {
-      @at-root html:not([data-theme="dark"]) nav #theme-toggle {
-        .icon-moon { display: inline; }
-        .icon-sun { display: none; }
+      @at-root html:not([data-theme="dark"]) header > nav #theme-toggle {
+        .toggle-track { background-color: var(--color-highlight); }
+        .toggle-thumb { transform: translateX(16px); }
       }
     }
 
@@ -292,6 +335,84 @@ html {
       border-top: 1px solid var(--color-text);
       max-width: var(--content-post);
       width: 100%;
+    }
+
+    .post-footer {
+      display: flex;
+      flex-flow: column;
+      gap: var(--space-8);
+      max-width: var(--content-post);
+      width: 100%;
+      margin-top: var(--space-12);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--color-text);
+      font-family: $fonts-body;
+
+      @media (min-width: $bp-md) {
+        flex-flow: row;
+        gap: var(--space-16);
+      }
+
+      .post-footer-col {
+        flex: 1;
+
+        h4 {
+          font-family: $fonts-titles;
+          font-size: var(--text-sm);
+          font-weight: var(--font-weight-semi);
+          text-transform: uppercase;
+          letter-spacing: 0.07em;
+          color: var(--color-dates);
+          margin: 0 0 var(--space-3);
+        }
+
+        ul {
+          margin: 0;
+
+          li {
+            margin-bottom: var(--space-2);
+
+            a {
+              font-size: var(--text-base);
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+
+    .tag-filter {
+      display: flex;
+      flex-flow: row wrap;
+      gap: var(--space-2);
+      max-width: var(--content-hero);
+      width: 100%;
+      margin: var(--space-6) auto 0;
+    }
+
+    .tag-badge {
+      font-family: $fonts-body;
+      font-size: var(--text-sm);
+      padding: var(--space-1) var(--space-3);
+      border: 1px solid var(--color-inactive);
+      border-radius: 3px;
+      background: transparent;
+      color: var(--color-inactive);
+      text-decoration: none;
+      transition: all 0.2s;
+
+      &:hover, &.active {
+        border-color: var(--color-highlight);
+        color: var(--color-highlight);
+        background: transparent;
+        box-shadow: none;
+      }
+    }
+
+    .post-tags {
+      display: flex;
+      flex-flow: row wrap;
+      gap: var(--space-2);
     }
 
     footer {

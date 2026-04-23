@@ -1,0 +1,9 @@
+{% assign all_tags = site.tags | sort %}
+{% if all_tags.size > 0 %}
+<nav class="tag-filter" aria-label="Filter posts by tag">
+  <a href="/" class="tag-badge{% unless page.tag %} active{% endunless %}">All</a>
+  {% for tag_pair in all_tags %}
+    <a href="/tags/{{ tag_pair[0] }}/" class="tag-badge{% if page.tag == tag_pair[0] %} active{% endif %}">{{ tag_pair[0] | capitalize }}</a>
+  {% endfor %}
+</nav>
+{% endif %}

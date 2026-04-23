@@ -154,24 +154,27 @@ $bp-md: 52em;
   }
   &.not-current {
     color: var(--color-inactive);
-    &:hover {
-      color: var(--color-text);
-      &:after {
-        width: 100%;
+
+    @media (hover: hover) {
+      &:hover {
+        color: var(--color-text);
+        &:after {
+          width: 100%;
+        }
       }
-    }
-    &:after {
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      right: 0;
-      margin: auto;
-      width: 0%;
-      content: '.';
-      color: transparent;
-      text-shadow: none;
-      background: var(--color-highlight);
-      height: 1px;
+      &:after {
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 0%;
+        content: '.';
+        color: transparent;
+        text-shadow: none;
+        background: var(--color-highlight);
+        height: 1px;
+      }
     }
   }
 }
