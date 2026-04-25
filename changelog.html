@@ -9,6 +9,28 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">April 25, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Rewrote the <strong>code syntax theme</strong> to align with the site's brand palette. Block code (<code>pre.highlight</code>) and inline code (<code>code.highlighter-rouge</code>) now consume CSS variables, so light and dark modes share one cohesive scheme: keywords use highlight (cyan in dark / deep teal in light), strings use links (pink / deep rose), numbers and names use dates (sage / dark teal), and comments use a mode-specific muted tone.</li>
+        <li>Added <code>--code-bg</code>, <code>--code-comment</code>, <code>--inline-code-bg</code>, and <code>--inline-code-border</code> custom properties to <code>_settings.scss</code>, with values defined for dark, light, and print modes.</li>
+        <li>Removed the hardcoded rose border on <code>pre.highlight</code> blocks; the themed background now defines the well on its own.</li>
+        <li>Redesigned the <strong>post footer</strong>. The two-column flex layout is now a <code>1fr auto</code> grid: the left rail (next/previous/random) absorbs slack, the right rail (RSS / about / reply via email) sits flush at content width. Section headings are dropped — structure carries the meaning. The left rail is now a <code>&lt;table&gt;</code> with <em>Next</em>/<em>Previous</em>/<em>Random</em> labels and post-title links; the right rail is an <code>&lt;ol&gt;</code> with visible numerals.</li>
+        <li>The post footer's <strong>random link</strong> now picks a post on page load and renders its actual title in the footer (rather than a generic "Random post" label that picks at click time).</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Fixed inline code chips (<code>--safe</code>, <code>.travis.yml</code>, etc.) rendering as cream text on a dark slab in <strong>light mode</strong>, failing WCAG contrast. Light mode now uses dark text on a near-transparent <code>$light-selected</code> tint with a hairline <code>$light-inactive</code> border.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">April 23, 2026</h2>
 
     <div class="changelog-group">

@@ -39,22 +39,25 @@ layout: base
         </script>
     </section>
     <section class="post-footer">
-      <div class="post-footer-col">
-        <h4>Navigate</h4>
-        <ul>
-          {% if page.next %}<li><a href="{{ page.next.url }}">← {{ page.next.title }}</a></li>{% endif %}
-          {% if page.previous %}<li><a href="{{ page.previous.url }}">{{ page.previous.title }} →</a></li>{% endif %}
-          <li><a href="#" id="random-post">Random post ↻</a></li>
-        </ul>
-      </div>
-      <div class="post-footer-col">
-        <h4>Elsewhere</h4>
-        <ul>
-          <li><a href="/feed.xml">Subscribe via RSS</a></li>
-          <li><a href="/about">Get to know me</a></li>
-          <li>{% include obfuscated-email.html text="Reply via email" %}</li>
-        </ul>
-      </div>
+      <table class="post-footer-nav">
+        <tr>
+          <th>Next</th>
+          <td>{% if page.next %}<a href="{{ page.next.url }}">{{ page.next.title }}</a>{% else %}<em>No newer post</em>{% endif %}</td>
+        </tr>
+        <tr>
+          <th>Previous</th>
+          <td>{% if page.previous %}<a href="{{ page.previous.url }}">{{ page.previous.title }}</a>{% else %}<em>No older post</em>{% endif %}</td>
+        </tr>
+        <tr>
+          <th>Random</th>
+          <td><a href="#" id="random-post">Surprise me</a></td>
+        </tr>
+      </table>
+      <ol class="post-footer-elsewhere">
+        <li><a href="/feed.xml">Subscribe via RSS</a></li>
+        <li><a href="/about">Get to know me</a></li>
+        <li>{% include obfuscated-email.html text="Reply via email" %}</li>
+      </ol>
     </section>
     <script>
     (function() {
@@ -65,11 +68,10 @@ layout: base
       ];
       var link = document.getElementById('random-post');
       if (link && posts.length > 1) {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          var others = posts.filter(function(p) { return p.url !== "{{ page.url }}"; });
-          window.location.href = others[Math.floor(Math.random() * others.length)].url;
-        });
+        var others = posts.filter(function(p) { return p.url !== "{{ page.url }}"; });
+        var pick = others[Math.floor(Math.random() * others.length)];
+        link.href = pick.url;
+        link.textContent = pick.title;
       }
     })();
     </script>

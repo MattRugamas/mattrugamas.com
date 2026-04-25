@@ -1,80 +1,56 @@
+/* Rouge syntax theme — uses CSS variables defined in _sass/_settings.scss
+   so dark, light, and print modes all share one palette mapping:
+   keywords → --color-highlight, strings → --color-links,
+   numbers / names → --color-dates, comments → --code-comment. */
+
 .highlight table td { padding: 5px; }
 .highlight table pre { margin: 0; }
-pre.highlight { border: 1px solid rgb(218, 114, 126); }
-code.highlighter-rouge { border: 1px solid rgb(52, 56, 64); }
-pre.highlight, code.highlighter-rouge, .highlight .w {
-  color: rgb(255, 244, 224);
-  background-color: rgba(29, 29, 29, 0.5);
+
+pre.highlight {
+  color: var(--color-text);
+  background-color: var(--code-bg);
 }
+
+code.highlighter-rouge {
+  color: var(--color-text);
+  background-color: var(--inline-code-bg);
+  border: 1px solid var(--inline-code-border);
+}
+
+.highlight .w { color: var(--color-text); }
+
 .highlight .err {
-  color: #151515;
-  background-color: #ac4142;
+  color: var(--color-base);
+  background-color: var(--color-links);
 }
-.highlight .c, .highlight .cd, .highlight .cm, .highlight .c1, .highlight .cs {
-  color: #505050;
-}
-.highlight .cp {
-  color: #f4bf75;
-}
-.highlight .nt {
-  color: #f4bf75;
-}
-.highlight .o, .highlight .ow {
-  color: #d0d0d0;
-}
-.highlight .p, .highlight .pi {
-  color: #d0d0d0;
-}
-.highlight .gi {
-  color: #90a959;
-}
-.highlight .gd {
-  color: #ac4142;
-}
-.highlight .gh {
-  color: #6a9fb5;
-  background-color: #151515;
-  font-weight: bold;
-}
-.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv {
-  color: #aa759f;
-}
-.highlight .kc {
-  color: #d28445;
-}
-.highlight .kt {
-  color: #d28445;
-}
-.highlight .kd {
-  color: #d28445;
-}
-.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
-  color: #90a959;
-}
-.highlight .sr {
-  color: #75b5aa;
-}
-.highlight .si {
-  color: #8f5536;
-}
-.highlight .se {
-  color: #8f5536;
-}
-.highlight .nn {
-  color: #f4bf75;
-}
-.highlight .nc {
-  color: #f4bf75;
-}
-.highlight .no {
-  color: #f4bf75;
-}
-.highlight .na {
-  color: #6a9fb5;
-}
-.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi, .highlight .il, .highlight .mo, .highlight .mb, .highlight .mx {
-  color: #90a959;
-}
-.highlight .ss {
-  color: #90a959;
-}
+
+/* Comments */
+.highlight .c, .highlight .cd, .highlight .cm,
+.highlight .c1, .highlight .cs, .highlight .cp { color: var(--code-comment); }
+
+/* Operators / punctuation — default text */
+.highlight .o, .highlight .ow,
+.highlight .p, .highlight .pi { color: var(--color-text); }
+
+/* Diff */
+.highlight .gi { color: var(--color-dates); }
+.highlight .gd { color: var(--color-links); }
+.highlight .gh { color: var(--color-highlight); font-weight: bold; }
+
+/* Keywords (incl. constants, types, declarations) */
+.highlight .k, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kv,
+.highlight .kc, .highlight .kt, .highlight .kd { color: var(--color-highlight); }
+
+/* Strings + regex / interpolation / escape */
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .sd,
+.highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1,
+.highlight .sr, .highlight .si, .highlight .se { color: var(--color-links); }
+
+/* Names: tags use highlight; namespace / class / constant / attr use dates */
+.highlight .nt { color: var(--color-highlight); }
+.highlight .nn, .highlight .nc, .highlight .no, .highlight .na { color: var(--color-dates); }
+
+/* Numbers + symbols */
+.highlight .m, .highlight .mf, .highlight .mh, .highlight .mi,
+.highlight .il, .highlight .mo, .highlight .mb, .highlight .mx,
+.highlight .ss { color: var(--color-dates); }
