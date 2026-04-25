@@ -34,6 +34,13 @@ $bp-md: 52em;
   --color-highlight: #{$highlight};
   --color-dates:     #{$dates};
 
+  // Code surfaces (dark defaults). Token hues reuse the brand vars above;
+  // these four cover only what the brand palette doesn't already express.
+  --code-bg:            rgba(29, 29, 29, 0.5);
+  --code-comment:       rgb(150, 148, 138);
+  --inline-code-bg:     rgba(29, 29, 29, 0.5);
+  --inline-code-border: var(--color-selected);
+
   --nav-height: 71px;
 
   --font-weight-normal: 400;
@@ -75,6 +82,11 @@ $bp-md: 52em;
   --color-links:     #{$light-links};
   --color-highlight: #{$light-highlight};
   --color-dates:     #{$light-dates};
+
+  --code-bg:            #{$light-selected};
+  --code-comment:       #{$light-inactive};
+  --inline-code-bg:     #{rgba($light-selected, 0.5)};
+  --inline-code-border: #{rgba($light-inactive, 0.35)};
 }
 
 // System light preference (no explicit override)
@@ -214,5 +226,10 @@ $bp-md: 52em;
     --color-links:     #000;
     --color-highlight: #000;
     --color-dates:     #555;
+
+    --code-bg:            transparent;
+    --code-comment:       #555;
+    --inline-code-bg:     transparent;
+    --inline-code-border: #999;
   }
 }
