@@ -9,6 +9,37 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">May 10, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Aligned the theme toggle with proper <strong>switch semantics</strong>: the control is now named <em>Dark mode</em> and its <code>aria-checked</code> state matches the active theme (true when dark mode is on).</li>
+        <li>Improved the mobile navigation behavior by scoping toggling logic to the header nav (so it doesn't interact with the tag filter nav) and adding <strong>Escape-to-close</strong> with focus return to the toggle.</li>
+        <li>Upgraded date markup across the site to use semantic <code>&lt;time&gt;</code> elements with machine-readable <code>datetime</code> attributes (homepage listing, tag archives, and post headers).</li>
+        <li>Refactored the post footer navigation from a <code>&lt;table&gt;</code> to a <strong>semantic definition list</strong> (<code>&lt;dl&gt;</code>) inside a labeled <code>&lt;nav&gt;</code>, preserving the same visual layout while improving meaning.</li>
+        <li>Removed inline JS on the résumé print button and attached printing behavior via the site script instead, keeping markup cleaner and more CSP-friendly.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added an <strong>accessibility stylesheet</strong> with consistent <code>:focus-visible</code> rings and a <code>prefers-reduced-motion</code> mode to reduce animations and transitions for motion-sensitive users.</li>
+        <li>Labeled the Giscus container as a <strong>Comments</strong> region so it’s discoverable as a landmark/region for assistive tech.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Fixed the <strong>Skip to Main Content</strong> link on post and tag pages by ensuring the target exists everywhere (<code>id=&quot;mainContent&quot;</code>) and is focusable for reliable keyboard navigation.</li>
+        <li>Fixed the post footer <strong>random post</strong> link for no-JS / script-failure scenarios by giving it a real server-rendered fallback URL and title.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">April 25, 2026</h2>
 
     <div class="changelog-group">

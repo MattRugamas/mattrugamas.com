@@ -14,7 +14,7 @@
       <li data-tags="{{ post.tags | join: ' ' }}">
         <article>
           <aside>
-            <p class="date">{{ post.date | date: "%b %d" }}</p>
+            <time class="date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d" }}</time>
           </aside>
           <header>
             {% if post.tags.size > 0 %}

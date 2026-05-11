@@ -1,0 +1,32 @@
+@use 'settings' as *;
+
+// --- Focus visibility (links use @mixin link-setup in index) ---
+html {
+  button:focus-visible,
+  summary:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    @include focus-ring;
+  }
+
+  #skipToMainContent:focus-visible {
+    @include focus-ring;
+    outline-offset: 4px;
+  }
+
+  #mainContent:focus {
+    @include focus-ring;
+    outline-offset: 4px;
+  }
+}
+
+// --- Reduced motion ---
+@media (prefers-reduced-motion: reduce) {
+  html *,
+  html *::before,
+  html *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
