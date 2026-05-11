@@ -23,7 +23,8 @@ article.blogpost {
       }
     }
 
-    p#post-date {
+    time#post-date {
+      display: block;
       margin: var(--space-2) 0 var(--space-8);
       font-family: $fonts-body;
       font-size: var(--text-sm);
