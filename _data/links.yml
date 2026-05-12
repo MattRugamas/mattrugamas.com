@@ -1,0 +1,20 @@
+# Bio / link-in-profile page — edit this file to add or reorder links.
+tagline: 🃏
+
+sections:
+  - heading: Aquínomás
+    items:
+      - label: Instagram
+        url: https://instagram.com/aquinomasband
+      - label: Bandcamp
+        url: https://aquinomas.bandcamp.com
+      - label: Apple Music
+        url: https://music.apple.com/us/artist/aquinomas/1786516091
+      - label: YouTube
+        url: https://www.youtube.com/@aquinomasband
+
+  - heading: Moon Lizards
+    items:
+      - label: Instagram
+        url: https://instagram.com/moonlizardsie
+        hint: Music coming 🔜

@@ -162,7 +162,31 @@
     });
   }
 
-  // ─── 12. Skip-to-content link ─────────────────────────────────────────────
+  // ─── 12. Link hub (/links/) outbound clicks ───────────────────────────────
+  var linkHub = document.querySelector('.link-hub');
+  if (linkHub) {
+    linkHub.querySelectorAll('.link-hub-list a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var section = this.closest('.link-hub-section');
+        var h2 = section && section.querySelector('h2');
+        var href = this.getAttribute('href') || '';
+        var platform = 'other';
+        if      (href.includes('spotify.com'))                          platform = 'spotify';
+        else if (href.includes('youtube.com') || href.includes('youtu.be')) platform = 'youtube';
+        else if (href.includes('soundcloud.com'))                       platform = 'soundcloud';
+        else if (href.includes('instagram.com'))                        platform = 'instagram';
+
+        track('link_hub_click', {
+          link_section: h2 ? h2.textContent.trim() : '',
+          platform:     platform,
+          link_text:    this.textContent.trim(),
+          link_url:     href
+        });
+      });
+    });
+  }
+
+  // ─── 13. Skip-to-content link ─────────────────────────────────────────────
   var skipLink = document.getElementById('skipToMainContent');
   if (skipLink) {
     skipLink.addEventListener('click', function () {
@@ -172,7 +196,7 @@
     });
   }
 
-  // ─── 13. Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────
+  // ─── 14. Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────
   var depthsFired  = {};
   var depthMarkers = [25, 50, 75, 100];
 

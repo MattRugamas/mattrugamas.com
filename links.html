@@ -1,0 +1,38 @@
+---
+title: "Matt's Hues"
+description: Quick links — Moon Lizards, Aquínomás and more.
+permalink: /links/
+layout: minimal
+---
+<section class="link-hub" aria-labelledby="link-hub-title">
+  <header class="link-hub-header">
+    <img
+      class="link-hub-avatar"
+      src="/assets/img/default.jpeg"
+      width="96"
+      height="96"
+      alt=""
+    />
+    <h1 id="link-hub-title">{{ page.title }}</h1>
+    {% if site.data.links.tagline %}
+      <p class="link-hub-tagline">{{ site.data.links.tagline }}</p>
+    {% endif %}
+  </header>
+
+  {% for section in site.data.links.sections %}
+    <section class="link-hub-section" aria-labelledby="link-hub-h-{{ forloop.index }}">
+      <h2 id="link-hub-h-{{ forloop.index }}">{{ section.heading }}</h2>
+      <ul class="link-hub-list">
+        {% for item in section.items %}
+          <li>
+            <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer">{{ item.label }}</a>
+            {% if item.hint %}
+              <span class="link-hub-hint">{{ item.hint }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+</section>
+
