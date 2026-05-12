@@ -40,8 +40,13 @@
   </head>
 
   <body>
-    {% include navigation.html %}
+    {% if page.layout == 'minimal' %}
+      {% include minimal-chrome.html %}
+    {% else %}
+      {% include navigation.html %}
+    {% endif %}
     {{ content }}
+    {% unless page.layout == 'minimal' %}
     <footer>
       <p>2019-{{ 'now' | date: '%Y' }} — Made with ❤️ on
         <strong>
@@ -52,6 +57,7 @@
           <a href="https://pages.github.com">GitHub Pages</a>
         </strong>.</p>
     </footer>
+    {% endunless %}
     <script>
           (function () {
       // Theme toggle
