@@ -9,6 +9,34 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">May 13, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added a <strong>links hub</strong> at <code>/links/</code>: a stacked, mobile-first profile page that pulls sections and items from <code>_data/links.yml</code>, rendered through the minimal layout. Includes outbound-click tracking with platform detection (Spotify / YouTube / SoundCloud / Instagram).</li>
+        <li>Added an inline <strong>Instagram glyph</strong> to any link-hub item whose URL points to <code>instagram.com</code>, sized in <code>em</code> so it tracks the button's font size and inherits the link color on hover.</li>
+        <li>Added an inline <strong>Steam glyph</strong> to any link-hub item whose URL points to <code>steamcommunity.com</code> or <code>steampowered.com</code>, using the same sizing/coloring conventions as the Instagram icon.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Swapped the link-hub's <strong>radial wash</strong> from rose to teal in <strong>light mode</strong> (via a new <code>--link-hub-wash</code> custom property), so the page sits inside the rest of the site's light-mode palette instead of fighting it.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Associated each link's optional <strong>hint text</strong> with its anchor via <code>aria-describedby</code>, so screen readers announce the hint as part of the link's accessible description instead of as orphaned text below it.</li>
+        <li>Aligned the links-hub <strong>avatar</strong>'s <code>width</code>/<code>height</code> attributes (88×88) with its rendered CSS size to prevent a small layout shift on slow connections.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">May 10, 2026</h2>
 
     <div class="changelog-group">

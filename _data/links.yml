@@ -1,20 +1,14 @@
 # Bio / link-in-profile page — edit this file to add or reorder links.
-tagline: 🃏
+tagline: Autobiographical Anonymous
 
 sections:
-  - heading: Aquínomás
+  - heading: Music
     items:
-      - label: Instagram
+      - label: Aquínomás
         url: https://instagram.com/aquinomasband
-      - label: Bandcamp
-        url: https://aquinomas.bandcamp.com
-      - label: Apple Music
-        url: https://music.apple.com/us/artist/aquinomas/1786516091
-      - label: YouTube
-        url: https://www.youtube.com/@aquinomasband
-
-  - heading: Moon Lizards
-    items:
-      - label: Instagram
+      - label: Moon Lizards
         url: https://instagram.com/moonlizardsie
-        hint: Music coming 🔜
+  - heading: Elsewhere
+    items:
+      - label: Steam
+        url: https://steamcommunity.com/id/mattrugamas
