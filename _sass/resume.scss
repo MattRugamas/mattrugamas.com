@@ -1,4 +1,4 @@
-@use 'settings' as *;
+@use "settings" as *;
 
 ///////////////
 /* RESUME/CV  */
@@ -71,7 +71,7 @@
         font-size: var(--text-sm);
         color: var(--color-links);
         text-decoration: none;
-        transition: color .2s;
+        transition: color 0.2s;
 
         &:hover {
           color: var(--color-highlight);
@@ -91,7 +91,7 @@
       font-family: $fonts-body;
       font-size: var(--text-sm);
       cursor: pointer;
-      transition: all .2s;
+      transition: all 0.2s;
 
       &:hover {
         background-color: var(--color-links);
@@ -278,7 +278,7 @@
         a {
           color: var(--color-links);
           text-decoration: none;
-          transition: color .2s;
+          transition: color 0.2s;
 
           &:hover {
             color: var(--color-highlight);
@@ -325,7 +325,14 @@
 
     // Force all colours to black/dark on white
     *,
-    h1, h2, h3, h4, p, li, dt, dd {
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    li,
+    dt,
+    dd {
       color: #000 !important;
       background: transparent !important;
       box-shadow: none !important;

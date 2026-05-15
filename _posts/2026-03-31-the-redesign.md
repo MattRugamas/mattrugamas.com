@@ -24,7 +24,7 @@ None of this was broken, exactly. But it wasn't a site I'd hand to someone who a
 
 I approached this in a few passes.
 
-The first was architectural. I converted the whole stylesheet to mobile-first; base styles for small screens, `min-width` breakpoints layering in the desktop layout. I introduced a proper design token system using CSS custom properties: a spacing scale, a type scale, a named color palette. Every color reference in the codebase now points to a variable instead of a hardcoded value. That groundwork made the light/dark mode toggle possible, and honestly easier than I expected. It's just a `data-theme` attribute on the root element, with a small script in `<head>` that reads `localStorage` before the first paint so there's no flash.
+The first was architectural. I converted the whole stylesheet to mobile-first; base styles for small screens, `min-width` breakpoints layering in the desktop layout. I introduced a proper design token system using CSS custom properties: a spacing scale, a type scale, a named color palette. Every color reference in the codebase now points to a variable instead of a hardcoded value. That groundwork made the light/dark mode toggle possible, and honestly easier than I expected. It's just a `data-theme` attribute on the root element, with a small script in `<head>` that reads `localStorage` before the first paint so there's no flash[^1].
 
 The second pass was structural. I rebuilt the About page around CSS Grid instead of the flexbox `column-reverse` trick I was using before. I extracted music into its own page. I rebuilt the resume as an actual web CV with semantic HTML: proper headings, `<article>` elements per role, a `<dl>` for skills. The navigation got a hamburger menu for mobile and a somewhat cleaner active-state treatment.
 
@@ -32,7 +32,7 @@ The third pass was content. I rewrote the homepage intro and the About bio to sa
 
 ## What's Still The Same
 
-The tech stack is unchanged. Still Jekyll, still GitHub Pages, still a `git push` to deploy. I wrote a whole other post about why I'm keeping that setup, but the short version is: it's the right tool for what this site actually is. I didn't need to migrate to something more complex to make it better. I just wanted to clean up the CSS and fix the copy.
+The tech stack is unchanged. Still [Jekyll](https://jekyllrb.com), still [GitHub Pages](https://pages.github.com), still a `git push` to deploy. I wrote a whole other post about why I'm keeping that setup, but the short version is: it's the right tool for what this site actually is. I didn't need to migrate to something more complex to make it better. I just wanted to clean up the CSS and fix the copy.
 
 The dark theme is still the default. The color palette is the same, a dark charcoal background with warm cream text and teal accents. What's new is a light mode that maps those same values to their warm-background counterparts, keeping the same character just with the values flipped.
 
@@ -41,3 +41,6 @@ The dark theme is still the default. The color palette is the same, a dark charc
 There's something satisfying about treating a personal site like a real project rather than a test environment you keep meaning to clean up. The design constraints are low-stakes in a useful way, nobody's filing a bug report if something looks slightly off, but that also means there's no excuse not to just fix the thing that's been bothering you.
 
 This site is a work in progress in the most literal sense. The blog is thin. There's probably still some CSS somewhere that's doing too much work. But it's a better version than what was here before, and that feels like the right direction.
+
+[^1]: The script has to run synchronously in `<head>`, before the browser paints the body. Moving it to an external file with `defer` would add a blocking request and reintroduce the flash, which defeats the point.
+

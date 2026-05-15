@@ -59,6 +59,22 @@ article.blogpost {
       line-height: 1.7;
     }
 
+    ul,
+    ol {
+      margin: 0 0 var(--space-4);
+      padding-inline-start: var(--space-6);
+      font-family: $fonts-body;
+      font-size: var(--text-base);
+      line-height: 1.7;
+    }
+
+    ul { list-style-type: disc; }
+    ol { list-style-type: decimal; }
+
+    li {
+      margin-bottom: var(--space-2);
+    }
+
     figure.shadow_image {
       margin: var(--space-8) auto;
       width: fit-content;
@@ -72,6 +88,50 @@ article.blogpost {
         text-align: center;
       }
     }
+
+    sup {
+      a.footnote {
+        text-decoration: none;
+        font-weight: var(--font-weight-semi);
+        padding: 0 0.15em;
+      }
+    }
+
+    .footnotes {
+      margin-top: var(--space-12);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-dates);
+      font-family: $fonts-body;
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      color: var(--color-dates);
+
+      ol {
+        margin: 0;
+        padding-inline-start: var(--space-6);
+        list-style-type: decimal;
+        font-size: var(--text-sm);
+        line-height: 1.6;
+      }
+
+      li {
+        margin-bottom: var(--space-3);
+        &:last-child { margin-bottom: 0; }
+      }
+
+      p {
+        display: inline;
+        margin: 0;
+        font-size: var(--text-sm);
+        line-height: 1.6;
+        color: var(--color-dates);
+      }
+
+      a.reversefootnote {
+        margin-left: 0.35em;
+        text-decoration: none;
+      }
+    }
   }
 
   @media all and (max-width: 800px) {
@@ -81,3 +141,117 @@ article.blogpost {
       }
     }
   }
+
+///////////////////////////
+/* ROUGE SYNTAX THEME    */
+///////////////////////////
+// Maps Rouge token classes to the site's palette (via custom properties in
+// _settings.scss), so dark, light, and print modes share one set of rules.
+
+.highlight table td {
+  padding: 5px;
+}
+.highlight table pre {
+  margin: 0;
+}
+
+pre.highlight {
+  color: var(--color-text);
+  background-color: var(--code-bg);
+}
+
+code.highlighter-rouge {
+  color: var(--color-text);
+  background-color: var(--inline-code-bg);
+  border: 1px solid var(--inline-code-border);
+}
+
+.highlight .w {
+  color: var(--color-text);
+}
+
+.highlight .err {
+  color: var(--color-base);
+  background-color: var(--color-links);
+}
+
+// Comments
+.highlight .c,
+.highlight .cd,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs,
+.highlight .cp {
+  color: var(--code-comment);
+}
+
+// Operators / punctuation — default text
+.highlight .o,
+.highlight .ow,
+.highlight .p,
+.highlight .pi {
+  color: var(--color-text);
+}
+
+// Diff
+.highlight .gi {
+  color: var(--color-dates);
+}
+.highlight .gd {
+  color: var(--color-links);
+}
+.highlight .gh {
+  color: var(--color-highlight);
+  font-weight: bold;
+}
+
+// Keywords (incl. constants, types, declarations)
+.highlight .k,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kv,
+.highlight .kc,
+.highlight .kt,
+.highlight .kd {
+  color: var(--color-highlight);
+}
+
+// Strings + regex / interpolation / escape
+.highlight .s,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .s2,
+.highlight .sh,
+.highlight .sx,
+.highlight .s1,
+.highlight .sr,
+.highlight .si,
+.highlight .se {
+  color: var(--color-links);
+}
+
+// Names: tags use highlight; namespace / class / constant / attr use dates
+.highlight .nt {
+  color: var(--color-highlight);
+}
+.highlight .nn,
+.highlight .nc,
+.highlight .no,
+.highlight .na {
+  color: var(--color-dates);
+}
+
+// Numbers + symbols
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .il,
+.highlight .mo,
+.highlight .mb,
+.highlight .mx,
+.highlight .ss {
+  color: var(--color-dates);
+}

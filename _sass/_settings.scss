@@ -1,24 +1,34 @@
-$fonts-body:   'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-$fonts-titles: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-$fonts-source: 'Source Code Pro', monospace;
+$fonts-body:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
+$fonts-titles:
+  "Inter",
+  -apple-system,
+  BlinkMacSystemFont,
+  "Segoe UI",
+  sans-serif;
+$fonts-source: "Source Code Pro", monospace;
 
 // Dark palette
-$base:      rgb(42, 45, 51);
-$selected:  rgb(52, 56, 64);
-$text:      rgb(255, 244, 224);
-$inactive:  rgb(229, 220, 202);
-$links:     rgb(255, 159, 170);
+$base: rgb(42, 45, 51);
+$selected: rgb(52, 56, 64);
+$text: rgb(255, 244, 224);
+$inactive: rgb(229, 220, 202);
+$links: rgb(255, 159, 170);
 $highlight: rgb(0, 206, 217);
-$dates:     rgb(159, 203, 204);
+$dates: rgb(159, 203, 204);
 
 // Light palette — all foreground values verified ≥4.5:1 on $light-base
-$light-base:      rgb(248, 245, 238); // warm cream bg
-$light-selected:  rgb(232, 227, 216); // hover/selected bg (bg-only, no contrast req)
-$light-text:      rgb(42, 45, 51);    // ~16:1 ✓
-$light-inactive:  rgb(100, 94, 82);   // ~5.2:1 ✓
-$light-links:     rgb(155, 28, 48);   // deep rose ~7.8:1 ✓
-$light-highlight: rgb(0, 105, 115);   // deep teal ~5.5:1 ✓
-$light-dates:     rgb(45, 100, 105);  // dark teal ~5.3:1 ✓
+$light-base: rgb(248, 245, 238); // warm cream bg
+$light-selected: rgb(232, 227, 216); // hover/selected bg (bg-only, no contrast req)
+$light-text: rgb(42, 45, 51); // ~16:1 ✓
+$light-inactive: rgb(100, 94, 82); // ~5.2:1 ✓
+$light-links: rgb(155, 28, 48); // deep rose ~7.8:1 ✓
+$light-highlight: rgb(0, 105, 115); // deep teal ~5.5:1 ✓
+$light-dates: rgb(45, 100, 105); // dark teal ~5.3:1 ✓
 
 $bp-sm: 40em;
 $bp-md: 52em;
@@ -26,76 +36,80 @@ $bp-md: 52em;
 // --- Dark mode (default) ---
 :root {
   color-scheme: light dark;
-  --color-base:      #{$base};
-  --color-selected:  #{$selected};
-  --color-text:      #{$text};
-  --color-inactive:  #{$inactive};
-  --color-links:     #{$links};
+  --color-base: #{$base};
+  --color-selected: #{$selected};
+  --color-text: #{$text};
+  --color-inactive: #{$inactive};
+  --color-links: #{$links};
   --color-highlight: #{$highlight};
-  --color-dates:     #{$dates};
+  --color-dates: #{$dates};
 
   // Code surfaces (dark defaults). Token hues reuse the brand vars above;
   // these four cover only what the brand palette doesn't already express.
-  --code-bg:            rgba(29, 29, 29, 0.5);
-  --code-comment:       rgb(150, 148, 138);
-  --inline-code-bg:     rgba(29, 29, 29, 0.5);
+  --code-bg: rgba(29, 29, 29, 0.5);
+  --code-comment: rgb(150, 148, 138);
+  --inline-code-bg: rgba(29, 29, 29, 0.5);
   --inline-code-border: var(--color-selected);
 
   --nav-height: 71px;
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
-  --font-weight-semi:   600;
-  --font-weight-bold:   700;
+  --font-weight-semi: 600;
+  --font-weight-bold: 700;
 
-  --space-1:  0.25rem;
-  --space-2:  0.5rem;
-  --space-3:  0.75rem;
-  --space-4:  1rem;
-  --space-6:  1.5rem;
-  --space-8:  2rem;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
   --space-12: 3rem;
   --space-16: 4rem;
 
-  --text-sm:   0.8125rem;
+  --text-sm: 0.8125rem;
   --text-base: 1rem;
-  --text-lg:   1.125rem;
-  --text-xl:   1.5rem;
-  --text-2xl:  2rem;
-  --text-3xl:  2.75rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
 
   --content-gap: var(--space-8);
 
-  --content-hero:  675px;
+  --content-hero: 675px;
   --content-prose: 720px;
-  --content-post:  760px;
-  --content-cv:    800px;
-  --content-wide:  1000px;
+  --content-post: 760px;
+  --content-cv: 800px;
+  --content-wide: 1000px;
 }
 
 // --- Light mode mixin ---
 @mixin light-colors {
-  --color-base:      #{$light-base};
-  --color-selected:  #{$light-selected};
-  --color-text:      #{$light-text};
-  --color-inactive:  #{$light-inactive};
-  --color-links:     #{$light-links};
+  --color-base: #{$light-base};
+  --color-selected: #{$light-selected};
+  --color-text: #{$light-text};
+  --color-inactive: #{$light-inactive};
+  --color-links: #{$light-links};
   --color-highlight: #{$light-highlight};
-  --color-dates:     #{$light-dates};
+  --color-dates: #{$light-dates};
 
-  --code-bg:            #{$light-selected};
-  --code-comment:       #{$light-inactive};
-  --inline-code-bg:     #{rgba($light-selected, 0.5)};
+  --code-bg: #{$light-selected};
+  --code-comment: #{$light-inactive};
+  --inline-code-bg: #{rgba($light-selected, 0.5)};
   --inline-code-border: #{rgba($light-inactive, 0.35)};
 }
 
 // System light preference (no explicit override)
 @media (prefers-color-scheme: light) {
-  :root:not([data-theme="dark"]) { @include light-colors; }
+  :root:not([data-theme="dark"]) {
+    @include light-colors;
+  }
 }
 
 // Explicit light
-[data-theme="light"] { @include light-colors; }
+[data-theme="light"] {
+  @include light-colors;
+}
 
 // --- Shared ---
 @mixin focus-ring {
@@ -103,8 +117,14 @@ $bp-md: 52em;
   outline-offset: 2px;
 }
 
-@mixin ui-shadow   { box-shadow:  0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15); }
-@mixin text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+@mixin ui-shadow {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 1px 3px rgba(0, 0, 0, 0.15);
+}
+@mixin text-shadow {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
 
 @mixin content-base {
   display: flex;
@@ -137,7 +157,7 @@ $bp-md: 52em;
 
 @mixin link-setup {
   a {
-    transition: all .2s;
+    transition: all 0.2s;
     color: var(--color-links);
     &:hover {
       @include ui-shadow;
@@ -161,8 +181,9 @@ $bp-md: 52em;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   text-decoration: none;
-  &:after, &:before {
-    transition: all .5s;
+  &:after,
+  &:before {
+    transition: all 0.5s;
   }
   &:hover {
     @include text-shadow;
@@ -189,7 +210,7 @@ $bp-md: 52em;
         right: 0;
         margin: auto;
         width: 0%;
-        content: '.';
+        content: ".";
         color: transparent;
         text-shadow: none;
         background: var(--color-highlight);
@@ -227,17 +248,17 @@ $bp-md: 52em;
     color-scheme: light;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    --color-base:      #fff;
-    --color-selected:  transparent;
-    --color-text:      #000;
-    --color-inactive:  #555;
-    --color-links:     #000;
+    --color-base: #fff;
+    --color-selected: transparent;
+    --color-text: #000;
+    --color-inactive: #555;
+    --color-links: #000;
     --color-highlight: #000;
-    --color-dates:     #555;
+    --color-dates: #555;
 
-    --code-bg:            transparent;
-    --code-comment:       #555;
-    --inline-code-bg:     transparent;
+    --code-bg: transparent;
+    --code-comment: #555;
+    --inline-code-bg: transparent;
     --inline-code-border: #999;
   }
 }

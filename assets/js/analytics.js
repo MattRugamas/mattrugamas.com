@@ -1,4 +1,3 @@
-<script>
 (function () {
   'use strict';
 
@@ -16,8 +15,8 @@
       var nav = document.querySelector('nav');
       var isMobileOpen = nav && nav.classList.contains('open');
       track('nav_click', {
-        nav_item_name:  this.textContent.trim(),
-        nav_item_url:   this.getAttribute('href'),
+        nav_item_name: this.textContent.trim(),
+        nav_item_url: this.getAttribute('href'),
         // desktop = wide viewport with always-visible nav
         // hamburger = mobile nav that was explicitly opened
         nav_context: isMobileOpen ? 'hamburger' : 'desktop'
@@ -29,11 +28,11 @@
   var themeToggle = document.getElementById('theme-toggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', function () {
-      var attr    = document.documentElement.getAttribute('data-theme');
-      var isDark  = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
+      var attr = document.documentElement.getAttribute('data-theme');
+      var isDark = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
       track('theme_toggle', {
         theme_from: isDark ? 'dark' : 'light',
-        theme_to:   isDark ? 'light' : 'dark'
+        theme_to: isDark ? 'light' : 'dark'
       });
     });
   }
@@ -43,15 +42,15 @@
   if (blogList) {
     blogList.querySelectorAll('article h3 a').forEach(function (link) {
       link.addEventListener('click', function () {
-        var article  = this.closest('article');
-        var dateEl   = article && article.querySelector('.date');
-        var yearEl   = this.closest('.year-group');
+        var article = this.closest('article');
+        var dateEl = article && article.querySelector('.date');
+        var yearEl = this.closest('.year-group');
         var yearHead = yearEl && yearEl.querySelector('.year-heading');
         track('blog_post_click', {
           post_title: this.textContent.trim(),
-          post_url:   this.getAttribute('href'),
-          post_date:  dateEl  ? dateEl.textContent.trim()  : '',
-          post_year:  yearHead ? yearHead.textContent.trim() : ''
+          post_url: this.getAttribute('href'),
+          post_date: dateEl ? dateEl.textContent.trim() : '',
+          post_year: yearHead ? yearHead.textContent.trim() : ''
         });
       });
     });
@@ -59,22 +58,22 @@
 
   // ─── 4. Music page external link clicks ───────────────────────────────────
   document.querySelectorAll('.music-project').forEach(function (project) {
-    var h2          = project.querySelector('h2');
+    var h2 = project.querySelector('h2');
     var projectName = h2 ? h2.textContent.trim() : 'unknown';
 
     project.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
-        var href     = this.getAttribute('href') || '';
+        var href = this.getAttribute('href') || '';
         var platform = 'other';
-        if      (href.includes('spotify.com'))                          platform = 'spotify';
+        if (href.includes('spotify.com')) platform = 'spotify';
         else if (href.includes('youtube.com') || href.includes('youtu.be')) platform = 'youtube';
-        else if (href.includes('soundcloud.com'))                       platform = 'soundcloud';
-        else if (href.includes('instagram.com'))                        platform = 'instagram';
+        else if (href.includes('soundcloud.com')) platform = 'soundcloud';
+        else if (href.includes('instagram.com')) platform = 'instagram';
         track('music_link_click', {
           music_project: projectName,
-          platform:      platform,
-          link_text:     this.textContent.trim(),
-          link_url:      href
+          platform: platform,
+          link_text: this.textContent.trim(),
+          link_url: href
         });
       });
     });
@@ -87,7 +86,7 @@
       link.addEventListener('click', function () {
         track('social_link_click', {
           social_platform: this.textContent.trim(),
-          link_url:        this.getAttribute('href')
+          link_url: this.getAttribute('href')
         });
       });
     });
@@ -98,7 +97,7 @@
   if (musicCta) {
     musicCta.addEventListener('click', function () {
       track('about_cta_click', {
-        cta_text:    this.textContent.trim(),
+        cta_text: this.textContent.trim(),
         destination: this.getAttribute('href')
       });
     });
@@ -128,8 +127,8 @@
   document.querySelectorAll('.tag-filter .tag-badge').forEach(function (link) {
     link.addEventListener('click', function () {
       track('tag_filter_click', {
-        tag_name:  this.textContent.trim(),
-        tag_url:   this.getAttribute('href'),
+        tag_name: this.textContent.trim(),
+        tag_url: this.getAttribute('href'),
         page_path: window.location.pathname
       });
     });
@@ -142,7 +141,7 @@
       link.addEventListener('click', function () {
         track('post_footer_click', {
           link_text: this.textContent.trim(),
-          link_url:  this.getAttribute('href'),
+          link_url: this.getAttribute('href'),
           page_path: window.location.pathname
         });
       });
@@ -156,7 +155,7 @@
       link.addEventListener('click', function () {
         track('footer_link_click', {
           link_text: this.textContent.trim(),
-          link_url:  this.getAttribute('href')
+          link_url: this.getAttribute('href')
         });
       });
     });
@@ -171,16 +170,18 @@
         var h2 = section && section.querySelector('h2');
         var href = this.getAttribute('href') || '';
         var platform = 'other';
-        if      (href.includes('spotify.com'))                          platform = 'spotify';
+        if (href.includes('spotify.com')) platform = 'spotify';
         else if (href.includes('youtube.com') || href.includes('youtu.be')) platform = 'youtube';
-        else if (href.includes('soundcloud.com'))                       platform = 'soundcloud';
-        else if (href.includes('instagram.com'))                        platform = 'instagram';
+        else if (href.includes('soundcloud.com')) platform = 'soundcloud';
+        else if (href.includes('instagram.com')) platform = 'instagram';
+        else if (href.includes('steamcommunity.com') || href.includes('steampowered.com')) platform = 'steam';
+        else if (href.includes('discord.gg') || href.includes('discord.com')) platform = 'discord';
 
         track('link_hub_click', {
           link_section: h2 ? h2.textContent.trim() : '',
-          platform:     platform,
-          link_text:    this.textContent.trim(),
-          link_url:     href
+          platform: platform,
+          link_text: this.textContent.trim(),
+          link_url: href
         });
       });
     });
@@ -197,12 +198,12 @@
   }
 
   // ─── 14. Scroll depth (25 / 50 / 75 / 100 %) ─────────────────────────────
-  var depthsFired  = {};
+  var depthsFired = {};
   var depthMarkers = [25, 50, 75, 100];
 
   function checkScrollDepth() {
-    var scrollTop  = window.scrollY || document.documentElement.scrollTop;
-    var docHeight  = Math.max(
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = Math.max(
       document.body.scrollHeight,
       document.documentElement.scrollHeight
     ) - window.innerHeight;
@@ -216,8 +217,8 @@
         depthsFired[marker] = true;
         track('scroll_depth', {
           depth_percent: marker,
-          page_title:    document.title,
-          page_path:     window.location.pathname
+          page_title: document.title,
+          page_path: window.location.pathname
         });
       }
     });
@@ -228,4 +229,3 @@
   checkScrollDepth();
 
 }());
-</script>

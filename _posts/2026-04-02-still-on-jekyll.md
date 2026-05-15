@@ -4,13 +4,13 @@ title: "Still on Jekyll, Probably Forever"
 date: 2026-04-02
 ---
 
-I've rebuilt this site a few times now. Not a full rebuild, more like the kind of thing where you touch one CSS file and end up rewriting three others. Each time I do it, I think about whether I should just... do it properly. Migrate to something modern. Maybe Next.js. Maybe Astro. Maybe whatever the new thing is by the time you're reading this.
+I've rebuilt this site a few times now. Not a full rebuild, more like the kind of thing where you touch one CSS file and end up rewriting three others. Each time I do it, I think about whether I should just... do it properly. Migrate to something modern. Maybe [Next.js](https://nextjs.org). Maybe [Astro](https://astro.build). Maybe whatever the new thing is by the time you're reading this.
 
 {% figure caption:"A Classic Case of Old Versus New" class:"shadow_image" %}
 ![old-vs-new](/assets/img/oldvsnew.png){:class="img-responsive"}
 {% endfigure %}
 
-Each time, I end up back at the same place: a text editor, a folder of Markdown files, and a `git push` that deploys to GitHub Pages in about ninety seconds. No build server. No monthly bill. No framework to upgrade around. Just HTML and CSS, served from an edge node somewhere, loading fast on whatever connection you're on.
+Each time, I end up back at the same place: a text editor, a folder of Markdown files, and a `git push` that deploys to [GitHub Pages](https://pages.github.com) in about ninety seconds. No build server. No monthly bill. No framework to upgrade around. Just HTML and CSS, served from an edge node somewhere, loading fast on whatever connection you're on.
 
 I want to think out loud about why. It's not because I haven't looked at the alternatives.
 
@@ -18,7 +18,7 @@ I want to think out loud about why. It's not because I haven't looked at the alt
 
 A personal site is a weird thing to optimize. It's not a product. It's not a dashboard. Nobody is going to bounce if your page load is 300ms instead of 100ms. The requirements are relaxed: a place for text, the occasional photo, links I want to share, maybe some thoughts about things I've been working on or listening to. That's it.
 
-When I think about what this site needs, the list is short: serve HTML fast, don't cost money, don't break and let me write posts in a format I'll still be able to read in ten years. Markdown in a git repo checks all of those. It's also portable; if GitHub Pages disappears or changes its pricing, I can point the same files at Netlify, Cloudflare Pages, or an S3 bucket in about twenty minutes.
+When I think about what this site needs, the list is short: serve HTML fast, don't cost money, don't break and let me write posts in a format I'll still be able to read in ten years. Markdown in a git repo checks all of those. It's also portable; if GitHub Pages disappears or changes its pricing, I can point the same files at [Netlify](https://www.netlify.com), [Cloudflare Pages](https://pages.cloudflare.com), or an S3 bucket in about twenty minutes[^1].
 
 That's a different kind of reliability than "the framework is well-maintained." It's the reliability of boring, stable technology that doesn't have anywhere to go.
 
@@ -30,7 +30,7 @@ A JavaScript bundle to ship to every visitor. A Node runtime to keep alive somew
 
 For a site with no interactivity, no real-time data, no user accounts, no dynamic server-side logic, that tradeoff is hard to justify. The thing you're optimizing for with a React app is developer ergonomics and component reuse. I have three pages. I don't need component reuse. I need to write a post and not think about it until next time.
 
-Jekyll's output is just files. Which is, at the end of the day, what a website is.
+[Jekyll](https://jekyllrb.com)'s output is just files. Which is, at the end of the day, what a website is.
 
 ## The Nostalgia Is Real, But It's Not The Point
 
@@ -47,3 +47,5 @@ Honestly? Not enough. The archive on this site is thin. But I've found that havi
 That frictionlessness is something I've come to value. It's why I'm not migrating to something with more features, more flexibility, more configuration surface area. Features are friction when you don't need them. I've got the features I need, and they're working fine.
 
 So we're still on Jekyll in 2026. Probably forever, or at least until GitHub Pages does something unforgivable, which seems unlikely. And if they do, the files are right here.
+
+[^1]: The same Jekyll setup runs on Netlify with a small `netlify.toml`, or on Cloudflare Pages with a build command set in the dashboard. Migration cost is mostly DNS propagation, and the source files don't change.
