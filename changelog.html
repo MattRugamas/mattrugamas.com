@@ -22,6 +22,9 @@ title: Changelog
       <h3>Changed</h3>
       <ul>
         <li>Expanded the link-hub click-tracking platform detection to recognize <strong>Steam</strong> and <strong>Discord</strong> as named platforms instead of bucketing them under <code>other</code>, so the GA breakdown stays consistent with the icons rendered on the page.</li>
+        <li>Refreshed the <strong><code>README.md</code></strong> so it actually describes the project: replaced the dead Travis CI badge with a live GitHub Actions deploy badge, updated the stack and plugin list to match the current <code>Gemfile</code> and <code>_config.yml</code>, documented the <code>tmp-checkpoint</code> → <code>release</code> deploy workflow, and removed the long-stale "Goals" list.</li>
+        <li>Audited <strong><code>_config.yml</code></strong>: split the homepage identity into a short <code>tagline</code> ("Customers, code, and product") that jekyll-seo-tag uses for the homepage <code>&lt;title&gt;</code> concat, and a longer <code>description</code> reserved for the meta description and social cards. Removed stale <code>twitter_username</code> and <code>codepen_username</code> entries, deleted a no-op <code>defaults</code> rule that set <code>image: true</code> on every file under <code>assets/img/</code>, and added an explicit <code>exclude</code> block so <code>README.md</code>, <code>LICENSE</code>, <code>Gemfile</code>(<code>.lock</code>), <code>vendor/</code>, and <code>.github/</code> stop getting copied into the built site.</li>
+        <li>Audited <strong><code>.gitignore</code></strong>: added <code>vendor/</code> and <code>.bundle/</code> for bundler vendoring directories that don't belong in version control, and tightened the existing <code>*swp</code> pattern to <code>*.swp</code> so it only matches the actual vim swap extension.</li>
       </ul>
     </div>
 
