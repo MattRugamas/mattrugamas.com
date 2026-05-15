@@ -5,13 +5,26 @@
 ///////////////
 
 // Soft wash behind the hub (same tokens as the rest of the site).
+// Dark mode rides the rose `--color-links`; light mode swaps to the teal
+// `--color-highlight` so the wash sits inside the rest of the site's palette.
 main:has(.link-hub) {
+  --link-hub-wash: var(--color-links);
   background-color: var(--color-base);
   background-image: radial-gradient(
     ellipse 90% 50% at 50% -8%,
-    color-mix(in srgb, var(--color-links) 16%, transparent),
+    color-mix(in srgb, var(--link-hub-wash) 16%, transparent),
     transparent 65%
   );
+}
+
+@media (prefers-color-scheme: light) {
+  html:not([data-theme="dark"]) main:has(.link-hub) {
+    --link-hub-wash: var(--color-highlight);
+  }
+}
+
+html[data-theme="light"] main:has(.link-hub) {
+  --link-hub-wash: var(--color-highlight);
 }
 
 main {
@@ -84,7 +97,10 @@ main {
     }
 
     .link-hub-list a {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
       text-align: center;
       text-decoration: none;
       padding: var(--space-3) var(--space-4);
@@ -105,6 +121,12 @@ main {
       &:focus-visible {
         @include focus-ring;
       }
+    }
+
+    .link-hub-icon {
+      flex-shrink: 0;
+      width: 1.125em;
+      height: 1.125em;
     }
 
     .link-hub-hint {
