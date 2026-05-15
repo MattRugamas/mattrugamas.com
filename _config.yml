@@ -1,6 +1,8 @@
 title: Matt Rugamas
+tagline: Customers, code, and product
 description: >
-  A Support professional based in Los Ángeles
+  Personal site of Matt Rugamas, a Senior Support and Accessibility Engineer
+  in Los Angeles, working at the intersection of customers, code and product.
 url: https://mattrugamas.com
 permalink: /:title
 
@@ -12,10 +14,8 @@ sass:
 google_analytics: G-EC57RQ9MNY
 
 # Social
-twitter_username: MattRugamas
 instagram_username: MattRugamas
 github_username: MattRugamas
-codepen_username: samagurtam
 
 # Build settings
 repository: MattRugamas/mattrugamas.com
@@ -36,11 +36,16 @@ plugins:
 jekyll-figure:
   paragraphs: false
 
+# Files Jekyll should not copy into the built site
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .github
+
 defaults:
-  - scope:
-      path: "assets/img"
-    values:
-      image: true
   - scope:
       path: ""
       type: "posts"
