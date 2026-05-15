@@ -9,6 +9,53 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">May 15, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added an inline <strong>Discord glyph</strong> to any link-hub item whose URL points to <code>discord.gg</code> or <code>discord.com</code>, using the same sizing/coloring conventions as the Instagram and Steam icons.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Expanded the link-hub click-tracking platform detection to recognize <strong>Steam</strong> and <strong>Discord</strong> as named platforms instead of bucketing them under <code>other</code>, so the GA breakdown stays consistent with the icons rendered on the page.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Styled <strong>lists inside blog posts</strong>. The global reset strips bullets and indent from every <code>&lt;ul&gt;</code>, and no rule restored them inside <code>article.blogpost</code>, so <code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code>/<code>&lt;li&gt;</code> fell back to the browser-default serif (Times New Roman) with no markers. Added matching <code>$fonts-body</code>, indent, bullets, and item spacing inside the post article. The issue was latent until the first post that actually used a list.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added a <strong>citations / footnotes</strong> treatment for posts: kramdown's <code>.footnotes</code> block now renders as a muted, smaller-type section below the post body with a thin top divider, an inline-rendered paragraph per item (so the marker stays inline with the text), and a subtly styled <code>↩</code> back-reference. Inline <code>sup a.footnote</code> reference markers also get a small bump in weight so they read as citations rather than orphan numerals.</li>
+        <li>Backfilled <strong>inline links and footnotes</strong> in <em>The Redesign</em> and <em>Still on Jekyll, Probably Forever</em>: brand names (Jekyll, GitHub Pages, Next.js, Astro, Netlify, Cloudflare Pages) now link to their respective homepages, and each post picks up a single explanatory footnote where the original prose was lightly hand-waving a technical claim.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">May 14, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Extracted the inline body scripts from the base layout and event-tracking include into external files at <code>/assets/js/site.js</code> and <code>/assets/js/analytics.js</code>, loaded with <code>defer</code>. Keeps the HTML cleaner, lets the browser cache the scripts across pages, and is friendlier to a future Content Security Policy. The pre-paint theme-flash script in <code>&lt;head&gt;</code> intentionally stays inline so it can run before first paint.</li>
+        <li>Extracted the Google Analytics bootstrap into a Jekyll-processed <code>/assets/js/ga-bootstrap.js</code> (the <code>{{ site.google_analytics }}</code> token still gets substituted at build), and dissolved the now-redundant <code>event-tracking.html</code> and <code>GoogleAnalytics.html</code> includes back into the base layout.</li>
+        <li>Extracted the post-layout inline scripts into <code>/assets/js/giscus-loader.js</code> (comments embed) and <code>/assets/js/random-post.js</code> (Jekyll-processed so the full post list is still rendered at build, but filtering of the current page now happens client-side against <code>window.location.pathname</code>).</li>
+        <li>Merged the standalone <code>syntax.css</code> Rouge theme into <code>_sass/posts.scss</code> and dropped the extra stylesheet link from the base layout, so syntax tokens now compile into the main <code>styles.css</code> bundle alongside the rest of the post styles.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">May 13, 2026</h2>
 
     <div class="changelog-group">

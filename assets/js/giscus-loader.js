@@ -1,0 +1,20 @@
+(function () {
+  var stored = localStorage.getItem('theme');
+  var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var s = document.createElement('script');
+  s.src = 'https://giscus.app/client.js';
+  s.setAttribute('data-repo', 'mattrugamas/mattrugamas.com');
+  s.setAttribute('data-repo-id', 'MDEwOlJlcG9zaXRvcnkxNjA2NDAzNjU=');
+  s.setAttribute('data-category', 'Announcements');
+  s.setAttribute('data-category-id', 'DIC_kwDOCZMtbc4C6mWJ');
+  s.setAttribute('data-mapping', 'pathname');
+  s.setAttribute('data-strict', '0');
+  s.setAttribute('data-reactions-enabled', '1');
+  s.setAttribute('data-emit-metadata', '0');
+  s.setAttribute('data-input-position', 'top');
+  s.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  s.setAttribute('data-lang', 'en');
+  s.setAttribute('crossorigin', 'anonymous');
+  s.async = true;
+  document.currentScript.parentNode.appendChild(s);
+})();
