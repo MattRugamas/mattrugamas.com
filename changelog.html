@@ -9,6 +9,24 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 3, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added an animated <strong>aurora background</strong> to the <code>/links/</code> page: four slow-drifting, palette-derived colour blobs (the brand rose and teal, plus a periwinkle bridge and a warm amber glow) rendered as a fixed, negative <code>z-index</code> layer behind the hub. The layer is masked with a vertical gradient so the glow concentrates above the fold and dissolves into the page around the first link, and it scales fluidly from mobile to desktop via <code>clamp()</code>-sized blobs. Intensity is tuned per theme — gentler on dark, more vivid and saturated on light — and the whole effect holds still under <code>prefers-reduced-motion</code>.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Replaced the link hub's static <code>--link-hub-wash</code> radial gradient with the new aurora layer, promoting <code>main:has(.link-hub)</code> to a stacking context (<code>isolation: isolate</code>) so the animated background paints above the opaque base colour but below both the links and the fixed nav.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 2, 2026</h2>
 
     <div class="changelog-group">
