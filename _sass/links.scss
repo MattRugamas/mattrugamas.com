@@ -4,27 +4,132 @@
 /* LINKS HUB */
 ///////////////
 
-// Soft wash behind the hub (same tokens as the rest of the site).
-// Dark mode rides the rose `--color-links`; light mode swaps to the teal
-// `--color-highlight` so the wash sits inside the rest of the site's palette.
+// Whisper-soft "aurora": four slow-drifting colour blobs concentrated above
+// the fold, fading out as the links begin. Rendered as a fixed, negative
+// z-index layer so it paints above main's opaque base colour but below the
+// hub content (main becomes a stacking context via `isolation` below).
+//
+// Palette: the brand rose + teal, plus two derived accents (a periwinkle
+// bridge and a warm amber glow) for a richer, more modern gradient.
 main:has(.link-hub) {
-  --link-hub-wash: var(--color-links);
+  position: relative;
+  isolation: isolate;
   background-color: var(--color-base);
-  background-image: radial-gradient(
-    ellipse 90% 50% at 50% -8%,
-    color-mix(in srgb, var(--link-hub-wash) 16%, transparent),
-    transparent 65%
-  );
+
+  // Dark-mode aurora hues + intensity.
+  --aur-rose: #ff9faa;
+  --aur-teal: #00ced9;
+  --aur-lilac: #9c8bff;
+  --aur-amber: #ffc49b;
+  --aur-opacity: 0.7;
+  --aur-blur: 64px;
+  // `screen` glows beautifully on the dark base; light mode swaps to `normal`.
+  --aur-blend: screen;
+}
+
+// Light mode: cream backdrop needs vivid, saturated hues at higher intensity
+// to actually read against the warm paper while staying in-palette.
+@mixin link-aurora-light {
+  --aur-rose: #ec3357;
+  --aur-teal: #0bb6c2;
+  --aur-lilac: #7a63f5;
+  --aur-amber: #f08a2e;
+  --aur-opacity: 0.62;
+  --aur-blur: 56px;
+  --aur-blend: normal;
 }
 
 @media (prefers-color-scheme: light) {
   html:not([data-theme="dark"]) main:has(.link-hub) {
-    --link-hub-wash: var(--color-highlight);
+    @include link-aurora-light;
   }
 }
 
 html[data-theme="light"] main:has(.link-hub) {
-  --link-hub-wash: var(--color-highlight);
+  @include link-aurora-light;
+}
+
+.link-aurora {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: min(88vh, 920px);
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  // Hold the glow at full strength deeper down (roughly to the first link),
+  // then dissolve into the page.
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+
+  .link-aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: var(--aur-opacity);
+    filter: blur(var(--aur-blur));
+    will-change: transform;
+    mix-blend-mode: var(--aur-blend);
+  }
+
+  .blob-rose {
+    top: -8%;
+    left: 6%;
+    width: clamp(220px, 48vmin, 540px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 50%, var(--aur-rose), transparent 70%);
+    animation: aur-drift-a 18s ease-in-out infinite;
+  }
+
+  .blob-teal {
+    top: -4%;
+    left: 52%;
+    width: clamp(220px, 46vmin, 520px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 50%, var(--aur-teal), transparent 70%);
+    animation: aur-drift-b 22s ease-in-out infinite;
+  }
+
+  .blob-lilac {
+    top: 14%;
+    left: 30%;
+    width: clamp(200px, 42vmin, 480px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 50%, var(--aur-lilac), transparent 70%);
+    animation: aur-drift-c 26s ease-in-out infinite;
+  }
+
+  .blob-amber {
+    top: 30%;
+    left: 16%;
+    width: clamp(180px, 38vmin, 440px);
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 50% 50%, var(--aur-amber), transparent 70%);
+    animation: aur-drift-d 30s ease-in-out infinite;
+  }
+}
+
+// Gentle, clearly-alive motion: wider drifts + a touch of scale.
+@keyframes aur-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(9%, 7%, 0) scale(1.14); }
+}
+@keyframes aur-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.08); }
+  50% { transform: translate3d(-11%, 8%, 0) scale(1); }
+}
+@keyframes aur-drift-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(8%, -7%, 0) scale(1.16); }
+}
+@keyframes aur-drift-d {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
+  50% { transform: translate3d(-9%, -5%, 0) scale(0.92); }
+}
+
+// Honour reduced-motion: hold the blobs still but keep the composition.
+@media (prefers-reduced-motion: reduce) {
+  .link-aurora .link-aurora-blob {
+    animation: none;
+  }
 }
 
 main {
