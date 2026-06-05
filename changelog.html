@@ -9,6 +9,17 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 4, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Reworked the <code>/links/</code> <strong>aurora background</strong> into a full-viewport <strong>flowing mesh gradient</strong>. The four discrete drifting colour blobs were replaced with two oversized, heavily-blurred multi-stop radial layers (rendered on <code>.link-aurora</code>'s <code>::before</code>/<code>::after</code>) that slowly counter-rotate and pulse-scale, so the palette-derived colour wells bleed into one continuous, morphing field rather than reading as separate orbs. The layer now spans the entire viewport (<code>inset: 0</code>) instead of a top-of-page band, the previous vertical fade was swapped for a soft radial vignette that frames and gently dims the reading column while melting the field into the screen edges, the brand hues were punched up a notch in both themes, and the motion runs roughly twice as fast. Link buttons also picked up a <strong>frosted-glass</strong> treatment (<code>backdrop-filter</code> blur + a translucent base) so they stay legible over the brighter full-bleed field. The whole effect still holds still under <code>prefers-reduced-motion</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 3, 2026</h2>
 
     <div class="changelog-group">

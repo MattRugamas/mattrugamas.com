@@ -4,37 +4,50 @@
 /* LINKS HUB */
 ///////////////
 
-// Whisper-soft "aurora": four slow-drifting colour blobs concentrated above
-// the fold, fading out as the links begin. Rendered as a fixed, negative
-// z-index layer so it paints above main's opaque base colour but below the
-// hub content (main becomes a stacking context via `isolation` below).
+// Full-bleed "aurora": a flowing mesh-gradient field that spans the entire
+// viewport. Two oversized, heavily-blurred multi-stop radial layers slowly
+// counter-rotate and pulse so the colour wells bleed into one another and the
+// whole field morphs continuously (OpenAI/Vercel-style). Rendered as a fixed,
+// negative z-index layer so it paints above main's opaque base colour but below
+// the hub content (main becomes a stacking context via `isolation`).
 //
 // Palette: the brand rose + teal, plus two derived accents (a periwinkle
-// bridge and a warm amber glow) for a richer, more modern gradient.
+// bridge and a warm amber glow), punched up for a more saturated, modern field.
 main:has(.link-hub) {
   position: relative;
   isolation: isolate;
   background-color: var(--color-base);
 
-  // Dark-mode aurora hues + intensity.
-  --aur-rose: #ff9faa;
-  --aur-teal: #00ced9;
-  --aur-lilac: #9c8bff;
-  --aur-amber: #ffc49b;
-  --aur-opacity: 0.7;
+  // Dark-mode aurora hues + intensity (punchier, higher-saturation hues).
+  --aur-rose: #ff6f87;
+  --aur-teal: #00e0ff;
+  --aur-lilac: #9b7bff;
+  --aur-amber: #ffae6b;
+  --aur-opacity: 0.72;
   --aur-blur: 64px;
   // `screen` glows beautifully on the dark base; light mode swaps to `normal`.
   --aur-blend: screen;
+
+  // Shared vignette: full strength in a ring around the centre, gently dimmed
+  // behind the reading column, melting away at the screen edges.
+  --aur-mask: radial-gradient(
+    125% 115% at 50% 42%,
+    rgba(0, 0, 0, 0.45) 0%,
+    #000 28%,
+    #000 60%,
+    rgba(0, 0, 0, 0.5) 82%,
+    transparent 100%
+  );
 }
 
 // Light mode: cream backdrop needs vivid, saturated hues at higher intensity
 // to actually read against the warm paper while staying in-palette.
 @mixin link-aurora-light {
-  --aur-rose: #ec3357;
-  --aur-teal: #0bb6c2;
-  --aur-lilac: #7a63f5;
-  --aur-amber: #f08a2e;
-  --aur-opacity: 0.62;
+  --aur-rose: #e51d46;
+  --aur-teal: #00b3c7;
+  --aur-lilac: #6a4cf2;
+  --aur-amber: #f47a12;
+  --aur-opacity: 0.66;
   --aur-blur: 56px;
   --aur-blend: normal;
 }
@@ -51,83 +64,71 @@ html[data-theme="light"] main:has(.link-hub) {
 
 .link-aurora {
   position: fixed;
-  inset: 0 0 auto 0;
-  height: min(88vh, 920px);
+  inset: 0;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  // Hold the glow at full strength deeper down (roughly to the first link),
-  // then dissolve into the page.
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+  -webkit-mask-image: var(--aur-mask);
+  mask-image: var(--aur-mask);
 
-  .link-aurora-blob {
+  // Two oversized gradient fields, centred and rotated about the viewport.
+  // Heavy blur melts the individual wells into one continuous mesh.
+  &::before,
+  &::after {
+    content: "";
     position: absolute;
-    border-radius: 50%;
-    opacity: var(--aur-opacity);
-    filter: blur(var(--aur-blur));
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
     will-change: transform;
+    filter: blur(calc(var(--aur-blur) + 24px));
     mix-blend-mode: var(--aur-blend);
   }
 
-  .blob-rose {
-    top: -8%;
-    left: 6%;
-    width: clamp(220px, 48vmin, 540px);
-    aspect-ratio: 1;
-    background: radial-gradient(circle at 50% 50%, var(--aur-rose), transparent 70%);
-    animation: aur-drift-a 18s ease-in-out infinite;
+  // Primary mesh field.
+  &::before {
+    opacity: var(--aur-opacity);
+    background:
+      radial-gradient(38% 38% at 24% 30%, var(--aur-rose), transparent 62%),
+      radial-gradient(42% 42% at 76% 24%, var(--aur-teal), transparent 64%),
+      radial-gradient(46% 46% at 32% 74%, var(--aur-lilac), transparent 62%),
+      radial-gradient(40% 40% at 72% 78%, var(--aur-amber), transparent 62%);
+    animation: aur-mesh-a 16s linear infinite;
   }
 
-  .blob-teal {
-    top: -4%;
-    left: 52%;
-    width: clamp(220px, 46vmin, 520px);
-    aspect-ratio: 1;
-    background: radial-gradient(circle at 50% 50%, var(--aur-teal), transparent 70%);
-    animation: aur-drift-b 22s ease-in-out infinite;
-  }
-
-  .blob-lilac {
-    top: 14%;
-    left: 30%;
-    width: clamp(200px, 42vmin, 480px);
-    aspect-ratio: 1;
-    background: radial-gradient(circle at 50% 50%, var(--aur-lilac), transparent 70%);
-    animation: aur-drift-c 26s ease-in-out infinite;
-  }
-
-  .blob-amber {
-    top: 30%;
-    left: 16%;
-    width: clamp(180px, 38vmin, 440px);
-    aspect-ratio: 1;
-    background: radial-gradient(circle at 50% 50%, var(--aur-amber), transparent 70%);
-    animation: aur-drift-d 30s ease-in-out infinite;
+  // Counter-rotating field: adds depth and keeps the colours morphing so the
+  // mesh never settles into a static-looking arrangement.
+  &::after {
+    opacity: calc(var(--aur-opacity) * 0.85);
+    background:
+      radial-gradient(36% 36% at 62% 34%, var(--aur-teal), transparent 62%),
+      radial-gradient(44% 44% at 24% 52%, var(--aur-amber), transparent 64%),
+      radial-gradient(40% 40% at 70% 66%, var(--aur-rose), transparent 62%),
+      radial-gradient(46% 46% at 46% 84%, var(--aur-lilac), transparent 62%);
+    animation: aur-mesh-b 20s linear infinite;
   }
 }
 
-// Gentle, clearly-alive motion: wider drifts + a touch of scale.
-@keyframes aur-drift-a {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(9%, 7%, 0) scale(1.14); }
+// Continuous counter-rotation + a gentle scale pulse so the wells bleed and
+// re-form. Kept brisk so the field reads lively (~2x the original drift pace).
+@keyframes aur-mesh-a {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.18); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
 }
-@keyframes aur-drift-b {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1.08); }
-  50% { transform: translate3d(-11%, 8%, 0) scale(1); }
-}
-@keyframes aur-drift-c {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(8%, -7%, 0) scale(1.16); }
-}
-@keyframes aur-drift-d {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1.06); }
-  50% { transform: translate3d(-9%, -5%, 0) scale(0.92); }
+@keyframes aur-mesh-b {
+  0% { transform: translate(-50%, -50%) rotate(360deg) scale(1.12); }
+  50% { transform: translate(-50%, -50%) rotate(180deg) scale(0.96); }
+  100% { transform: translate(-50%, -50%) rotate(0deg) scale(1.12); }
 }
 
-// Honour reduced-motion: hold the blobs still but keep the composition.
+// Honour reduced-motion: hold the mesh still but keep the composition.
 @media (prefers-reduced-motion: reduce) {
-  .link-aurora .link-aurora-blob {
+  .link-aurora::before,
+  .link-aurora::after {
     animation: none;
   }
 }
@@ -209,18 +210,23 @@ main {
       text-align: center;
       text-decoration: none;
       padding: var(--space-3) var(--space-4);
-      border: 1px solid var(--color-links);
-      border-radius: 5px;
+      border: 1px solid color-mix(in srgb, var(--color-links) 70%, transparent);
+      border-radius: 10px;
       color: var(--color-links);
       font-size: var(--text-base);
       font-weight: var(--font-weight-medium);
-      transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      // Frosted-glass card so links stay legible over the full-bleed glow.
+      background-color: color-mix(in srgb, var(--color-base) 55%, transparent);
+      backdrop-filter: blur(10px) saturate(135%);
+      -webkit-backdrop-filter: blur(10px) saturate(135%);
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 
       &:hover {
         background-color: var(--color-links);
         color: var(--color-base);
         border-color: var(--color-links);
         box-shadow: none;
+        transform: translateY(-1px);
       }
 
       &:focus-visible {
