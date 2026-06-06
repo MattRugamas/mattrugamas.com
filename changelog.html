@@ -9,6 +9,17 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 5, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Smoothed out <strong>scroll jank</strong> on the <code>/links/</code> mesh-gradient background. Three culprits were making the field feel "glitchy" while scrolling: the <code>mix-blend-mode: screen</code> layers were reading the scrolling page as their blend backdrop, forcing the heavily-blurred mesh to re-rasterise every frame; the layer used <code>inset: 0</code>, so its height tracked the <em>dynamic</em> viewport and the centred mesh lurched as mobile browser chrome collapsed on scroll; and the oversized, blurred fields were expensive to repaint. Fixed by adding <code>isolation: isolate</code> (so the blend stays within the two gradient layers instead of the page behind them), pinning the layer to the <em>large</em> viewport (<code>height: 100lvh</code> with a <code>vh</code> fallback, via <code>top/left/right</code> instead of <code>inset</code>), and promoting each field to its own GPU layer (<code>contain: layout paint</code> + <code>backface-visibility: hidden</code>) so the animation is a pure composited transform. No visual change — the look is identical, just steady while scrolling.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 4, 2026</h2>
 
     <div class="changelog-group">

@@ -64,10 +64,21 @@ html[data-theme="light"] main:has(.link-hub) {
 
 .link-aurora {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  // Pin the layer to the *large* viewport so it doesn't resize (and the
+  // centred mesh doesn't lurch) as mobile browser chrome collapses on scroll.
+  height: 100vh;
+  height: 100lvh;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
+  // Isolate the blend group: without this, `mix-blend-mode` reads the scrolling
+  // page content as its backdrop and the blurred mesh re-rasterises every frame
+  // while scrolling. Isolating limits the blend to the two layers themselves.
+  isolation: isolate;
+  contain: layout paint;
   -webkit-mask-image: var(--aur-mask);
   mask-image: var(--aur-mask);
 
@@ -83,7 +94,10 @@ html[data-theme="light"] main:has(.link-hub) {
     height: 200%;
     transform: translate(-50%, -50%);
     transform-origin: center;
+    // Promote each field to its own GPU layer so the animation is a pure
+    // composited transform (no repaint per frame) and stays smooth on scroll.
     will-change: transform;
+    backface-visibility: hidden;
     filter: blur(calc(var(--aur-blur) + 24px));
     mix-blend-mode: var(--aur-blend);
   }
