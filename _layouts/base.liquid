@@ -7,7 +7,7 @@
         var t = localStorage.getItem('theme');
         if (t) {
           document.documentElement.setAttribute('data-theme', t);
-          var c = t === 'dark' ? '#2A2D33' : '#F8F5EE';
+          var c = t === 'dark' ? '#17181C' : '#F8F5EE';
           var m = document.querySelectorAll('meta[name="theme-color"]');
           for (var i = 0; i < m.length; i++) m[i].setAttribute('content', c);
         }
@@ -29,11 +29,11 @@
     <link rel="stylesheet" href="/assets/css/styles.css" />
     <link
       rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap"
       as="style"
       onload="this.onload=null;this.rel='stylesheet'">
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     </noscript>
     {% include faviconpackage.html %}
     {% feed_meta %}

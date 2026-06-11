@@ -1,34 +1,48 @@
+// ============================================================
+// Design system — Liquid Glass redesign
+// Single source of truth: palette, glass, type, motion, shape.
+// ============================================================
+
+// --- Type pairing ---
+// Display: Instrument Serif — hero/page titles, italic accent words.
+// Body/UI: Geist — crisp, SF-adjacent grotesque.
+// Code:    Geist Mono.
+$fonts-display:
+  "Instrument Serif",
+  "New York",
+  Georgia,
+  serif;
 $fonts-body:
-  "Inter",
+  "Geist",
   -apple-system,
   BlinkMacSystemFont,
   "Segoe UI",
   sans-serif;
-$fonts-titles:
-  "Inter",
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  sans-serif;
-$fonts-source: "Source Code Pro", monospace;
+$fonts-titles: $fonts-body;
+$fonts-source: "Geist Mono", "SF Mono", "Menlo", monospace;
 
-// Dark palette
-$base: rgb(42, 45, 51);
-$selected: rgb(52, 56, 64);
-$text: rgb(255, 244, 224);
-$inactive: rgb(229, 220, 202);
-$links: rgb(255, 159, 170);
-$highlight: rgb(0, 206, 217);
-$dates: rgb(159, 203, 204);
+// --- Dark palette (default) ---
+// Evolved from the original charcoal/cream: deeper base, layered
+// surfaces, cream softened, pink/cyan demoted to one teal accent.
+$base: rgb(23, 24, 28); // near-black charcoal
+$surface: rgb(33, 35, 41); // raised surface
+$selected: rgb(42, 44, 51); // hover/selected surface
+$text: rgb(242, 239, 232); // warm off-white
+$inactive: rgb(168, 164, 155); // muted warm gray ~7:1
+$accent: rgb(93, 200, 209); // refined teal-cyan ~9:1
+$dates: rgb(148, 155, 164); // quiet cool gray ~6:1
+$rose: rgb(228, 162, 173); // decorative only (code strings, washes)
 
-// Light palette — all foreground values verified ≥4.5:1 on $light-base
-$light-base: rgb(248, 245, 238); // warm cream bg
-$light-selected: rgb(232, 227, 216); // hover/selected bg (bg-only, no contrast req)
-$light-text: rgb(42, 45, 51); // ~16:1 ✓
-$light-inactive: rgb(100, 94, 82); // ~5.2:1 ✓
-$light-links: rgb(155, 28, 48); // deep rose ~7.8:1 ✓
-$light-highlight: rgb(0, 105, 115); // deep teal ~5.5:1 ✓
-$light-dates: rgb(45, 100, 105); // dark teal ~5.3:1 ✓
+// --- Light palette ---
+// All foreground values verified ≥4.5:1 on $light-base.
+$light-base: rgb(248, 245, 238); // warm cream
+$light-surface: rgb(253, 251, 246); // raised surface
+$light-selected: rgb(233, 229, 219); // hover/selected (bg-only)
+$light-text: rgb(29, 31, 36); // ~15:1
+$light-inactive: rgb(100, 94, 82); // ~5.2:1
+$light-accent: rgb(8, 98, 106); // deep teal ~5.8:1
+$light-dates: rgb(84, 96, 99); // dark slate-teal ~5.6:1
+$light-rose: rgb(155, 28, 48); // decorative only ~7.8:1
 
 $bp-sm: 40em;
 $bp-md: 52em;
@@ -37,27 +51,55 @@ $bp-md: 52em;
 :root {
   color-scheme: light dark;
   --color-base: #{$base};
+  --color-surface: #{$surface};
   --color-selected: #{$selected};
   --color-text: #{$text};
   --color-inactive: #{$inactive};
-  --color-links: #{$links};
-  --color-highlight: #{$highlight};
+  --color-accent: #{$accent};
+  --color-links: #{$accent};
+  --color-highlight: #{$accent};
   --color-dates: #{$dates};
 
-  // Code surfaces (dark defaults). Token hues reuse the brand vars above;
-  // these four cover only what the brand palette doesn't already express.
-  --code-bg: rgba(29, 29, 29, 0.5);
-  --code-comment: rgb(150, 148, 138);
-  --inline-code-bg: rgba(29, 29, 29, 0.5);
+  // Code surfaces + token hues
+  --code-bg: rgba(15, 16, 19, 0.55);
+  --code-comment: rgb(138, 136, 128);
+  --code-string: #{$rose};
+  --inline-code-bg: rgba(15, 16, 19, 0.55);
   --inline-code-border: var(--color-selected);
 
-  --nav-height: 71px;
+  // Glass material
+  --glass-bg: rgba(28, 30, 35, 0.58);
+  --glass-bg-strong: rgba(26, 28, 33, 0.78);
+  --glass-fallback: rgba(28, 30, 35, 0.96);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-inner: rgba(255, 255, 255, 0.06);
+  --glass-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.12),
+    0 12px 32px -12px rgba(0, 0, 0, 0.5);
+  --glass-blur: 20px;
+  --glass-saturate: 160%;
 
+  // Ambient background washes (very low opacity, fixed)
+  --wash-a: rgba(93, 200, 209, 0.07);
+  --wash-b: rgba(228, 162, 173, 0.05);
+
+  // Card / soft surface
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.07);
+  --hairline: rgba(255, 255, 255, 0.1);
+
+  // Nav geometry — floating pill
+  --nav-inset: 0.75rem;
+  --nav-height: 3.5rem;
+  --nav-offset: calc(var(--nav-inset) + var(--nav-height));
+
+  // Weights
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semi: 600;
   --font-weight-bold: 700;
 
+  // Spacing
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -67,12 +109,30 @@ $bp-md: 52em;
   --space-12: 3rem;
   --space-16: 4rem;
 
-  --text-sm: 0.8125rem;
+  // Type scale — HIG-flavored, clamp-based display sizes
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: 1.125rem;
+  --text-lg: 1.1875rem;
   --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.75rem;
+  --text-2xl: clamp(1.75rem, 1.45rem + 1.2vw, 2.25rem);
+  --text-3xl: clamp(2.25rem, 1.85rem + 1.8vw, 2.75rem);
+  --text-display: clamp(2.5rem, 1.9rem + 2.8vw, 3.625rem);
+  --tracking-tight: -0.011em;
+  --tracking-display: -0.014em;
+
+  // Motion
+  --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 160ms;
+  --dur-med: 320ms;
+  --dur-slow: 560ms;
+
+  // Shape — large, continuous-feel radii
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
 
   --content-gap: var(--space-8);
 
@@ -86,17 +146,36 @@ $bp-md: 52em;
 // --- Light mode mixin ---
 @mixin light-colors {
   --color-base: #{$light-base};
+  --color-surface: #{$light-surface};
   --color-selected: #{$light-selected};
   --color-text: #{$light-text};
   --color-inactive: #{$light-inactive};
-  --color-links: #{$light-links};
-  --color-highlight: #{$light-highlight};
+  --color-accent: #{$light-accent};
+  --color-links: #{$light-accent};
+  --color-highlight: #{$light-accent};
   --color-dates: #{$light-dates};
 
-  --code-bg: #{$light-selected};
+  --code-bg: #{rgba($light-selected, 0.6)};
   --code-comment: #{$light-inactive};
+  --code-string: #{$light-rose};
   --inline-code-bg: #{rgba($light-selected, 0.5)};
   --inline-code-border: #{rgba($light-inactive, 0.35)};
+
+  --glass-bg: rgba(252, 250, 244, 0.55);
+  --glass-bg-strong: rgba(252, 250, 244, 0.8);
+  --glass-fallback: rgba(252, 250, 244, 0.97);
+  --glass-border: rgba(29, 31, 36, 0.08);
+  --glass-inner: rgba(255, 255, 255, 0.65);
+  --glass-shadow:
+    0 1px 1px rgba(29, 31, 36, 0.04),
+    0 12px 32px -12px rgba(29, 31, 36, 0.22);
+
+  --wash-a: rgba(8, 98, 106, 0.06);
+  --wash-b: rgba(155, 28, 48, 0.04);
+
+  --card-bg: rgba(29, 31, 36, 0.025);
+  --card-border: rgba(29, 31, 36, 0.07);
+  --hairline: rgba(29, 31, 36, 0.1);
 }
 
 // System light preference (no explicit override)
@@ -111,7 +190,7 @@ $bp-md: 52em;
   @include light-colors;
 }
 
-// --- Shared ---
+// --- Shared mixins ---
 @mixin focus-ring {
   outline: 2px solid var(--color-highlight);
   outline-offset: 2px;
@@ -119,50 +198,87 @@ $bp-md: 52em;
 
 @mixin ui-shadow {
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 1px 3px rgba(0, 0, 0, 0.15);
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    0 6px 20px -8px rgba(0, 0, 0, 0.25);
 }
+
 @mixin text-shadow {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+// Liquid Glass material — blur + saturate, hairline border,
+// inner top bevel, soft depth shadow. Opaque fallback when
+// backdrop-filter is unsupported.
+@mixin glass($bg: var(--glass-bg)) {
+  background-color: var(--glass-fallback);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 0 var(--glass-inner),
+    var(--glass-shadow);
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    background-color: $bg;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  }
+}
+
+// Soft raised card surface (non-blurred — for content on the base)
+@mixin card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-md);
 }
 
 @mixin content-base {
   display: flex;
   flex-flow: column nowrap;
   flex-grow: 1;
-  padding: calc(var(--nav-height) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-8);
-  background-color: var(--color-base);
+  padding: calc(var(--nav-offset) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-12);
   align-items: center;
   h1 {
     margin: 0;
-    font-family: $fonts-titles;
-    font-size: var(--text-xl);
+    font-family: $fonts-display;
+    font-size: var(--text-2xl);
     font-weight: var(--font-weight-normal);
-    line-height: 1.4;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.2;
     max-width: var(--content-hero);
     strong {
+      font-weight: var(--font-weight-normal);
+      font-style: italic;
       color: var(--color-highlight);
     }
   }
   p {
-    font-family: $fonts-titles;
-    line-height: 1.5;
+    font-family: $fonts-body;
+    line-height: 1.6;
     font-size: var(--text-base);
     max-width: var(--content-wide);
     &#tagline {
       max-width: var(--content-hero);
+      color: var(--color-inactive);
+      font-size: var(--text-lg);
     }
   }
 }
 
+// Refined link treatment — accent underline that resolves on hover.
 @mixin link-setup {
   a {
-    transition: all 0.2s;
     color: var(--color-links);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in srgb, var(--color-links) 35%, transparent);
+    transition:
+      color var(--dur-fast) var(--ease-glass),
+      text-decoration-color var(--dur-fast) var(--ease-glass),
+      background-color var(--dur-fast) var(--ease-glass),
+      border-color var(--dur-fast) var(--ease-glass),
+      box-shadow var(--dur-fast) var(--ease-glass);
     &:hover {
-      @include ui-shadow;
-      color: var(--color-base);
-      background-color: var(--color-links);
+      text-decoration-color: var(--color-links);
     }
     &:focus-visible {
       @include focus-ring;
@@ -170,74 +286,41 @@ $bp-md: 52em;
   }
 }
 
-@mixin nav-animate {
-  position: relative;
-  display: block;
-  padding: var(--space-4) var(--space-2);
-  margin: 0 var(--space-2);
-
+// Glass pill button — shared by CTAs, chips, controls.
+@mixin glass-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-family: $fonts-body;
   font-size: var(--text-sm);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-weight: var(--font-weight-medium);
   text-decoration: none;
-  &:after,
-  &:before {
-    transition: all 0.5s;
-  }
-  &:hover {
-    @include text-shadow;
-    box-shadow: none;
-    background-color: transparent;
-  }
-  &.current {
-    color: var(--color-highlight);
-  }
-  &.not-current {
-    color: var(--color-inactive);
+  cursor: pointer;
+  color: var(--color-text);
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition:
+    background-color var(--dur-fast) var(--ease-glass),
+    border-color var(--dur-fast) var(--ease-glass),
+    color var(--dur-fast) var(--ease-glass),
+    transform var(--dur-fast) var(--ease-glass),
+    box-shadow var(--dur-fast) var(--ease-glass);
 
-    @media (hover: hover) {
-      &:hover {
-        color: var(--color-text);
-        &:after {
-          width: 100%;
-        }
-      }
-      &:after {
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        right: 0;
-        margin: auto;
-        width: 0%;
-        content: ".";
-        color: transparent;
-        text-shadow: none;
-        background: var(--color-highlight);
-        height: 1px;
-      }
-    }
-  }
-}
-
-@mixin li-animate {
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease-out;
-  border-left: 1px solid var(--color-text);
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to right, var(--color-base), transparent);
-    z-index: -1;
-  }
   &:hover {
-    border-left: 1px solid var(--color-highlight);
-    background: var(--color-selected);
+    background-color: var(--color-selected);
+    border-color: var(--hairline);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
   }
 }
 
@@ -249,16 +332,25 @@ $bp-md: 52em;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     --color-base: #fff;
+    --color-surface: transparent;
     --color-selected: transparent;
     --color-text: #000;
     --color-inactive: #555;
+    --color-accent: #000;
     --color-links: #000;
     --color-highlight: #000;
     --color-dates: #555;
 
     --code-bg: transparent;
     --code-comment: #555;
+    --code-string: #000;
     --inline-code-bg: transparent;
     --inline-code-border: #999;
+
+    --wash-a: transparent;
+    --wash-b: transparent;
+    --card-bg: transparent;
+    --card-border: #ccc;
+    --hairline: #ccc;
   }
 }

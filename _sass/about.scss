@@ -17,6 +17,7 @@ main {
       margin: 0;
       max-width: none;
       text-align: left;
+      font-size: var(--text-3xl);
     }
 
     img#selfie {
@@ -26,13 +27,14 @@ main {
       align-self: center;
       height: auto;
       @include ui-shadow;
-      border: 1px solid var(--color-links);
-      border-radius: 3px;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
     }
 
     div#aboutMeText {
       p.about-me {
         margin: var(--space-4) 0;
+        line-height: 1.7;
 
         &:first-child {
           margin-top: 0;
@@ -47,34 +49,20 @@ main {
       margin-top: var(--space-6);
 
       a {
-        display: inline-block;
-        padding: var(--space-2) var(--space-4);
-        border-radius: 3px;
+        @include glass-button;
+        padding: var(--space-2) var(--space-6);
         font-size: var(--text-base);
-        text-decoration: none;
-        transition: all .2s;
       }
 
       .cta-primary {
-        background-color: var(--color-links);
+        background-color: var(--color-highlight);
+        border-color: var(--color-highlight);
         color: var(--color-base);
-        border: 1px solid var(--color-links);
 
         &:hover {
-          background-color: transparent;
-          color: var(--color-links);
-          box-shadow: none;
-        }
-      }
-
-      .cta-secondary {
-        border: 1px solid var(--color-links);
-        color: var(--color-links);
-
-        &:hover {
-          background-color: var(--color-links);
+          background-color: color-mix(in srgb, var(--color-highlight) 85%, var(--color-text));
+          border-color: transparent;
           color: var(--color-base);
-          box-shadow: none;
         }
       }
     }
@@ -83,43 +71,43 @@ main {
   section.findme {
     width: 100%;
     max-width: 400px;
-    margin: var(--space-8) auto 0;
+    margin: var(--space-12) auto 0;
     font-family: $fonts-body;
 
     h2 {
-      color: var(--color-highlight);
+      font-family: $fonts-display;
+      font-weight: var(--font-weight-normal);
+      font-size: var(--text-xl);
+      color: var(--color-text);
       text-align: center;
     }
 
     ul {
       margin: 0;
-      @include ui-shadow;
-      border: 2px solid var(--color-links);
-      border-radius: 3px;
+      @include card;
+      overflow: hidden;
 
       li {
         text-align: center;
-        background-color: var(--color-base);
-        border-top: 1px solid var(--color-selected);
+        border-top: 1px solid var(--card-border);
 
         &:first-child {
           border-top: none;
         }
 
         &:hover {
-          transition-duration: 0.3s;
           background-color: var(--color-selected);
         }
 
         a {
           display: block;
-          padding: 10px;
+          padding: var(--space-3);
           text-decoration: none;
           color: var(--color-text);
+          transition: color var(--dur-fast) var(--ease-glass);
 
           &:hover {
-            background-color: transparent;
-            box-shadow: none;
+            color: var(--color-highlight);
           }
         }
       }

@@ -38,13 +38,27 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: antialiased;
 
   body {
     display: flex;
     flex-flow: column;
     height: inherit;
     @include link-setup;
+
+    // Ambient washes — two faint fixed radial gradients the glass
+    // chrome can refract. Sits above the html base colour, below content.
+    &::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(52% 44% at 18% -6%, var(--wash-a), transparent 70%),
+        radial-gradient(46% 40% at 88% 12%, var(--wash-b), transparent 70%),
+        radial-gradient(60% 48% at 50% 110%, var(--wash-a), transparent 72%);
+    }
 
     figure figcaption {
       font-family: $fonts-body;
@@ -57,59 +71,107 @@ html {
       width: 100%;
       pre.highlight {
         max-height: 50vh;
-        padding: 0 0 0 10px;
+        padding: var(--space-4);
         overflow: auto;
         scrollbar-width: none;
-        border-radius: 5px;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--card-border);
         code {
           font-family: $fonts-source;
           white-space: pre-wrap;
-          font-size: 15px;
+          font-size: var(--text-sm);
+          line-height: 1.65;
         }
       }
     }
 
-
+    // ------------------------------------------------------------
+    // Floating glass nav
+    // ------------------------------------------------------------
     header > nav {
       position: fixed;
-      z-index: 2;
-      width: 100%;
-      font-family: $fonts-titles;
-      background-color: var(--color-base);
-      box-shadow: 0 1px 0 var(--color-text);
+      z-index: 10;
+      top: var(--nav-inset);
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(calc(100% - 2 * var(--nav-inset)), 760px);
+      min-height: var(--nav-height);
       display: flex;
       flex-flow: row wrap;
       align-items: center;
+      padding: 0 var(--space-2);
+      border-radius: var(--radius-lg);
+      font-family: $fonts-body;
+      @include glass;
+      transition:
+        min-height var(--dur-med) var(--ease-glass),
+        background-color var(--dur-med) var(--ease-glass),
+        box-shadow var(--dur-med) var(--ease-glass),
+        border-radius var(--dur-med) var(--ease-glass);
 
-      // Mobile home wordmark — hidden on desktop
-      .nav-home {
-        padding: var(--space-4) var(--space-2) var(--space-4) clamp(var(--space-4), 8vw, var(--space-16));
-        font-size: var(--text-base);
-        font-weight: var(--font-weight-bold);
-        letter-spacing: 0.05em;
-        text-decoration: none;
-        color: var(--color-text);
+      // Scrolled: compress slightly, strengthen the material
+      &.scrolled {
+        min-height: calc(var(--nav-height) - 0.5rem);
 
-        &:hover {
-          background: transparent;
-          box-shadow: none;
-        }
-
-        @media (min-width: $bp-md) {
-          display: none;
+        @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+          background-color: var(--glass-bg-strong);
         }
       }
 
-      // Nav links — hidden on mobile, always visible on desktop
+      // Home mark — serif italic signature
+      .nav-home {
+        display: block;
+        padding: var(--space-2) var(--space-3);
+        font-family: $fonts-display;
+        font-style: italic;
+        font-size: 1.3125rem;
+        line-height: 1;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+        color: var(--color-text);
+        border-radius: var(--radius-pill);
+        transition: opacity var(--dur-fast) var(--ease-glass);
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+
+      // Nav links — lozenge pills, sentence case
       ul {
         display: none;
         width: 100%;
         flex-flow: column;
         margin: 0;
-        border-top: 1px solid var(--color-selected);
+        order: 4;
+        padding: var(--space-2) var(--space-1) var(--space-3);
 
         li a {
-          @include nav-animate;
+          position: relative;
+          display: block;
+          padding: var(--space-2) var(--space-3);
+          border-radius: var(--radius-pill);
+          font-size: var(--text-sm);
+          font-weight: var(--font-weight-medium);
+          letter-spacing: var(--tracking-tight);
+          text-decoration: none;
+          transition:
+            color var(--dur-fast) var(--ease-glass),
+            background-color var(--dur-fast) var(--ease-glass);
+
+          &.not-current {
+            color: var(--color-inactive);
+
+            &:hover {
+              color: var(--color-text);
+              background-color: color-mix(in srgb, var(--color-text) 7%, transparent);
+            }
+          }
+
+          &.current {
+            color: var(--color-text);
+            background-color: color-mix(in srgb, var(--color-text) 11%, transparent);
+          }
         }
 
         @media (min-width: $bp-md) {
@@ -118,155 +180,164 @@ html {
           align-items: center;
           justify-content: center;
           flex: 1;
-          border-top: none;
+          width: auto;
+          order: 0;
+          padding: 0;
+          gap: var(--space-1);
         }
       }
 
-      &.open ul {
-        display: flex;
+      &.open {
+        border-radius: var(--radius-md);
+
+        ul {
+          display: flex;
+
+          li {
+            animation: nav-item-in var(--dur-med) var(--ease-out-expo) backwards;
+
+            @for $i from 1 through 6 {
+              &:nth-child(#{$i}) {
+                animation-delay: #{$i * 35}ms;
+              }
+            }
+          }
+        }
       }
 
       // RSS, theme toggle + hamburger — always on the right
       .nav-actions {
         display: flex;
         align-items: center;
+        gap: var(--space-1);
         margin-left: auto;
-        padding-right: var(--space-2);
-
-        @media (min-width: $bp-md) {
-          position: absolute;
-          right: var(--space-2);
-          top: 0;
-          bottom: 0;
-          margin-left: 0;
-        }
       }
 
-      #rss-link {
+      #rss-link,
+      #theme-toggle,
+      #nav-toggle {
+        text-decoration: none;
         display: flex;
         align-items: center;
-        padding: var(--space-4) var(--space-2);
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        border: none;
+        border-radius: var(--radius-pill);
+        background: none;
+        cursor: pointer;
         color: var(--color-inactive);
-        transition: color .2s;
+        transition:
+          color var(--dur-fast) var(--ease-glass),
+          background-color var(--dur-fast) var(--ease-glass);
 
         &:hover {
           color: var(--color-text);
-          background: transparent;
+          background-color: color-mix(in srgb, var(--color-text) 7%, transparent);
           box-shadow: none;
         }
       }
 
+      // Theme toggle — sun/moon crossfade
       #theme-toggle {
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: var(--space-4) var(--space-2);
-        line-height: 1;
+        position: relative;
 
-        .toggle-track {
-          display: block;
-          position: relative;
-          width: 36px;
-          height: 20px;
-          border-radius: 10px;
-          background-color: var(--color-inactive);
-          transition: background-color 0.3s ease;
+        svg {
+          position: absolute;
+          inset: 0;
+          margin: auto;
+          transition:
+            opacity var(--dur-med) var(--ease-glass),
+            transform var(--dur-med) var(--ease-glass);
         }
 
-        .toggle-thumb {
-          position: absolute;
-          top: 2px;
-          left: 2px;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          background-color: var(--color-base);
-          transition: transform 0.3s ease;
+        // Dark (default): show moon, stash sun
+        .icon-sun {
+          opacity: 0;
+          transform: scale(0.4) rotate(-90deg);
+        }
+        .icon-moon {
+          opacity: 1;
+          transform: scale(1) rotate(0deg);
         }
       }
 
       #nav-toggle {
-        display: flex;
         flex-flow: column;
-        justify-content: center;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: var(--space-4) var(--space-2);
+        gap: 4px;
 
         span {
           display: block;
-          width: 22px;
-          height: 2px;
-          background-color: var(--color-text);
-          transition: transform 0.3s ease, opacity 0.3s ease;
+          width: 16px;
+          height: 1.5px;
+          border-radius: 1px;
+          background-color: currentColor;
+          transition: transform var(--dur-med) var(--ease-glass), opacity var(--dur-med) var(--ease-glass);
         }
 
         &[aria-expanded="true"] {
-          span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+          span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
           span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-          span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+          span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
         }
 
         @media (min-width: $bp-md) {
           display: none;
         }
       }
-
     }
 
-    // Explicit light mode — slide thumb right, highlight track
+    // Light mode — show sun, stash moon
     @at-root html[data-theme="light"] header > nav #theme-toggle {
-      .toggle-track { background-color: var(--color-highlight); }
-      .toggle-thumb { transform: translateX(16px); }
+      .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+      .icon-moon { opacity: 0; transform: scale(0.4) rotate(90deg); }
     }
 
-    // System light preference — slide thumb right, highlight track
     @media (prefers-color-scheme: light) {
       @at-root html:not([data-theme="dark"]) header > nav #theme-toggle {
-        .toggle-track { background-color: var(--color-highlight); }
-        .toggle-thumb { transform: translateX(16px); }
+        .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
+        .icon-moon { opacity: 0; transform: scale(0.4) rotate(90deg); }
       }
     }
 
+    // ------------------------------------------------------------
+    // Main content
+    // ------------------------------------------------------------
     main {
       @include content-base;
 
-      h1 {
+      h1.hello {
         width: 100%;
+        font-size: var(--text-display);
+        line-height: 1.12;
         margin-bottom: var(--space-4);
-
-        @media (min-width: $bp-md) {
-          margin-bottom: var(--space-2);
-          font-size: var(--text-xl);
-        }
       }
 
       ul#blog-list {
-        margin: var(--space-8) auto 0;
+        margin: var(--space-12) auto 0;
         max-width: var(--content-wide);
         width: 100%;
 
         li.year-group {
-          margin: 0 0 var(--space-8);
+          margin: 0 0 var(--space-12);
 
           &:last-child {
             margin-bottom: 0;
           }
 
           h2.year-heading {
-            font-family: $fonts-titles;
-            font-size: var(--text-lg);
-            font-weight: var(--font-weight-semi);
-            margin: 0 0 var(--space-3);
-            color: var(--color-text);
+            font-family: $fonts-display;
+            font-size: var(--text-xl);
+            font-weight: var(--font-weight-normal);
+            margin: 0 0 var(--space-4);
+            color: var(--color-dates);
           }
 
           ul.year-posts {
             li {
               &:not(:last-child) {
-                margin-bottom: var(--space-4);
+                margin-bottom: var(--space-2);
               }
 
               article {
@@ -277,7 +348,7 @@ html {
                 aside {
                   time.date {
                     display: block;
-                    font-family: $fonts-body;
+                    font-family: $fonts-source;
                     font-size: var(--text-sm);
                     color: var(--color-dates);
                     margin: 0;
@@ -290,13 +361,24 @@ html {
                     font-family: $fonts-titles;
                     font-size: var(--text-lg);
                     font-weight: var(--font-weight-semi);
+                    letter-spacing: var(--tracking-tight);
+
+                    a {
+                      color: var(--color-text);
+                      text-decoration: none;
+
+                      &:hover {
+                        color: var(--color-highlight);
+                      }
+                    }
                   }
 
                   p {
                     margin: var(--space-1) 0 0;
                     font-family: $fonts-body;
                     font-size: var(--text-base);
-                    line-height: 1.7;
+                    line-height: 1.65;
+                    color: var(--color-inactive);
                   }
                 }
 
@@ -305,8 +387,8 @@ html {
                   grid-template-columns: max-content 1fr;
 
                   &:hover header {
-                    background: var(--color-selected);
-                    border-left-color: var(--color-highlight);
+                    background: var(--card-bg);
+                    border-color: var(--card-border);
                   }
 
                   aside {
@@ -320,8 +402,11 @@ html {
 
                   header {
                     padding: var(--space-3) var(--space-4);
-                    border-left: 1px solid var(--color-text);
-                    transition: background 0.3s ease-out, border-left-color 0.3s ease-out;
+                    border: 1px solid transparent;
+                    border-radius: var(--radius-sm);
+                    transition:
+                      background var(--dur-med) var(--ease-glass),
+                      border-color var(--dur-med) var(--ease-glass);
                   }
                 }
               }
@@ -334,7 +419,7 @@ html {
     .post-comments {
       margin-top: var(--space-12);
       padding-top: var(--space-8);
-      border-top: 1px solid var(--color-text);
+      border-top: 1px solid var(--hairline);
       max-width: var(--content-post);
       width: 100%;
     }
@@ -346,7 +431,7 @@ html {
       width: 100%;
       margin-top: var(--space-12);
       padding-top: var(--space-8);
-      border-top: 1px solid var(--color-text);
+      border-top: 1px solid var(--hairline);
       font-family: $fonts-body;
       font-size: var(--text-base);
       line-height: 1.6;
@@ -408,6 +493,7 @@ html {
       }
     }
 
+    // Tag chips — quiet glass pills
     .tag-filter {
       display: flex;
       flex-flow: row wrap;
@@ -418,21 +504,25 @@ html {
     }
 
     .tag-badge {
-      font-family: $fonts-body;
-      font-size: var(--text-sm);
+      @include glass-button;
       padding: var(--space-1) var(--space-3);
-      border: 1px solid var(--color-inactive);
-      border-radius: 3px;
-      background: transparent;
+      font-size: var(--text-sm);
       color: var(--color-inactive);
-      text-decoration: none;
-      transition: all 0.2s;
 
-      &:hover, &.active {
-        border-color: var(--color-highlight);
-        color: var(--color-highlight);
-        background: transparent;
+      &:hover {
+        color: var(--color-text);
         box-shadow: none;
+      }
+
+      &.active {
+        color: var(--color-base);
+        background-color: var(--color-highlight);
+        border-color: var(--color-highlight);
+
+        &:hover {
+          color: var(--color-base);
+          background-color: var(--color-highlight);
+        }
       }
     }
 
@@ -443,11 +533,11 @@ html {
     }
 
     footer {
-      padding: 5px 0 0;
-      background-color: var(--color-base);
+      padding: var(--space-6) var(--space-4);
       font-family: $fonts-body;
       font-size: var(--text-sm);
-      box-shadow: 0 -1px 0 var(--color-text);
+      color: var(--color-inactive);
+      border-top: 1px solid var(--hairline);
       text-align: center;
 
       p {
@@ -455,21 +545,15 @@ html {
       }
 
       strong {
-        padding: 6px 0 0;
-        transition: all 0.5s ease;
-
-        &:hover {
-          box-shadow: 0 -1px 0 var(--color-highlight);
-        }
-
-        a {
-          &:hover {
-            background-color: transparent;
-            box-shadow: none;
-            color: var(--color-links);
-          }
-        }
+        font-weight: var(--font-weight-medium);
       }
     }
+  }
+}
+
+@keyframes nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
   }
 }
