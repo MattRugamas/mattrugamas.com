@@ -89,13 +89,16 @@ html {
     // Floating glass nav
     // ------------------------------------------------------------
     header > nav {
+      // First-row height is pinned via --nav-row (not the nav's min-height)
+      // so opening the mobile menu — which wraps a second flex row — can't
+      // collapse the bar row and shove the controls against the edge.
+      --nav-row: calc(var(--nav-height) - 2px); // minus top/bottom border
       position: fixed;
       z-index: 10;
       top: var(--nav-inset);
       left: 50%;
       transform: translateX(-50%);
       width: min(calc(100% - 2 * var(--nav-inset)), 760px);
-      min-height: var(--nav-height);
       display: flex;
       flex-flow: row wrap;
       align-items: center;
@@ -104,14 +107,13 @@ html {
       font-family: $fonts-body;
       @include glass;
       transition:
-        min-height var(--dur-med) var(--ease-glass),
         background-color var(--dur-med) var(--ease-glass),
         box-shadow var(--dur-med) var(--ease-glass),
         border-radius var(--dur-med) var(--ease-glass);
 
       // Scrolled: compress slightly, strengthen the material
       &.scrolled {
-        min-height: calc(var(--nav-height) - 0.5rem);
+        --nav-row: calc(var(--nav-height) - 0.5rem - 2px);
 
         @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
           background-color: var(--glass-bg-strong);
@@ -120,8 +122,10 @@ html {
 
       // Home mark — serif italic signature
       .nav-home {
-        display: block;
-        padding: var(--space-2) var(--space-3);
+        display: flex;
+        align-items: center;
+        height: var(--nav-row);
+        padding: 0 var(--space-3);
         font-family: $fonts-display;
         font-style: italic;
         font-size: 1.3125rem;
@@ -130,7 +134,9 @@ html {
         text-decoration: none;
         color: var(--color-text);
         border-radius: var(--radius-pill);
-        transition: opacity var(--dur-fast) var(--ease-glass);
+        transition:
+          height var(--dur-med) var(--ease-glass),
+          opacity var(--dur-fast) var(--ease-glass);
 
         &:hover {
           opacity: 0.7;
@@ -142,6 +148,9 @@ html {
         display: none;
         width: 100%;
         flex-flow: column;
+        // Breathing room between stacked pills so an item's focus ring
+        // (2px outline + 2px offset) never touches the active lozenge.
+        gap: var(--space-2);
         margin: 0;
         order: 4;
         padding: var(--space-2) var(--space-1) var(--space-3);
@@ -209,8 +218,10 @@ html {
       .nav-actions {
         display: flex;
         align-items: center;
+        height: var(--nav-row);
         gap: var(--space-1);
         margin-left: auto;
+        transition: height var(--dur-med) var(--ease-glass);
       }
 
       #rss-link,

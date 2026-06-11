@@ -12,6 +12,14 @@ title: Changelog
     <h2 class="changelog-date">June 10, 2026</h2>
 
     <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Opening the mobile menu no longer shifts the nav's top-row controls. The bar relied on <code>min-height</code> centering, so when the menu wrapped in as a second flex row the first row collapsed to content height, squeezing the MR mark, RSS, theme, and close controls against the nav edge. The first row is now pinned to a fixed height (<code>--nav-row</code>) that the scrolled state compresses instead, so the controls hold position whether the menu is open or not.</li>
+        <li>Mobile menu items now have proper spacing (<code>gap</code>) between the stacked pills, so a tapped item's focus ring no longer touches the active item's lozenge.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
       <h3>Removed</h3>
       <ul>
         <li>Deleted the unfinished <code>link-in-bio-platform-who.md</code> draft in favor of an upcoming post introducing the redesign.</li>
