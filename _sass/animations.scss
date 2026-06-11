@@ -1,0 +1,62 @@
+@use 'settings' as *;
+
+// Sequenced entrance — fade and float up on load (see site.js).
+// Classes are removed on animationend so transform layers don't linger
+// and interfere with later hover interactions.
+@keyframes entrance-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes entrance-float-in-nav {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.animate-item {
+  &.animate-pending,
+  &.animate-in {
+    will-change: transform, opacity;
+  }
+
+  &.animate-pending {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  &.animate-in {
+    animation: entrance-float-in 0.8s var(--ease-out-expo) forwards;
+  }
+}
+
+header > nav.animate-item {
+  &.animate-pending {
+    transform: translateX(-50%) translateY(24px);
+  }
+
+  &.animate-in {
+    animation: entrance-float-in-nav 0.8s var(--ease-out-expo) forwards;
+  }
+}
+
+// Never let a pending entrance state hide content on paper.
+@media print {
+  .animate-item.animate-pending {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
