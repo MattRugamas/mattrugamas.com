@@ -170,8 +170,8 @@ main {
       width: 5.5rem;
       height: 5.5rem;
       object-fit: cover;
-      border-radius: 10px;
-      border: 2px solid color-mix(in srgb, var(--color-links) 55%, var(--color-selected));
+      border-radius: var(--radius-md);
+      border: 1px solid var(--glass-border);
       @include ui-shadow;
     }
 
@@ -224,23 +224,31 @@ main {
       text-align: center;
       text-decoration: none;
       padding: var(--space-3) var(--space-4);
-      border: 1px solid color-mix(in srgb, var(--color-links) 70%, transparent);
-      border-radius: 10px;
-      color: var(--color-links);
+      border-radius: var(--radius-md);
+      color: var(--color-text);
       font-size: var(--text-base);
       font-weight: var(--font-weight-medium);
-      // Frosted-glass card so links stay legible over the full-bleed glow.
-      background-color: color-mix(in srgb, var(--color-base) 55%, transparent);
-      backdrop-filter: blur(10px) saturate(135%);
-      -webkit-backdrop-filter: blur(10px) saturate(135%);
-      transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      // True glass card so links stay legible over the full-bleed glow.
+      @include glass;
+      transition:
+        background-color var(--dur-fast) var(--ease-glass),
+        color var(--dur-fast) var(--ease-glass),
+        border-color var(--dur-fast) var(--ease-glass),
+        box-shadow var(--dur-fast) var(--ease-glass),
+        transform var(--dur-fast) var(--ease-glass);
 
       &:hover {
-        background-color: var(--color-links);
-        color: var(--color-base);
-        border-color: var(--color-links);
-        box-shadow: none;
-        transform: translateY(-1px);
+        color: var(--color-highlight);
+        border-color: color-mix(in srgb, var(--color-highlight) 45%, transparent);
+        transform: translateY(-2px);
+
+        @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+          background-color: var(--glass-bg-strong);
+        }
+      }
+
+      &:active {
+        transform: translateY(0) scale(0.99);
       }
 
       &:focus-visible {

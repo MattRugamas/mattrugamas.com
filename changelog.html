@@ -9,6 +9,35 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 10, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Published <strong>"Glass, and the Machine That Built It"</strong> — a post introducing the Liquid Glass redesign, how the Fable model in Cursor planned, built, and verified it end-to-end, and some closing thoughts on the line between AI that makes us more capable and AI we quietly delegate our judgment to, with footnotes out to Dario Amodei's essays.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Removed</h3>
+      <ul>
+        <li>Deleted the unfinished <code>link-in-bio-platform-who.md</code> draft in favor of the redesign post.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Shipped a full <strong>Liquid Glass redesign</strong> across every page, guided by Apple's Human Interface Guidelines. The fixed full-width nav became a <strong>floating glass pill</strong> — inset from the top, centred, capped at 760px — built from real glass material (<code>backdrop-filter</code> blur + saturate, hairline border, inner top bevel, soft depth shadow) with an opaque fallback when <code>backdrop-filter</code> is unsupported. The bar compresses and strengthens its material once the page scrolls (an <code>IntersectionObserver</code> sentinel, no scroll listeners), nav links became sentence-case lozenge pills with a soft active highlight, and the mobile menu expands the pill into a glass sheet with staggered item entrances.</li>
+        <li>New <strong>type pairing</strong>: <em>Instrument Serif</em> for display headings (with italic accent words in the hero, page titles, and the new serif-italic "MR" home mark) and <em>Geist</em> for body and UI, with <em>Geist Mono</em> replacing Source Code Pro for code, dates, and metadata. The scale was rebuilt around clamp-based display sizes with tighter heading tracking.</li>
+        <li><strong>Evolved the palette</strong>: the charcoal base deepened to near-black with layered surface tints, cream text softened toward warm off-white, and the old pink/cyan pair was demoted to a single refined teal accent (pink survives only decoratively — code strings and background washes). Both themes pick up faint fixed radial <strong>ambient washes</strong> behind the content for the glass to refract.</li>
+        <li>Reskinned every page on the new system: blog rows trade the hard <code>border-left</code> hover for soft rounded surfaces, tag chips became quiet glass pills, music entries became cards, the about CTAs and résumé print button became glass buttons, code blocks picked up rounded hairline borders, heavy accent rules were replaced with hairlines throughout, and the <code>/links/</code> hub cards upgraded to the shared glass material. The iOS-style theme switch was replaced with a single <strong>sun/moon icon button</strong> that cross-fades and rotates between modes.</li>
+        <li>New shared design tokens in <code>_settings.scss</code>: glass material (<code>--glass-*</code>), motion (<code>--ease-glass</code>, duration steps), shape (12/20/28px radii + pill), and card/hairline surfaces. All animation respects <code>prefers-reduced-motion</code>, the résumé print stylesheet is untouched, and <code>theme-color</code> metas track the new base colours.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 5, 2026</h2>
 
     <div class="changelog-group">

@@ -13,11 +13,13 @@
   .changelog-header {
     margin-bottom: var(--space-12);
     padding-bottom: var(--space-8);
-    border-bottom: 2px solid var(--color-highlight);
+    border-bottom: 1px solid var(--hairline);
 
     h1 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-family: $fonts-display;
+      font-size: var(--text-3xl);
+      font-weight: var(--font-weight-normal);
+      letter-spacing: var(--tracking-display);
       margin: 0 0 var(--space-2);
       color: var(--color-text);
     }
@@ -34,7 +36,7 @@
   .changelog-entry {
     margin-bottom: var(--space-12);
     padding-bottom: var(--space-12);
-    border-bottom: 1px solid var(--color-selected);
+    border-bottom: 1px solid var(--hairline);
 
     &:last-child {
       border-bottom: none;
@@ -105,9 +107,10 @@
           font-family: $fonts-source;
           font-size: 0.85em;
           color: var(--color-dates);
-          background: var(--color-selected);
-          padding: 1px 5px;
-          border-radius: 3px;
+          background: var(--inline-code-bg);
+          border: 1px solid var(--inline-code-border);
+          padding: 1px 6px;
+          border-radius: 6px;
         }
 
         em {

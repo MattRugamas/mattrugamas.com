@@ -18,7 +18,7 @@
       localStorage.setItem('theme', next);
       updateToggleState(next === 'dark');
       // Sync theme-color meta tags with the new theme
-      var tc = next === 'dark' ? '#2A2D33' : '#F8F5EE';
+      var tc = next === 'dark' ? '#17181C' : '#F8F5EE';
       var metas = document.querySelectorAll('meta[name="theme-color"]');
       for (var j = 0; j < metas.length; j++) metas[j].setAttribute('content', tc);
       // Sync Giscus iframe theme if present
@@ -43,6 +43,20 @@
       el.removeAttribute('data-u');
       el.removeAttribute('data-d');
     }
+  }
+
+  // Nav scroll choreography — strengthen the glass once the page scrolls.
+  // A zero-height sentinel at the top of the body is observed instead of
+  // listening to scroll events, so there's no per-frame work.
+  var navBar = document.querySelector('header nav');
+  if (navBar && 'IntersectionObserver' in window) {
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(function (entries) {
+      navBar.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }, { rootMargin: '8px 0px 0px 0px' }).observe(sentinel);
   }
 
   // Hamburger nav toggle

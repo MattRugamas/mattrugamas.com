@@ -12,21 +12,22 @@ article.blogpost {
     align-items: flex-start;
 
     h1#post-title {
-      font-family: $fonts-titles;
-      font-size: var(--text-xl);
-      font-weight: var(--font-weight-semi);
-      line-height: 1.3;
+      font-family: $fonts-display;
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-normal);
+      letter-spacing: var(--tracking-display);
+      line-height: 1.18;
       margin-bottom: 0;
 
       @media (min-width: $bp-md) {
-        font-size: var(--text-2xl);
+        font-size: var(--text-3xl);
       }
     }
 
     time#post-date {
       display: block;
-      margin: var(--space-2) 0 var(--space-8);
-      font-family: $fonts-body;
+      margin: var(--space-3) 0 var(--space-8);
+      font-family: $fonts-source;
       font-size: var(--text-sm);
       font-weight: var(--font-weight-normal);
       color: var(--color-dates);
@@ -38,16 +39,18 @@ article.blogpost {
 
     h2 {
       font-family: $fonts-titles;
-      font-size: var(--text-lg);
+      font-size: var(--text-xl);
       font-weight: var(--font-weight-semi);
-      line-height: 1.4;
+      letter-spacing: var(--tracking-tight);
+      line-height: 1.35;
       margin: var(--space-8) 0 var(--space-2);
     }
 
     h3 {
       font-family: $fonts-titles;
-      font-size: var(--text-base);
+      font-size: var(--text-lg);
       font-weight: var(--font-weight-semi);
+      letter-spacing: var(--tracking-tight);
       line-height: 1.4;
       margin: var(--space-6) 0 var(--space-2);
     }
@@ -100,7 +103,7 @@ article.blogpost {
     .footnotes {
       margin-top: var(--space-12);
       padding-top: var(--space-6);
-      border-top: 1px solid var(--color-dates);
+      border-top: 1px solid var(--hairline);
       font-family: $fonts-body;
       font-size: var(--text-sm);
       line-height: 1.6;
@@ -164,6 +167,8 @@ code.highlighter-rouge {
   color: var(--color-text);
   background-color: var(--inline-code-bg);
   border: 1px solid var(--inline-code-border);
+  border-radius: 6px;
+  padding: 0.05em 0.35em;
 }
 
 .highlight .w {
@@ -172,7 +177,7 @@ code.highlighter-rouge {
 
 .highlight .err {
   color: var(--color-base);
-  background-color: var(--color-links);
+  background-color: var(--code-string);
 }
 
 // Comments
@@ -198,7 +203,7 @@ code.highlighter-rouge {
   color: var(--color-dates);
 }
 .highlight .gd {
-  color: var(--color-links);
+  color: var(--code-string);
 }
 .highlight .gh {
   color: var(--color-highlight);
@@ -229,7 +234,7 @@ code.highlighter-rouge {
 .highlight .sr,
 .highlight .si,
 .highlight .se {
-  color: var(--color-links);
+  color: var(--code-string);
 }
 
 // Names: tags use highlight; namespace / class / constant / attr use dates
