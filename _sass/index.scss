@@ -546,13 +546,14 @@ html {
     footer {
       padding: var(--space-6) var(--space-4);
       font-family: $fonts-body;
-      font-size: var(--text-sm);
       color: var(--color-inactive);
       border-top: 1px solid var(--hairline);
       text-align: center;
 
       p {
         margin: 0;
+        white-space: nowrap;
+        font-size: clamp(0.625rem, 0.2rem + 2.5vw, var(--text-sm));
       }
 
       strong {
