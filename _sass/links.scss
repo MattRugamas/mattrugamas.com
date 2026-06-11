@@ -272,10 +272,3 @@ main {
     }
   }
 }
-
-// Minimal link page: keep MR visible on large screens (main nav hides it ≥ md).
-html body header.minimal-chrome > nav .nav-home {
-  @media (min-width: $bp-md) {
-    display: block;
-  }
-}
