@@ -1,4 +1,133 @@
 (function () {
+  // Sequenced entrance animations — fade and float elements in on load.
+  function unwrapForAnimation(container) {
+    if (
+      container.matches('.link-hub') ||
+      (container.children.length > 1 && container.matches('section, div, article'))
+    ) {
+      return Array.prototype.slice.call(container.children);
+    }
+    return [container];
+  }
+
+  function collectEntranceItems() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return [];
+    }
+
+    var items = [];
+    var nav = document.querySelector('header nav');
+    if (nav) items.push(nav);
+
+    var main = document.getElementById('mainContent');
+    if (main) {
+      var children = Array.prototype.slice.call(main.children).filter(function (el) {
+        return !el.hasAttribute('aria-hidden') && el.tagName !== 'SCRIPT';
+      });
+
+      if (children.length === 1) {
+        items = items.concat(unwrapForAnimation(children[0]));
+      } else {
+        children.forEach(function (child) {
+          if (child.matches('.link-hub')) {
+            items = items.concat(unwrapForAnimation(child));
+          } else {
+            items.push(child);
+          }
+        });
+      }
+
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].id !== 'blog-list') continue;
+        var yearGroups = Array.prototype.slice.call(items[i].querySelectorAll(':scope > .year-group'));
+        if (yearGroups.length) {
+          items.splice.apply(items, [i, 1].concat(yearGroups));
+        }
+        break;
+      }
+    }
+
+    var footer = document.querySelector('body > footer');
+    if (footer) items.push(footer);
+
+    return items;
+  }
+
+  function finishEntranceAnimation(el) {
+    el.classList.remove('animate-item', 'animate-pending', 'animate-in');
+  }
+
+  function onEntranceAnimationEnd(el, event) {
+    if (
+      event.animationName !== 'entrance-float-in' &&
+      event.animationName !== 'entrance-float-in-nav'
+    ) {
+      return;
+    }
+    finishEntranceAnimation(el);
+  }
+
+  function runEntranceAnimations() {
+    var items = collectEntranceItems();
+    if (!items.length) return;
+
+    items.forEach(function (el) {
+      el.classList.add('animate-item', 'animate-pending');
+      el.addEventListener('animationend', function handler(event) {
+        onEntranceAnimationEnd(el, event);
+        el.removeEventListener('animationend', handler);
+      });
+    });
+
+    window.setTimeout(function () {
+      items.forEach(function (el, index) {
+        window.setTimeout(function () {
+          el.classList.remove('animate-pending');
+          el.classList.add('animate-in');
+        }, index * 200);
+      });
+    }, 100);
+
+    // Fallback: strip animation classes if animationend never fires.
+    window.setTimeout(function () {
+      items.forEach(finishEntranceAnimation);
+    }, 100 + items.length * 200 + 900);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runEntranceAnimations);
+  } else {
+    runEntranceAnimations();
+  }
+
+  // Resume timeline — reveal role cards as they enter the viewport.
+  var timelineRoles = document.querySelectorAll('.cv-timeline .cv-role');
+  if (
+    timelineRoles.length &&
+    'IntersectionObserver' in window &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    var timelineObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var role = entry.target;
+        role.classList.remove('tl-pending');
+        role.classList.add('tl-in');
+        role.addEventListener('transitionend', function onEnd(event) {
+          if (event.target !== role || event.propertyName !== 'transform') return;
+          role.classList.remove('tl-pending', 'tl-in');
+          role.removeEventListener('transitionend', onEnd);
+        });
+        timelineObserver.unobserve(role);
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+
+    Array.prototype.forEach.call(timelineRoles, function (role) {
+      role.classList.add('tl-pending');
+      timelineObserver.observe(role);
+    });
+  }
+
   // Theme toggle
   var btn = document.getElementById('theme-toggle');
   if (btn) {

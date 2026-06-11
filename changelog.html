@@ -9,6 +9,26 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 11, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li><strong>Résumé experience timeline</strong> — each role is now a chapter card on a vertical rail with mono index + dates eyebrows, scroll-triggered reveal, and a breathing marker on the current role. Section headings, skill cards, and recommendation cards share the same soft surface vocabulary (<code>--card-bg</code>, hairline border, <code>--radius-md</code>).</li>
+        <li>Sequenced <strong>page entrance animations</strong> (<code>_sass/animations.scss</code>, <code>site.js</code>): main content blocks float in on load with staggered timing. Animation classes are stripped on <code>animationend</code> so compositor layers don't linger and post-load hovers stay responsive.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Restyled the résumé beyond the timeline: profile opens with a lead paragraph, recommendations collapsed into one section of serif quote cards, and skills became a two-column grid of capability cards with mono labels. Print styles collapse cards back to plain stacked copy.</li>
+        <li>Nav and blog post hovers now fade a <code>::before</code> overlay (opacity) instead of repainting <code>background-color</code> inside the glass nav — faster interaction on <code>backdrop-filter</code> surfaces.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 10, 2026</h2>
 
     <div class="changelog-group">
