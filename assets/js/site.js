@@ -54,13 +54,15 @@
   }
 
   function finishEntranceAnimation(el) {
-    el.classList.remove('animate-item', 'animate-pending', 'animate-in');
+    el.classList.remove('animate-item', 'animate-pending', 'animate-in', 'animate-fade-only');
   }
 
   function onEntranceAnimationEnd(el, event) {
+    if (event.target !== el) return;
     if (
       event.animationName !== 'entrance-float-in' &&
-      event.animationName !== 'entrance-float-in-nav'
+      event.animationName !== 'entrance-float-in-nav' &&
+      event.animationName !== 'entrance-fade-in'
     ) {
       return;
     }
@@ -72,10 +74,20 @@
     if (!items.length) return;
 
     items.forEach(function (el) {
+      if (el.matches('.link-hub-section')) {
+        el.classList.add('animate-fade-only');
+      }
       el.classList.add('animate-item', 'animate-pending');
       el.addEventListener('animationend', function handler(event) {
         onEntranceAnimationEnd(el, event);
-        el.removeEventListener('animationend', handler);
+        if (
+          event.target === el &&
+          (event.animationName === 'entrance-float-in' ||
+            event.animationName === 'entrance-float-in-nav' ||
+            event.animationName === 'entrance-fade-in')
+        ) {
+          el.removeEventListener('animationend', handler);
+        }
       });
     });
 
