@@ -1,4 +1,5 @@
 @use 'settings' as *;
+@use 'safari-chrome' as *;
 
 ///////////////
 /* LINKS HUB */
@@ -62,18 +63,28 @@ html[data-theme="light"] main:has(.link-hub) {
   @include link-aurora-light;
 }
 
+// Site-wide html washes compete with the aurora for toolbar tint sampling.
+html:has(.link-hub)::before {
+  display: none;
+}
+
+// Pin toolbar tint on /links/ for Chromium and other meta-color samplers.
+body:has(.link-hub) .link-chrome-edge--top {
+  display: block;
+}
+
 .link-aurora {
   position: fixed;
-  top: 0;
   left: 0;
   right: 0;
-  // Pin the layer to the *large* viewport so it doesn't resize (and the
-  // centred mesh doesn't lurch) as mobile browser chrome collapses on scroll.
-  height: 100vh;
-  height: 100lvh;
+  top: calc(-1 * env(safe-area-inset-top, 0px));
+  height: calc(100lvh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
+  background-color: var(--color-base);
+  backdrop-filter: saturate(100%) blur(0px);
+  -webkit-backdrop-filter: saturate(100%) blur(0px);
   // Isolate the blend group: without this, `mix-blend-mode` reads the scrolling
   // page content as its backdrop and the blurred mesh re-rasterises every frame
   // while scrolling. Isolating limits the blend to the two layers themselves.
@@ -147,6 +158,48 @@ html[data-theme="light"] main:has(.link-hub) {
   }
 }
 
+// Links minimal nav: glass on an absolute child so Safari doesn't sample the
+// aurora through backdrop-filter on the fixed bar (see safari-color-tinting).
+body:has(.link-hub) header > nav {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: saturate(100%) blur(0px);
+  -webkit-backdrop-filter: saturate(100%) blur(0px);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background-color: var(--glass-fallback);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-inner),
+      var(--glass-shadow);
+
+    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      background-color: var(--glass-bg);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    }
+  }
+
+  .nav-home,
+  .nav-actions {
+    position: relative;
+    z-index: 1;
+  }
+
+  &.scrolled::after {
+    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      background-color: var(--glass-bg-strong);
+    }
+  }
+}
+
 main {
   .link-hub {
     width: 100%;
@@ -217,6 +270,7 @@ main {
     }
 
     .link-hub-list a {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -231,19 +285,31 @@ main {
       // True glass card so links stay legible over the full-bleed glow.
       @include glass;
       transition:
-        background-color var(--dur-fast) var(--ease-glass),
         color var(--dur-fast) var(--ease-glass),
         border-color var(--dur-fast) var(--ease-glass),
         box-shadow var(--dur-fast) var(--ease-glass),
         transform var(--dur-fast) var(--ease-glass);
+
+      // Opacity on a pseudo-element composites more cheaply than
+      // repainting background-color inside a backdrop-filter surface.
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        background-color: color-mix(in srgb, var(--color-text) 9%, transparent);
+        opacity: 0;
+        transition: opacity var(--dur-fast) var(--ease-glass);
+      }
 
       &:hover {
         color: var(--color-highlight);
         border-color: color-mix(in srgb, var(--color-highlight) 45%, transparent);
         transform: translateY(-2px);
 
-        @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-          background-color: var(--glass-bg-strong);
+        &::before {
+          opacity: 1;
         }
       }
 

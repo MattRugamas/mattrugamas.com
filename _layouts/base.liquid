@@ -20,7 +20,11 @@
     {% endif %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    {% if page.layout == 'minimal' %}
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    {% else %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% endif %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
       rel="preconnect"
@@ -42,9 +46,11 @@
 
   <body>
     {% if page.layout == 'minimal' %}
-      {% include minimal-chrome.html %}
+    <div class="link-chrome-edge link-chrome-edge--top" aria-hidden="true"></div>
+    <div class="link-chrome-edge link-chrome-edge--bottom" aria-hidden="true"></div>
+    {% include minimal-chrome.html %}
     {% else %}
-      {% include navigation.html %}
+    {% include navigation.html %}
     {% endif %}
     {{ content }}
     {% unless page.layout == 'minimal' %}

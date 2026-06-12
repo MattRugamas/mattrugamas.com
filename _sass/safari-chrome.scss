@@ -1,0 +1,46 @@
+@use 'settings' as *;
+
+// Toolbar tint helpers for /links/ (see links.scss).
+
+// Extend a fixed full-bleed layer under safe areas (requires viewport-fit=cover).
+@mixin bleed-safe-areas {
+  top: calc(-1 * env(safe-area-inset-top, 0px));
+  right: 0;
+  bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+  left: 0;
+  width: auto;
+  height: auto;
+}
+
+// Hidden sampling strips for toolbar tint on /links/ (see links.scss for when
+// each edge is shown). Uses --color-base so chrome tracks the active theme.
+.link-chrome-edge {
+  display: none;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  z-index: 5;
+  background-color: var(--color-base);
+
+  &--top {
+    top: 0;
+    min-height: max(4px, env(safe-area-inset-top, 0px));
+  }
+
+  &--bottom {
+    bottom: -8px;
+    min-height: 12px;
+  }
+}
+
+// iOS Safari bottom-toolbar seam only (jahir.dev / safari-color-tinting).
+@supports (-webkit-touch-callout: none) {
+  @media (width < 768px) {
+    body:has(.link-hub) .link-chrome-edge--bottom {
+      display: block;
+    }
+  }
+}

@@ -9,6 +9,27 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 12, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Link hub hovers felt sluggish because entrance animations were applying <code>transform</code> and <code>will-change: transform</code> to <code>.link-hub-section</code> parents of glass link cards, and hover was repainting <code>background-color</code> inside <code>backdrop-filter</code> surfaces. Sections now use an opacity-only entrance (<code>animate-fade-only</code>), link hovers cross-fade a <code>::before</code> overlay like the nav, and <code>animationend</code> handlers only detach after the entrance animation on the target element itself.</li>
+        <li>On <code>/links/</code>, Safari 26+ was tinting the tab/status bar from the animated aurora and the nav's <code>backdrop-filter</code> instead of the active theme. The aurora now carries an explicit <code>--color-base</code> fill plus a neutral <code>backdrop-filter</code> to opt out of toolbar sampling; the links nav's glass moved to an absolute <code>::after</code> so the fixed bar stays transparent; ambient washes moved to <code>html::before</code> so they aren't buried by <code>body</code> background; and <code>viewport-fit=cover</code> is scoped to the links layout only.</li>
+        <li>On iOS Safari (<code>/links/</code>), Liquid Glass left a seam between the URL bar tint and page paint. The aurora bleeds into <code>env(safe-area-inset-*)</code> and hidden mobile sampling strips pin toolbar tint to the theme base.</li>
+        <li>On Chromium (<code>/links/</code>, e.g. Dia), the title bar was still tracking the animated aurora. A fixed top <code>.link-chrome-edge</code> strip pins sampling to <code>--color-base</code>, site-wide html washes are suppressed behind the aurora, and the links nav opts out of backdrop sampling.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Replaced the terminal-style favicon set with an <strong>MR wordmark</strong> that matches the nav home mark — Instrument Serif italic on the site charcoal base, across every size in the package (<code>favicon.ico</code>, PNGs, Apple touch icon, Android chrome icons, Safari pinned tab, and Windows tile). Cache-bust query bumped to <code>?v=3</code>; manifest and tile theme colors now use the current palette.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 11, 2026</h2>
 
     <div class="changelog-group">
