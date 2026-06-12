@@ -79,7 +79,7 @@
     });
   });
 
-  // ─── 5. "Elsewhere" social link clicks ────────────────────────────────────
+  // ─── 5. About CTA link clicks ─────────────────────────────────────────────
   var findme = document.querySelector('.findme');
   if (findme) {
     findme.querySelectorAll('a').forEach(function (link) {

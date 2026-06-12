@@ -1,12 +1,14 @@
 ---
+layout: post
 title: Getting Ready For The Web
+date: 2018-12-14
 ---
 My experience with web tools fell exponentially after high school, when computer science courses intrigued me with *'actual'* programming languages like C++ and Java, with a little Python mixed in with discrete math curriculum.
 
 So coming into 2018 my conceptions of web tooling, and programming languages (think what we're doing with modern JS, [Node](https://nodejs.org/en/), [React](https://reactjs.org), [Bundlers](https://parceljs.org), etc), needed refreshing. All of these relatively new technologies I had previously heard a thing or two about on dev twitter, but I never really looked into any of them or how they worked. I knew I wanted to use a static page generator but I knew I'd have to come to grips with more fundamental tooling first:
 
 {% figure caption:"Terminal with configurations" class:"shadow_image" %}
-![terminal-with-configs](/assets/img/terminal-with-configs.png){:class="img-responsive"}
+![terminal-with-configs](/assets/img/posts/terminal-with-configs.png){:class="img-responsive"}
 {% endfigure %}
 
 [Terminal.app](https://en.wikipedia.org/wiki/Terminal_(macOS)) is Apple's terminal emulator for MacOS and is enough for what I needed: Getting Started. I've heard great things about other emulators like [iTerm2](https://iterm2.com) and [Hyper](https://hyper.is), but I feel having a solid foundation on a default terminal emu is beneficial.
