@@ -1,4 +1,8 @@
-- name: Steam
-  link: https://steamcommunity.com/id/mattrugamas
-- name: Spotify
-  link: https://open.spotify.com/user/catasphere
+# About page CTA buttons — edit labels, order, or add entries here.
+- label: Get in touch →
+  primary: true
+  email: true
+- label: LinkedIn
+  url: https://www.linkedin.com/in/mattrugamas/
+- label: GitHub
+  url: https://github.com/MattRugamas

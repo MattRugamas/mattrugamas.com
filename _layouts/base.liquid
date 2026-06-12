@@ -20,7 +20,7 @@
     {% endif %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    {% if page.layout == 'minimal' %}
+    {% if page.minimal_chrome %}
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     {% else %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,7 +45,7 @@
   </head>
 
   <body>
-    {% if page.layout == 'minimal' %}
+    {% if page.minimal_chrome %}
     <div class="link-chrome-edge link-chrome-edge--top" aria-hidden="true"></div>
     <div class="link-chrome-edge link-chrome-edge--bottom" aria-hidden="true"></div>
     {% include minimal-chrome.html %}
@@ -53,7 +53,7 @@
     {% include navigation.html %}
     {% endif %}
     {{ content }}
-    {% unless page.layout == 'minimal' %}
+    {% unless page.minimal_chrome %}
     <footer>
       <p>2019-{{ 'now' | date: '%Y' }} — Made with ❤️ on
         <strong>

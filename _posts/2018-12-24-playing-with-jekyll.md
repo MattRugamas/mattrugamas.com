@@ -1,5 +1,7 @@
 ---
+layout: post
 title: Playing With Jekyll
+date: 2018-12-24
 ---
 Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I've gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with [SCSS](https://sass-lang.com), write posts in [markdown](https://kramdown.gettalong.org/syntax.html) (kramdown), and do kinda-dynamic stuff using HTML with [Liquid](https://shopify.github.io/liquid/)—sweet.
 
@@ -104,7 +106,7 @@ nav {
 I'm using a [navigation bar style](https://codepen.io/samagurtam/pen/oQOwOv) that I forked from user [shahjehan](https://codepen.io/shahjehan/pen/BzLKRm) over on [CodePen](https://codepen.io/shahjehan/). I took the animation he was using in one of the nav styles and modified it to match the barebones minimal style I wanted to approach for the site. I also needed something simple that I could style and scale gracefully to smaller viewports. Much of this project turned out to be learning CSS, SCSS and how they work. Jekyll made the site building process much simpler such that I only really needed to focus on that.
 
 {% figure caption:"Finder Window showing Directory Layout" class:"shadow_image" %}
-![DirectoryLayout](/assets/img/DirectoryLayout.png){:class="img-responsive"}
+![DirectoryLayout](/assets/img/posts/directory-layout.png){:class="img-responsive"}
 {% endfigure %}
 
 We're hosting on Github Pages because a) it's free, and b) works well with Jekyll. Pros and cons of course, one being that [Github Pages has a whitelist](https://pages.github.com/versions/) on dependencies/plugins such that we are forced to use Jekyll 3.7.4 along with other not quite up-to-date wares (With Jekyll we need to use the `bundle exec` command as a prefix before any jekyll commands if we're running a newer Jekyll than the one GitHub currently has whitelisted). A pro on the other hand is that we don't build! We push our commits over to our remote repo on GitHub and they build our site and serve, meaning we can add `_site` directory to our `.gitignore`. We can start this process by using GitHub's web interface to create a new repo titled `<username>.github.io` and pushing our updates to the master branch of this new repo.
