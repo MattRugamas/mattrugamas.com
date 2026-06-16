@@ -9,6 +9,25 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 16, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Redesigned per-post tags on the homepage, tag archives, and blog post layouts as a quiet metadata line — lowercase monospace labels in the muted dates color with middot separators, rendered through a shared <code>_includes/post-tags.html</code> partial. On listing rows the tags sit below the excerpt and the date column is pinned to a fixed width, so titles and rows stay aligned no matter how many tags a post carries; on post pages the tags sit on their own line beneath the date. The interactive filter-nav pills are unchanged.</li>
+        <li>The Google Analytics loader now reads the measurement ID from <code>{{ site.google_analytics }}</code> in <code>_config.yml</code> instead of a hardcoded <code>G-</code> ID in the base layout, making the config the single source of truth for both the <code>gtag.js</code> tag and the bootstrap script.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Google Analytics stopped initializing because <code>ga-bootstrap.js</code> was being wrapped in the default layout at build time, so the browser received a full HTML page instead of JavaScript. Added <code>layout: null</code> to the file's front matter so Jekyll emits only the processed bootstrap script.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 12, 2026</h2>
 
     <div class="changelog-group">
@@ -16,6 +35,7 @@ title: Changelog
       <ul>
         <li>About page CTAs are now driven by <code>_data/findme.yml</code> via <code>{% include findme.html %}</code>, so contact and social links can be edited in one place without touching HTML.</li>
         <li>Post pages now hide the Giscus comments section when the embed reports an unrecoverable error (for example a giscus.app outage), instead of leaving a broken widget on the page.</li>
+        <li>Added blog tags (<strong>website</strong>, <strong>projects</strong>, <strong>ideas</strong>, <strong>music</strong>) with archive pages at <code>/tags/&lt;tag&gt;/</code>, tag front matter on every post, and a homepage filter nav driven by <code>_data/tags.yml</code>.</li>
       </ul>
     </div>
 
