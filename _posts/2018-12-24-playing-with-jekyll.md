@@ -2,6 +2,8 @@
 layout: post
 title: Playing With Jekyll
 date: 2018-12-24
+tags:
+  - website
 ---
 Jekyll feels like a great place to start, again. Ruby and RubyGems is familiar, I've gotten the hang of switching between Ruby environments with rbenv, and I like the idea of packaging Jekyll themes in a RubyGem. With Jekyll we can also style with [SCSS](https://sass-lang.com), write posts in [markdown](https://kramdown.gettalong.org/syntax.html) (kramdown), and do kinda-dynamic stuff using HTML with [Liquid](https://shopify.github.io/liquid/)—sweet.
 

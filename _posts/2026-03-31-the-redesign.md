@@ -2,6 +2,9 @@
 layout: post
 title: "The Redesign"
 date: 2026-03-31
+tags:
+  - website
+  - ideas
 ---
 
 I've been sitting on a version of this site that I built sometime around 2018 or 2019, back when I was learning more front-end seriously and wanted a place to practice. It worked, mostly. The bones were fine. But it had the kind of accumulated debt that happens when you build something to learn and then never really go back to treat it like a real project.

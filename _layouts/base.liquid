@@ -15,7 +15,7 @@
     </script>
     {% if site.google_analytics and jekyll.environment == 'production' %}
       <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-EC57RQ9MNY"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
       <script src="/assets/js/ga-bootstrap.js"></script>
     {% endif %}
     <meta charset="utf-8" />

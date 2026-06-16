@@ -2,6 +2,8 @@
 layout: post
 title: Getting Ready For The Web
 date: 2018-12-14
+tags:
+  - website
 ---
 My experience with web tools fell exponentially after high school, when computer science courses intrigued me with *'actual'* programming languages like C++ and Java, with a little Python mixed in with discrete math curriculum.
 

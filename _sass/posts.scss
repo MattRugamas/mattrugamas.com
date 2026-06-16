@@ -24,17 +24,23 @@ article.blogpost {
       }
     }
 
-    time#post-date {
-      display: block;
+    .post-meta {
       margin: var(--space-3) 0 var(--space-8);
-      font-family: $fonts-source;
-      font-size: var(--text-sm);
-      font-weight: var(--font-weight-normal);
-      color: var(--color-dates);
-    }
 
-    .post-tags {
-      margin: 0 0 var(--space-6);
+      time#post-date {
+        display: block;
+        margin: 0;
+        font-family: $fonts-source;
+        font-size: var(--text-sm);
+        font-weight: var(--font-weight-normal);
+        color: var(--color-dates);
+      }
+
+      .post-tags {
+        margin-top: var(--space-2);
+        padding-inline-start: 0;
+        list-style: none;
+      }
     }
 
     h2 {

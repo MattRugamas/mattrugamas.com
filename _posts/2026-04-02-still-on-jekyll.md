@@ -2,6 +2,9 @@
 layout: post
 title: "Still on Jekyll, Probably Forever"
 date: 2026-04-02
+tags:
+  - website
+  - ideas
 ---
 
 I've rebuilt this site a few times now. Not a full rebuild, more like the kind of thing where you touch one CSS file and end up rewriting three others. Each time I do it, I think about whether I should just... do it properly. Migrate to something modern. Maybe [Next.js](https://nextjs.org). Maybe [Astro](https://astro.build). Maybe whatever the new thing is by the time you're reading this.

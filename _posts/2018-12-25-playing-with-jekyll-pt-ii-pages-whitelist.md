@@ -2,6 +2,8 @@
 layout: post
 title: Playing With Jekyll Pt. II (Pages Whitelist)
 date: 2018-12-25
+tags:
+  - website
 ---
 In my previous post I wrote about Jekyll and it's integration with Github Pages, and I mentioned how Github Pages whitelists Jekyll dependencies in your build, essentially building our Jekyll site with the `--safe` mode flag. As I thought about how we might go around this, switching over to [Netlify](https://www.netlify.com) was a thought that came up that could get comments and syntax highlights going. I also realized I could just build the site locally and push my static pages over to the Github repo for my site, but seemed hacky.
 

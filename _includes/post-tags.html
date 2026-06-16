@@ -1,0 +1,7 @@
+{% if include.tags.size > 0 %}
+<ul class="post-tags" aria-label="Tags">
+  {% for tag in include.tags %}
+    <li><a href="/tags/{{ tag }}/" class="post-tag">{{ tag }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
