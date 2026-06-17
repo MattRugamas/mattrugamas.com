@@ -13,7 +13,10 @@ html {
   &::before {
     content: "";
     position: fixed;
-    inset: 0;
+    // Bleed under the iOS safe areas (status bar + the floating Safari toolbar /
+    // home indicator) so the bottom glow reaches the physical screen edge with no
+    // flat seam. Requires viewport-fit=cover; resolves to inset:0 when env() is 0.
+    @include bleed-safe-areas;
     z-index: 0;
     pointer-events: none;
     background:
@@ -99,7 +102,7 @@ html {
       --nav-row: calc(var(--nav-height) - 2px); // minus top/bottom border
       position: fixed;
       z-index: 10;
-      top: var(--nav-inset);
+      top: calc(var(--nav-inset) + env(safe-area-inset-top, 0px));
       left: 50%;
       transform: translateX(-50%);
       width: min(calc(100% - 2 * var(--nav-inset)), 760px);
@@ -595,7 +598,7 @@ html {
     }
 
     footer {
-      padding: var(--space-6) var(--space-4);
+      padding: var(--space-6) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
       font-family: $fonts-body;
       color: var(--color-inactive);
       border-top: 1px solid var(--hairline);
