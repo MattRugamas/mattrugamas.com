@@ -12,4 +12,4 @@ vendor/
 .bundle/
 .claude/
 .cursor/
-scripts/InstrumentSerif-Italic.ttf
+scripts/*.ttf
