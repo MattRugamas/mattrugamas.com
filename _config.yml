@@ -1,8 +1,8 @@
 title: Matt Rugamas
-tagline: Customers, code, and product
+tagline: Customers, product, and code
 description: >
-  Personal site of Matt Rugamas, a Senior Support and Accessibility Engineer
-  in Los Angeles, working at the intersection of customers, code and product.
+  Personal site of Matt Rugamas, a support engineer in Los Angeles
+  working at the intersection of customers, product, and code.
 url: https://mattrugamas.com
 permalink: /:title
 
@@ -14,7 +14,8 @@ sass:
 google_analytics: G-EC57RQ9MNY
 
 # Social
-instagram_username: MattRugamas
+twitter:
+  card: summary_large_image
 github_username: MattRugamas
 
 # Build settings
@@ -56,3 +57,8 @@ defaults:
       path: ""
     values:
       layout: "default"
+      # Default social share card (Open Graph / Twitter); pages may override.
+      image:
+        path: /assets/img/site/social-card.png
+        width: 1200
+        height: 630

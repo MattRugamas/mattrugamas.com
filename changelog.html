@@ -12,8 +12,16 @@ title: Changelog
     <h2 class="changelog-date">June 16, 2026</h2>
 
     <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Added a social share card so links to the site render a rich preview in iMessage and on social platforms. A new <code>scripts/generate-social-card.py</code> renders a 1200×630 card from the site's own type and palette — the MR monogram, the name in Geist, "customers, product & code" in Instrument Serif Italic, and a Geist Mono footer — to <code>assets/img/site/social-card.png</code>. It is wired into <code>jekyll-seo-tag</code> through a front-matter default <code>image</code> (with width and height) in <code>_config.yml</code>, which every page inherits and which upgrades the Twitter card to <code>summary_large_image</code>.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
       <h3>Changed</h3>
       <ul>
+        <li>Updated the site <code>description</code> and <code>tagline</code> in <code>_config.yml</code> to reflect the current Technical Support Engineer role and the "customers, product, and code" ordering used throughout the new copy.</li>
         <li>Rewrote the homepage lede beneath the name to reflect current work: it now frames the role around the intersection of customers, product, and code, with a drive to help young support teams scale and define what support looks like in an AI-native world. Renamed the element from <code>#tagline</code> to <code>#lede</code> in <code>index.html</code> and its style block in <code>_sass/_settings.scss</code>, since the paragraph functions as an introductory lede rather than a tagline.</li>
         <li>Rewrote the About page in a tighter, more self-aware voice. The opening paragraph now leads with the current Cursor role and the customers/product/code intersection, including the work of scaling young support teams and defining support in an AI-native environment; the remaining paragraphs trim corporate phrasing, add a note on a love for art and life, and drop em dashes and colons in favor of plainer punctuation.</li>
         <li>Rewrote the Music page intro, replacing the previous "Playing music has been a constant" opener with a more personal account: making and collaborating on music since sixteen, moving from guitar to drums to bass, framing collaboration as one of the joys of music and an open invitation to new projects, and presenting the page as a rough archive of projects.</li>
