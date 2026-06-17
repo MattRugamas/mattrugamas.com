@@ -234,7 +234,7 @@ $bp-md: 52em;
   display: flex;
   flex-flow: column nowrap;
   flex-grow: 1;
-  padding: calc(var(--nav-offset) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-12);
+  padding: calc(var(--nav-offset) + var(--content-gap) + env(safe-area-inset-top, 0px)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-12);
   align-items: center;
   h1 {
     margin: 0;
