@@ -13,16 +13,28 @@ html {
   &::before {
     content: "";
     position: fixed;
-    // Bleed under the iOS safe areas (status bar + the floating Safari toolbar /
-    // home indicator) so the bottom glow reaches the physical screen edge with no
-    // flat seam. Requires viewport-fit=cover; resolves to inset:0 when env() is 0.
-    @include bleed-safe-areas;
+    inset: 0;
     z-index: 0;
     pointer-events: none;
     background:
       radial-gradient(52% 44% at 18% -6%, var(--wash-a), transparent 70%),
       radial-gradient(46% 40% at 88% 12%, var(--wash-b), transparent 70%),
       radial-gradient(60% 48% at 50% 110%, var(--wash-a), transparent 72%);
+  }
+
+  // The bottom glow is anchored to the fixed (layout-viewport) layer, so it can't
+  // track iOS Safari's floating bottom toolbar — when the toolbar expands, the
+  // glow has faded to base by the visible edge, leaving a seam. env() safe-area
+  // insets only cover the home indicator, not the toolbar, so they can't close
+  // it. On iOS phones we drop the bottom wash and keep the two top washes.
+  @supports (-webkit-touch-callout: none) {
+    @media (width < 768px) {
+      &::before {
+        background:
+          radial-gradient(52% 44% at 18% -6%, var(--wash-a), transparent 70%),
+          radial-gradient(46% 40% at 88% 12%, var(--wash-b), transparent 70%);
+      }
+    }
   }
 
   #skipToMainContent {
@@ -102,7 +114,7 @@ html {
       --nav-row: calc(var(--nav-height) - 2px); // minus top/bottom border
       position: fixed;
       z-index: 10;
-      top: calc(var(--nav-inset) + env(safe-area-inset-top, 0px));
+      top: var(--nav-inset);
       left: 50%;
       transform: translateX(-50%);
       width: min(calc(100% - 2 * var(--nav-inset)), 760px);
@@ -598,7 +610,7 @@ html {
     }
 
     footer {
-      padding: var(--space-6) var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+      padding: var(--space-6) var(--space-4);
       font-family: $fonts-body;
       color: var(--color-inactive);
       border-top: 1px solid var(--hairline);
