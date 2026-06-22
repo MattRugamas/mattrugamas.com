@@ -9,6 +9,28 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">June 22, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Closed two gaps left by the prior interface-polish pass. The nav menu link pills now scale to <code>scale(0.96)</code> on press, matching the press feedback already on the adjacent icon controls and glass buttons (previously they cross-faded color only). And <code>text-wrap: pretty</code> now extends to blog-post list items, so bulleted and numbered body copy gets the same orphan-avoidance the prose paragraphs already had.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">June 21, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Applied interface-polish fixes from a design-engineering skills audit: normalized press feedback to <code>scale(0.96)</code> on glass buttons, link-hub cards, and nav icon controls; enlarged nav icon hit areas to 40×40px; retuned the theme-toggle sun/moon crossfade to <code>scale(0.25)</code> with a <code>blur(4px)</code> enter/exit and <code>cubic-bezier(0.2, 0, 0, 1)</code>; swapped tinted image borders for pure black/white <code>--img-outline</code> on the About photo, link-hub avatar, and post figures; added <code>text-wrap: balance</code> on headings and <code>text-wrap: pretty</code> on prose via <code>content-base</code>; applied <code>tabular-nums</code> to dates and footer years; switched music-project hovers to a <code>::before</code> opacity cross-fade; and completed the <code>nav-item-in</code> keyframe <code>to</code> block.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 17, 2026</h2>
 
     <div class="changelog-group">

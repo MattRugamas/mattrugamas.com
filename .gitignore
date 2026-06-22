@@ -2,6 +2,7 @@
 *.swp
 .tm_properties
 .vscode
+skills-lock.json
 .ruby-version
 **/.DS_Store
 .jekyll-metadata
@@ -10,6 +11,7 @@
 _site/
 vendor/
 .bundle/
+.agents/
 .claude/
 .cursor/
 scripts/*.ttf

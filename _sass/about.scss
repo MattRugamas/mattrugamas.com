@@ -26,8 +26,8 @@ main {
       max-width: 480px;
       align-self: center;
       height: auto;
+      @include img-outline;
       @include ui-shadow;
-      border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
     }
 

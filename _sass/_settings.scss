@@ -87,6 +87,7 @@ $bp-md: 52em;
   --card-bg: rgba(255, 255, 255, 0.03);
   --card-border: rgba(255, 255, 255, 0.07);
   --hairline: rgba(255, 255, 255, 0.1);
+  --img-outline: rgba(255, 255, 255, 0.1);
 
   // Nav geometry — floating pill
   --nav-inset: 0.75rem;
@@ -123,6 +124,7 @@ $bp-md: 52em;
 
   // Motion
   --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-icon: cubic-bezier(0.2, 0, 0, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-fast: 160ms;
   --dur-med: 320ms;
@@ -176,6 +178,7 @@ $bp-md: 52em;
   --card-bg: rgba(29, 31, 36, 0.025);
   --card-border: rgba(29, 31, 36, 0.07);
   --hairline: rgba(29, 31, 36, 0.1);
+  --img-outline: rgba(0, 0, 0, 0.1);
 }
 
 // System light preference (no explicit override)
@@ -200,6 +203,15 @@ $bp-md: 52em;
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.1),
     0 6px 20px -8px rgba(0, 0, 0, 0.25);
+}
+
+@mixin img-outline {
+  outline: 1px solid var(--img-outline);
+  outline-offset: 0;
+}
+
+@mixin tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 @mixin text-shadow {
@@ -236,6 +248,13 @@ $bp-md: 52em;
   flex-grow: 1;
   padding: calc(var(--nav-offset) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-12);
   align-items: center;
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
   h1 {
     margin: 0;
     font-family: $fonts-display;
@@ -254,6 +273,7 @@ $bp-md: 52em;
     font-family: $fonts-body;
     line-height: 1.6;
     font-size: var(--text-base);
+    text-wrap: pretty;
     max-width: var(--content-wide);
     &#lede {
       max-width: var(--content-hero);
@@ -316,7 +336,7 @@ $bp-md: 52em;
   }
 
   &:active {
-    transform: translateY(0) scale(0.98);
+    transform: translateY(0) scale(0.96);
   }
 
   &:focus-visible {

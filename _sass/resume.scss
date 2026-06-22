@@ -301,6 +301,7 @@
 
     .cv-role-index {
       color: var(--color-highlight);
+      @include tabular-nums;
     }
 
     h3 {
@@ -337,6 +338,7 @@
     .cv-location,
     .cv-dates {
       color: var(--color-dates);
+      @include tabular-nums;
     }
   }
 

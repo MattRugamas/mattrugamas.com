@@ -21,16 +21,35 @@ main {
   }
 
   .music-project {
+    position: relative;
     @include card;
     padding: var(--space-6);
     margin: 0;
-    transition:
-      background-color var(--dur-med) var(--ease-glass),
-      border-color var(--dur-med) var(--ease-glass);
+    transition: border-color var(--dur-med) var(--ease-glass);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      border-radius: inherit;
+      background-color: var(--color-surface);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--dur-med) var(--ease-glass);
+    }
+
+    > * {
+      position: relative;
+      z-index: 1;
+    }
 
     &:hover {
-      background-color: var(--color-surface);
       border-color: var(--hairline);
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     h2 {
