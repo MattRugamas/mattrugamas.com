@@ -16,6 +16,7 @@ title: Changelog
       <ul>
         <li>Closed two gaps left by the prior interface-polish pass. The nav menu link pills now scale to <code>scale(0.96)</code> on press, matching the press feedback already on the adjacent icon controls and glass buttons (previously they cross-faded color only). And <code>text-wrap: pretty</code> now extends to blog-post list items, so bulleted and numbered body copy gets the same orphan-avoidance the prose paragraphs already had.</li>
         <li>Renamed the development branch from <code>tmp-checkpoint</code> to <code>main</code> and documented the deploy loop in <code>README.md</code> and the Cursor deploy rule: push <code>main</code>, then <code>git push origin main:release</code> so both branches stay aligned without merge-commit drift. Renamed the frozen Travis-era site branch from <code>master</code> to <code>archive/legacy-site</code>.</li>
+        <li>Bumped GitHub Pages workflow actions to Node 24–native majors (<code>checkout@v5</code>, <code>configure-pages@v6</code>, <code>upload-pages-artifact@v4</code>, <code>deploy-pages@v5</code>) to clear runner deprecation warnings ahead of GitHub’s Node 20 removal.</li>
       </ul>
     </div>
 
