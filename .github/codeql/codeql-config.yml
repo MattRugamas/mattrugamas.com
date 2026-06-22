@@ -2,5 +2,4 @@
 # CodeQL JavaScript extraction (they are not valid JS until build time).
 name: "mattrugamas.com CodeQL config"
 paths-ignore:
-  - assets/js/ga-bootstrap.js.liquid
-  - assets/js/random-post.js.liquid
+  - assets/js/random-post.js

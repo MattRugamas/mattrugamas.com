@@ -22,6 +22,7 @@ title: Changelog
     <div class="changelog-group">
       <h3>Fixed</h3>
       <ul>
+        <li>Google Analytics stopped initializing in production because the CodeQL-driven <code>.js.liquid</code> rename caused Jekyll to emit <code>ga-bootstrap.js.liquid</code> instead of <code>/assets/js/ga-bootstrap.js</code>, so the layout’s script tag 404’d. Inlined the four-line bootstrap in <code>base.liquid</code>, reverted <code>random-post</code> to <code>assets/js/random-post.js</code> with <code>layout: null</code>, and narrowed the CodeQL <code>paths-ignore</code> to that file only.</li>
         <li>Bumped <code>concurrent-ruby</code> from 1.3.5 to 1.3.7 in <code>Gemfile.lock</code> (Dependabot security update).</li>
         <li>Fixed GitHub CodeQL parse errors on Jekyll-templated JavaScript by renaming <code>ga-bootstrap.js</code> and <code>random-post.js</code> to <code>.js.liquid</code> (build output URLs unchanged) and excluding those templates in <code>.github/codeql/codeql-config.yml</code>.</li>
         <li>Hardened client-side email link assembly in <code>site.js</code>: <code>data-u</code>/<code>data-d</code> values are trimmed, regex-validated, and passed through <code>encodeURIComponent</code> before <code>setAttribute('href', …)</code>, clearing a CodeQL DOM XSS warning.</li>
