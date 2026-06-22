@@ -183,7 +183,9 @@ html {
           font-weight: var(--font-weight-medium);
           letter-spacing: var(--tracking-tight);
           text-decoration: none;
-          transition: color var(--dur-fast) var(--ease-glass);
+          transition:
+            color var(--dur-fast) var(--ease-glass),
+            transform var(--dur-fast) var(--ease-glass);
 
           // Opacity on a pseudo-element composites more cheaply than
           // background-color inside a backdrop-filter nav.
@@ -217,6 +219,10 @@ html {
               background-color: color-mix(in srgb, var(--color-text) 11%, transparent);
               opacity: 1;
             }
+          }
+
+          &:active {
+            transform: scale(0.96);
           }
         }
 
@@ -269,15 +275,17 @@ html {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 2.25rem;
-        height: 2.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
         padding: 0;
         border: none;
         border-radius: var(--radius-pill);
         background: none;
         cursor: pointer;
         color: var(--color-inactive);
-        transition: color var(--dur-fast) var(--ease-glass);
+        transition:
+          color var(--dur-fast) var(--ease-glass),
+          transform var(--dur-fast) var(--ease-glass);
 
         &::before {
           content: "";
@@ -298,6 +306,10 @@ html {
             opacity: 1;
           }
         }
+
+        &:active {
+          transform: scale(0.96);
+        }
       }
 
       // Theme toggle — sun/moon crossfade
@@ -310,18 +322,21 @@ html {
           margin: auto;
           z-index: 1;
           transition:
-            opacity var(--dur-med) var(--ease-glass),
-            transform var(--dur-med) var(--ease-glass);
+            opacity var(--dur-med) var(--ease-icon),
+            transform var(--dur-med) var(--ease-icon),
+            filter var(--dur-med) var(--ease-icon);
         }
 
         // Dark (default): show moon, stash sun
         .icon-sun {
           opacity: 0;
-          transform: scale(0.4) rotate(-90deg);
+          transform: scale(0.25);
+          filter: blur(4px);
         }
         .icon-moon {
           opacity: 1;
-          transform: scale(1) rotate(0deg);
+          transform: scale(1);
+          filter: blur(0);
         }
       }
 
@@ -352,14 +367,14 @@ html {
 
     // Light mode — show sun, stash moon
     @at-root html[data-theme="light"] header > nav #theme-toggle {
-      .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
-      .icon-moon { opacity: 0; transform: scale(0.4) rotate(90deg); }
+      .icon-sun { opacity: 1; transform: scale(1); filter: blur(0); }
+      .icon-moon { opacity: 0; transform: scale(0.25); filter: blur(4px); }
     }
 
     @media (prefers-color-scheme: light) {
       @at-root html:not([data-theme="dark"]) header > nav #theme-toggle {
-        .icon-sun { opacity: 1; transform: scale(1) rotate(0deg); }
-        .icon-moon { opacity: 0; transform: scale(0.4) rotate(90deg); }
+        .icon-sun { opacity: 1; transform: scale(1); filter: blur(0); }
+        .icon-moon { opacity: 0; transform: scale(0.25); filter: blur(4px); }
       }
     }
 
@@ -401,6 +416,7 @@ html {
             font-weight: var(--font-weight-normal);
             margin: 0 0 var(--space-4);
             color: var(--color-dates);
+            @include tabular-nums;
 
             @media (min-width: $bp-md) {
               grid-column: 1;
@@ -431,6 +447,7 @@ html {
                     font-size: var(--text-sm);
                     color: var(--color-dates);
                     margin: 0;
+                    @include tabular-nums;
                   }
                 }
 
@@ -647,6 +664,7 @@ html {
         margin: 0;
         white-space: nowrap;
         font-size: clamp(0.625rem, 0.2rem + 2.5vw, var(--text-sm));
+        @include tabular-nums;
       }
 
       strong {
@@ -660,5 +678,10 @@ html {
   from {
     opacity: 0;
     transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

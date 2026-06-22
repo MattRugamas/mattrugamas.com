@@ -224,7 +224,7 @@ main {
       height: 5.5rem;
       object-fit: cover;
       border-radius: var(--radius-md);
-      border: 1px solid var(--glass-border);
+      @include img-outline;
       @include ui-shadow;
     }
 
@@ -314,7 +314,7 @@ main {
       }
 
       &:active {
-        transform: translateY(0) scale(0.99);
+        transform: translateY(0) scale(0.96);
       }
 
       &:focus-visible {
