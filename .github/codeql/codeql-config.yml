@@ -1,0 +1,6 @@
+# Jekyll emits Liquid-templated assets as .js; exclude source templates from
+# CodeQL JavaScript extraction (they are not valid JS until build time).
+name: "mattrugamas.com CodeQL config"
+paths-ignore:
+  - assets/js/ga-bootstrap.js.liquid
+  - assets/js/random-post.js.liquid

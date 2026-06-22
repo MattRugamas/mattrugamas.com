@@ -23,6 +23,7 @@ title: Changelog
       <h3>Fixed</h3>
       <ul>
         <li>Bumped <code>concurrent-ruby</code> from 1.3.5 to 1.3.7 in <code>Gemfile.lock</code> (Dependabot security update).</li>
+        <li>Fixed GitHub CodeQL parse errors on Jekyll-templated JavaScript by renaming <code>ga-bootstrap.js</code> and <code>random-post.js</code> to <code>.js.liquid</code> (build output URLs unchanged) and excluding those templates in <code>.github/codeql/codeql-config.yml</code>.</li>
       </ul>
     </div>
   </section>
