@@ -173,31 +173,26 @@
     });
   }
 
-  // Email link obfuscation — validate parts before building mailto: so untrusted
-  // attribute values cannot reach the DOM sink (CodeQL dom-based XSS rule).
-  function safeEmailLocalPart(value) {
-    return typeof value === 'string' && /^[a-zA-Z0-9._-]+$/.test(value) ? value : null;
-  }
-
-  function safeEmailDomain(value) {
-    return typeof value === 'string' && /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? value : null;
-  }
-
-  function buildMailtoHref(localPart, domain) {
-    var u = safeEmailLocalPart(localPart);
-    var d = safeEmailDomain(domain);
-    if (!u || !d) return null;
-    return 'mailto:' + encodeURIComponent(u) + '@' + encodeURIComponent(d);
-  }
-
+  // Email link obfuscation — validate parts inline before setAttribute so
+  // CodeQL sees a sanitized flow from data attributes to href.
   var emailLinks = document.querySelectorAll('.js-email');
   for (var i = 0; i < emailLinks.length; i++) {
     var el = emailLinks[i];
-    var href = buildMailtoHref(el.getAttribute('data-u'), el.getAttribute('data-d'));
-    if (href) {
-      el.setAttribute('href', href);
-      el.removeAttribute('data-u');
-      el.removeAttribute('data-d');
+    var u = el.getAttribute('data-u');
+    var d = el.getAttribute('data-d');
+    if (u && d) {
+      var user = u.trim();
+      var domain = d.trim();
+      var isValidUser = /^[A-Za-z0-9._%+-]+$/.test(user);
+      var isValidDomain = /^[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(domain);
+      if (isValidUser && isValidDomain) {
+        el.setAttribute(
+          'href',
+          'ma' + 'il' + 'to:' + encodeURIComponent(user) + '@' + encodeURIComponent(domain)
+        );
+        el.removeAttribute('data-u');
+        el.removeAttribute('data-d');
+      }
     }
   }
 

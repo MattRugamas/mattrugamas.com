@@ -1,6 +1,44 @@
 (function () {
   'use strict';
 
+  function hostnameMatches(host, allowedHost) {
+    host = host.toLowerCase();
+    allowedHost = allowedHost.toLowerCase();
+    return host === allowedHost || host.endsWith('.' + allowedHost);
+  }
+
+  var PLATFORM_RULES = [
+    { platform: 'spotify', hosts: ['spotify.com'] },
+    { platform: 'youtube', hosts: ['youtube.com', 'youtu.be'] },
+    { platform: 'soundcloud', hosts: ['soundcloud.com'] },
+    { platform: 'instagram', hosts: ['instagram.com'] },
+    { platform: 'steam', hosts: ['steamcommunity.com', 'steampowered.com'] },
+    { platform: 'discord', hosts: ['discord.com', 'discord.gg'] }
+  ];
+
+  // Parse hostname instead of substring-matching href (CodeQL incomplete URL sanitization).
+  function platformFromHref(href) {
+    var url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (e) {
+      return 'other';
+    }
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+      return 'other';
+    }
+    var host = url.hostname.toLowerCase();
+    for (var i = 0; i < PLATFORM_RULES.length; i++) {
+      var rule = PLATFORM_RULES[i];
+      for (var j = 0; j < rule.hosts.length; j++) {
+        if (hostnameMatches(host, rule.hosts[j])) {
+          return rule.platform;
+        }
+      }
+    }
+    return 'other';
+  }
+
   // Safe gtag wrapper — only fires when GA4 is loaded (production builds).
   // In development gtag is undefined and all calls are silently skipped.
   function track(eventName, params) {
@@ -64,14 +102,9 @@
     project.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         var href = this.getAttribute('href') || '';
-        var platform = 'other';
-        if (href.includes('spotify.com')) platform = 'spotify';
-        else if (href.includes('youtube.com') || href.includes('youtu.be')) platform = 'youtube';
-        else if (href.includes('soundcloud.com')) platform = 'soundcloud';
-        else if (href.includes('instagram.com')) platform = 'instagram';
         track('music_link_click', {
           music_project: projectName,
-          platform: platform,
+          platform: platformFromHref(href),
           link_text: this.textContent.trim(),
           link_url: href
         });
@@ -169,17 +202,10 @@
         var section = this.closest('.link-hub-section');
         var h2 = section && section.querySelector('h2');
         var href = this.getAttribute('href') || '';
-        var platform = 'other';
-        if (href.includes('spotify.com')) platform = 'spotify';
-        else if (href.includes('youtube.com') || href.includes('youtu.be')) platform = 'youtube';
-        else if (href.includes('soundcloud.com')) platform = 'soundcloud';
-        else if (href.includes('instagram.com')) platform = 'instagram';
-        else if (href.includes('steamcommunity.com') || href.includes('steampowered.com')) platform = 'steam';
-        else if (href.includes('discord.gg') || href.includes('discord.com')) platform = 'discord';
 
         track('link_hub_click', {
           link_section: h2 ? h2.textContent.trim() : '',
-          platform: platform,
+          platform: platformFromHref(href),
           link_text: this.textContent.trim(),
           link_url: href
         });

@@ -24,7 +24,8 @@ title: Changelog
       <ul>
         <li>Bumped <code>concurrent-ruby</code> from 1.3.5 to 1.3.7 in <code>Gemfile.lock</code> (Dependabot security update).</li>
         <li>Fixed GitHub CodeQL parse errors on Jekyll-templated JavaScript by renaming <code>ga-bootstrap.js</code> and <code>random-post.js</code> to <code>.js.liquid</code> (build output URLs unchanged) and excluding those templates in <code>.github/codeql/codeql-config.yml</code>.</li>
-        <li>Hardened client-side email link assembly in <code>site.js</code>: <code>data-u</code>/<code>data-d</code> values are validated and passed through <code>encodeURIComponent</code> before <code>setAttribute('href', …)</code>, clearing a CodeQL DOM XSS warning.</li>
+        <li>Hardened client-side email link assembly in <code>site.js</code>: <code>data-u</code>/<code>data-d</code> values are trimmed, regex-validated, and passed through <code>encodeURIComponent</code> before <code>setAttribute('href', …)</code>, clearing a CodeQL DOM XSS warning.</li>
+        <li>Replaced <code>href.includes(…)</code> platform detection in <code>analytics.js</code> with hostname parsing via <code>URL</code> and an allowlist, fixing CodeQL incomplete URL substring sanitization warnings on music and link-hub click tracking.</li>
       </ul>
     </div>
   </section>
