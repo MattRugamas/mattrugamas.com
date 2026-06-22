@@ -173,14 +173,29 @@
     });
   }
 
-  // Email link obfuscation
+  // Email link obfuscation — validate parts before building mailto: so untrusted
+  // attribute values cannot reach the DOM sink (CodeQL dom-based XSS rule).
+  function safeEmailLocalPart(value) {
+    return typeof value === 'string' && /^[a-zA-Z0-9._-]+$/.test(value) ? value : null;
+  }
+
+  function safeEmailDomain(value) {
+    return typeof value === 'string' && /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ? value : null;
+  }
+
+  function buildMailtoHref(localPart, domain) {
+    var u = safeEmailLocalPart(localPart);
+    var d = safeEmailDomain(domain);
+    if (!u || !d) return null;
+    return 'mailto:' + encodeURIComponent(u) + '@' + encodeURIComponent(d);
+  }
+
   var emailLinks = document.querySelectorAll('.js-email');
   for (var i = 0; i < emailLinks.length; i++) {
     var el = emailLinks[i];
-    var u = el.getAttribute('data-u');
-    var d = el.getAttribute('data-d');
-    if (u && d) {
-      el.setAttribute('href', 'ma' + 'il' + 'to:' + u + '@' + d);
+    var href = buildMailtoHref(el.getAttribute('data-u'), el.getAttribute('data-d'));
+    if (href) {
+      el.setAttribute('href', href);
       el.removeAttribute('data-u');
       el.removeAttribute('data-d');
     }
