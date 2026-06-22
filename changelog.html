@@ -15,6 +15,14 @@ title: Changelog
       <h3>Changed</h3>
       <ul>
         <li>Closed two gaps left by the prior interface-polish pass. The nav menu link pills now scale to <code>scale(0.96)</code> on press, matching the press feedback already on the adjacent icon controls and glass buttons (previously they cross-faded color only). And <code>text-wrap: pretty</code> now extends to blog-post list items, so bulleted and numbered body copy gets the same orphan-avoidance the prose paragraphs already had.</li>
+        <li>Renamed the development branch from <code>tmp-checkpoint</code> to <code>main</code> and documented the deploy loop in <code>README.md</code> and the Cursor deploy rule: push <code>main</code>, then <code>git push origin main:release</code> so both branches stay aligned without merge-commit drift. Renamed the frozen Travis-era site branch from <code>master</code> to <code>archive/legacy-site</code>.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Bumped <code>concurrent-ruby</code> from 1.3.5 to 1.3.7 in <code>Gemfile.lock</code> (Dependabot security update).</li>
       </ul>
     </div>
   </section>

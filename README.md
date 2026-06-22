@@ -41,7 +41,16 @@ The site will be at `http://localhost:4000`.
 
 ### Deploy workflow
 
-Day-to-day work happens on `tmp-checkpoint`. When changes are ready to publish, merge `tmp-checkpoint` into `release` and push. The GitHub Actions workflow then builds the site with `JEKYLL_ENV=production` and deploys to GitHub Pages.
+Day-to-day work happens on `main`. When changes are ready to publish, push `main` and promote the same commit to `release`:
+
+```bash
+git push origin main
+git push origin main:release
+```
+
+The GitHub Actions workflow (triggered by pushes to `release`) builds the site with `JEKYLL_ENV=production` and deploys to GitHub Pages. After deploy, `main` and `release` should point at the same commit.
+
+**Branches:** `main` (development) · `release` (production deploy) · `archive/legacy-site` (frozen pre-redesign site, Travis-era `master`)
 
 ### License
 
