@@ -54,6 +54,11 @@ defaults:
     values:
       layout: "post"
   - scope:
+      path: "tags"
+      type: "pages"
+    values:
+      layout: "tag"
+  - scope:
       path: ""
     values:
       layout: "default"

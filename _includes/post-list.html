@@ -1,0 +1,27 @@
+{% assign list_posts = include.posts %}
+{% assign posts_by_year = list_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+<ul id="blog-list">
+  {% for year_group in posts_by_year %}
+    <li class="year-group">
+      <h2 class="year-heading">{{ year_group.name }}</h2>
+      <ul class="year-posts">
+        {% for post in year_group.items %}
+          <li>
+            <article>
+              <aside>
+                <time class="date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d" }}</time>
+              </aside>
+              <header>
+                <h3>
+                  <a href="{{ post.url }}">{{ post.title }}</a>
+                </h3>
+                {{ post.excerpt }}
+                {% include post-tags.html tags=post.tags %}
+              </header>
+            </article>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+  {% endfor %}
+</ul>

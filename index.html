@@ -6,29 +6,4 @@
   is a support engineer in Los Angeles.</h1>
 <p id="lede">My work focuses on the intersection of customers, product, and code, with a drive to help support teams scale, and define what the work looks like in an AI-native world.</p>
 {% include tag-filter.html %}
-{% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-<ul id="blog-list">
-  {% for year_group in posts_by_year %}
-    <li class="year-group">
-      <h2 class="year-heading">{{ year_group.name }}</h2>
-      <ul class="year-posts">
-        {% for post in year_group.items %}
-          <li data-tags="{{ post.tags | join: ' ' }}">
-            <article>
-              <aside>
-                <time class="date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d" }}</time>
-              </aside>
-              <header>
-                <h3>
-                  <a href="{{ post.url }}">{{ post.title }}</a>
-                </h3>
-                {{ post.excerpt }}
-                {% include post-tags.html tags=post.tags %}
-              </header>
-            </article>
-          </li>
-        {% endfor %}
-      </ul>
-    </li>
-  {% endfor %}
-</ul>
+{% include post-list.html posts=site.posts %}
