@@ -3,6 +3,7 @@
 main .not-found {
   width: 100%;
   max-width: var(--content-hero);
+  min-width: 0; // flex child — allow shrink below content min-size on narrow viewports
   text-align: center;
 
   .not-found-emblem {
@@ -39,6 +40,7 @@ main .not-found {
     @include card;
     @include link-setup;
     text-align: left;
+    box-sizing: border-box; // width: 100% + padding must stay inside the column on mobile
     width: 100%;
     padding: var(--space-6);
     margin-bottom: var(--space-8);
@@ -118,6 +120,7 @@ main .not-found {
       code {
         font-family: $fonts-source;
         font-size: 0.92em;
+        overflow-wrap: anywhere;
       }
     }
   }
