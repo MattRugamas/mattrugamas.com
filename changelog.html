@@ -12,8 +12,21 @@ title: Changelog
     <h2 class="changelog-date">June 22, 2026</h2>
 
     <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Custom <code>404.html</code> not-found page for missing URLs on GitHub Pages — later replaced with the codec-style FOX page (see Changed).</li>
+        <li><code>.ruby-version</code> pinning Ruby 3.2.0 to match the GitHub Actions workflow.</li>
+        <li>Shared <code>_includes/post-list.html</code> partial for the year-grouped blog index markup.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
       <h3>Changed</h3>
       <ul>
+        <li>Replaced the plain <code>404.html</code> with a codec-style not-found page: a traced SVG of the FOXHOUND fox insignia (no watermark) in <code>_includes/fox-logo.html</code>, Colonel/Snake dialogue personalized to the site's actual pages and Jekyll setup, live requested-path readout via client-side script, and recovery links to the homepage, <em>Still on Jekyll, Probably Forever</em>, and a fallback post. Styled in new <code>_sass/not-found.scss</code>.</li>
+        <li>Expanded <code>README.md</code> into a maintainer guide: project structure, data files, URL shapes, site features (theme, Giscus, analytics, obfuscated email), asset scripts, and workflows for adding posts and tags.</li>
+        <li>Extracted duplicate blog-list markup from <code>index.html</code> and <code>_layouts/tag.liquid</code> into <code>post-list.html</code>.</li>
+        <li>Tag archive pages under <code>tags/</code> now inherit <code>layout: tag</code> from a <code>_config.yml</code> default instead of repeating it in every stub file.</li>
         <li>Closed two gaps left by the prior interface-polish pass. The nav menu link pills now scale to <code>scale(0.96)</code> on press, matching the press feedback already on the adjacent icon controls and glass buttons (previously they cross-faded color only). And <code>text-wrap: pretty</code> now extends to blog-post list items, so bulleted and numbered body copy gets the same orphan-avoidance the prose paragraphs already had.</li>
         <li>Renamed the development branch from <code>tmp-checkpoint</code> to <code>main</code> and documented the deploy loop in <code>README.md</code> and the Cursor deploy rule: push <code>main</code>, then <code>git push origin main:release</code> so both branches stay aligned without merge-commit drift. Renamed the frozen Travis-era site branch from <code>master</code> to <code>archive/legacy-site</code>.</li>
         <li>Bumped GitHub Pages workflow actions to Node 24–native majors (<code>checkout@v5</code>, <code>configure-pages@v6</code>, <code>upload-pages-artifact@v5</code>, <code>deploy-pages@v5</code>) to clear runner deprecation warnings ahead of GitHub’s Node 20 removal.</li>

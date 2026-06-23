@@ -1,0 +1,66 @@
+---
+title: Page not found
+description: This URL wasn't in the Jekyll build. Codec signal lost — reroute to somewhere that exists.
+---
+{% assign post_count = site.posts | size %}
+{% assign jekyll_post = site.posts | where: "title", "Still on Jekyll, Probably Forever" | first %}
+{% assign random_post = site.posts | where_exp: "post", "post.url != jekyll_post.url" | first %}
+<section class="not-found" aria-labelledby="not-found-title">
+  <div class="not-found-emblem">
+    {% include fox-logo.html %}
+  </div>
+
+  <p class="not-found-status">Codec signal lost · HTTP 404</p>
+  <h1 id="not-found-title">This page wasn't in the <strong>build</strong>.</h1>
+
+  <div class="not-found-codec">
+    <div class="not-found-codec-header">
+      <span>Incoming transmission</span>
+      <span class="not-found-codec-live">Live</span>
+    </div>
+    <dl>
+      <div>
+        <dt>Snake</dt>
+        <dd>Colonel, I'm at a URL that doesn't resolve. Requested path is below — I'm reading it off the browser, not the server. There's no server.</dd>
+      </div>
+      <div>
+        <dt>Colonel</dt>
+        <dd>That's a static site, Snake. Jekyll compiled what exists in the repo and GitHub Pages served it. If it wasn't generated at build time, it isn't here. Same energy as {% if jekyll_post %}<a href="{{ jekyll_post.url }}">Still on Jekyll, Probably Forever</a>{% else %}the post where he explains why he never migrated off Jekyll{% endif %} — no runtime, no framework, just HTML.</dd>
+      </div>
+      <div>
+        <dt>Snake</dt>
+        <dd>What's actually on record?</dd>
+      </div>
+      <div>
+        <dt>Colonel</dt>
+        <dd>Thin archive: {{ post_count }} post{% if post_count != 1 %}s{% endif %}, {% if site.data.tags.size > 0 %}{{ site.data.tags.size }} tag filters{% else %}a tag filter{% endif %}, an <a href="/about">about page</a>, <a href="/music">music</a>, a <a href="/resume">résumé</a>, a <a href="/links/">link hub</a>, and a <a href="/changelog">changelog</a> he updates when something ships. Posts live at the root — <code>permalink: /:title</code> — not under <code>/blog/</code>. If you typed <code>/projects</code>, he wrote about wanting that in 2019. Still hasn't happened.</dd>
+      </div>
+      <div>
+        <dt>Snake</dt>
+        <dd>So what's the mission?</dd>
+      </div>
+      <div>
+        <dt>Colonel</dt>
+        <dd>Exfil to somewhere that exists. Homepage, a post, or email him — support engineer reflex. He'll treat a broken link like a ticket.</dd>
+      </div>
+    </dl>
+  </div>
+
+  <p class="not-found-path">Requested: <code id="not-found-path">/</code></p>
+
+  <nav class="not-found-actions" aria-label="Recovery options">
+    <a href="/">Return to base</a>
+    {% if jekyll_post %}
+      <a href="{{ jekyll_post.url }}">Read the Jekyll post</a>
+    {% endif %}
+    {% if random_post %}
+      <a href="{{ random_post.url }}">Try "{{ random_post.title }}"</a>
+    {% endif %}
+  </nav>
+</section>
+<script>
+  (function () {
+    var el = document.getElementById('not-found-path');
+    if (el) el.textContent = window.location.pathname + window.location.search;
+  })();
+</script>
