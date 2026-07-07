@@ -9,6 +9,29 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">July 7, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Reusable <code>_includes/cursor-logo.html</code> partial — the official Cursor cube as an inline <code>fill="currentColor"</code> SVG — and a small <code>_sass/brand.scss</code> for the <code>.brand-mention</code> wrapper and <code>.brand-logo</code> mark. The logo now sits immediately before the word <em>Cursor</em> in the About intro and in the Résumé experience entry's company slot, optically centred on the text at <code>1em</code> and inheriting the surrounding colour so it reads as body text in prose and as the highlight colour in the CV company line, in both themes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
+    <h2 class="changelog-date">June 30, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Ran a dead-code and asset audit across the site. Removed the unused <code>.changelog-since</code> selector from <code>_sass/changelog.scss</code> — it shared a rule with <code>.changelog-hash</code> but was referenced in no template — and deleted the orphaned <code>assets/img/site/foxhound-logo.svg</code>, a 3.9&nbsp;KB leftover from the 404 work that nothing referenced once <code>_includes/fox-logo.html</code> inlined its own SVG path.</li>
+        <li>Stopped publishing two source-only files to the live site by excluding them in <code>_config.yml</code>: <code>assets/favicon-source.svg</code> (an output of the offline <code>generate-favicons.py</code> that no page links to) and the local <code>skills-lock.json</code>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 22, 2026</h2>
 
     <div class="changelog-group">
