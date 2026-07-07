@@ -20,6 +20,19 @@ title: Changelog
   </section>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">July 6, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Began a flat editorial-minimalist redesign of the core pages (home, post, nav, footer), reworking the design-token layer in <code>_sass/_settings.scss</code>. Retired the Liquid Glass material: the <code>glass</code> mixin now renders a solid surface with a single 1px hairline border and a near-zero, ultra-diffuse shadow instead of <code>backdrop-filter</code> blur, and the fixed radial-gradient ambient washes on <code>html</code> were removed in <code>_sass/index.scss</code>.</li>
+        <li>Shifted the palette to warm monochrome with one scarce muted-clay/terracotta spot accent, dropping the teal. Body links are now monochrome and underlined (accent reserved for the hero name, code keywords, focus rings, and the active tag). Both dark (default) and light themes were retuned; contrast ratios preserved.</li>
+        <li>Tightened the shape system to crisp editorial radii (8&nbsp;px surfaces, 12&nbsp;px containers, 6&nbsp;px buttons), keeping pills only for small tag chips, which now use a muted-pastel fill. Legacy glass CSS variables were kept as flattened aliases (blur&nbsp;0, saturate&nbsp;100%) so the not-yet-migrated pages continue to build.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">June 30, 2026</h2>
 
     <div class="changelog-group">

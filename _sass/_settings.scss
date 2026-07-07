@@ -1,6 +1,7 @@
 // ============================================================
-// Design system — Liquid Glass redesign
-// Single source of truth: palette, glass, type, motion, shape.
+// Design system — Editorial Minimalism
+// Single source of truth: palette, surfaces, type, motion, shape.
+// Warm monochrome, flat surfaces, one scarce muted-clay spot accent.
 // ============================================================
 
 // --- Type pairing ---
@@ -22,30 +23,35 @@ $fonts-titles: $fonts-body;
 $fonts-source: "Geist Mono", "SF Mono", "Menlo", monospace;
 
 // --- Dark palette (default) ---
-// Evolved from the original charcoal/cream: deeper base, layered
-// surfaces, cream softened, pink/cyan demoted to one teal accent.
+// Warm charcoal base, layered flat surfaces, warm off-white ink,
+// a single muted-clay spot accent. No teal, no glass.
 $base: rgb(23, 24, 28); // near-black charcoal
-$surface: rgb(33, 35, 41); // raised surface
-$selected: rgb(42, 44, 51); // hover/selected surface
+$surface: rgb(31, 33, 38); // raised flat surface
+$selected: rgb(40, 42, 48); // hover/selected surface
 $text: rgb(242, 239, 232); // warm off-white
 $inactive: rgb(168, 164, 155); // muted warm gray ~7:1
-$accent: rgb(93, 200, 209); // refined teal-cyan ~9:1
+$accent: rgb(216, 167, 146); // muted clay spot accent ~8:1
 $dates: rgb(148, 155, 164); // quiet cool gray ~6:1
-$rose: rgb(228, 162, 173); // decorative only (code strings, washes)
+$rose: rgb(228, 162, 173); // decorative only (code strings)
 
 // --- Light palette ---
+// Warm bone canvas, flat surfaces, charcoal ink, deep terracotta accent.
 // All foreground values verified ≥4.5:1 on $light-base.
-$light-base: rgb(248, 245, 238); // warm cream
-$light-surface: rgb(253, 251, 246); // raised surface
-$light-selected: rgb(233, 229, 219); // hover/selected (bg-only)
+$light-base: rgb(247, 246, 243); // warm bone / off-white
+$light-surface: rgb(252, 251, 248); // raised flat surface
+$light-selected: rgb(237, 234, 227); // hover/selected (bg-only)
 $light-text: rgb(29, 31, 36); // ~15:1
 $light-inactive: rgb(100, 94, 82); // ~5.2:1
-$light-accent: rgb(8, 98, 106); // deep teal ~5.8:1
+$light-accent: rgb(158, 74, 48); // deep terracotta ~6.8:1
 $light-dates: rgb(84, 96, 99); // dark slate-teal ~5.6:1
 $light-rose: rgb(155, 28, 48); // decorative only ~7.8:1
 
 $bp-sm: 40em;
 $bp-md: 52em;
+
+// Structural hairline — the single 1px border used everywhere.
+$border-dark: rgba(255, 255, 255, 0.09);
+$border-light: rgba(29, 31, 36, 0.09);
 
 // --- Dark mode (default) ---
 :root {
@@ -56,40 +62,47 @@ $bp-md: 52em;
   --color-text: #{$text};
   --color-inactive: #{$inactive};
   --color-accent: #{$accent};
-  --color-links: #{$accent};
+  --color-links: #{$text}; // monochrome, underlined
   --color-highlight: #{$accent};
   --color-dates: #{$dates};
 
   // Code surfaces + token hues
-  --code-bg: rgba(15, 16, 19, 0.55);
+  --code-bg: rgba(255, 255, 255, 0.035);
   --code-comment: rgb(138, 136, 128);
   --code-string: #{$rose};
-  --inline-code-bg: rgba(15, 16, 19, 0.55);
-  --inline-code-border: var(--color-selected);
+  --inline-code-bg: rgba(255, 255, 255, 0.05);
+  --inline-code-border: #{$border-dark};
 
-  // Glass material
-  --glass-bg: rgba(28, 30, 35, 0.58);
-  --glass-bg-strong: rgba(26, 28, 33, 0.78);
-  --glass-fallback: rgba(28, 30, 35, 0.96);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-inner: rgba(255, 255, 255, 0.06);
-  --glass-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.12),
-    0 12px 32px -12px rgba(0, 0, 0, 0.5);
-  --glass-blur: 20px;
-  --glass-saturate: 160%;
+  // Muted pastel spot accents (tags, subtle fills)
+  --pastel-bg: rgba(216, 167, 146, 0.14);
+  --pastel-text: #{$accent};
 
-  // Ambient background washes (very low opacity, fixed)
-  --wash-a: rgba(93, 200, 209, 0.07);
-  --wash-b: rgba(228, 162, 173, 0.05);
+  // Flat surface material (was glass) — solid, no blur
+  --surface-1: #{$surface};
+  --surface-strong: #{$selected};
+  --glass-fallback: #{$surface}; // legacy alias
 
-  // Card / soft surface
-  --card-bg: rgba(255, 255, 255, 0.03);
-  --card-border: rgba(255, 255, 255, 0.07);
-  --hairline: rgba(255, 255, 255, 0.1);
+  // Legacy glass aliases (flattened) — keep not-yet-migrated pages working.
+  // blur 0 + saturate 100% makes any backdrop-filter a no-op.
+  --glass-bg: #{$surface};
+  --glass-bg-strong: #{$selected};
+  --glass-border: #{$border-dark};
+  --glass-inner: transparent;
+  --glass-shadow: var(--shadow-soft);
+  --glass-blur: 0px;
+  --glass-saturate: 100%;
+
+  // The single hairline border
+  --card-bg: rgba(255, 255, 255, 0.025);
+  --card-border: #{$border-dark};
+  --hairline: #{$border-dark};
   --img-outline: rgba(255, 255, 255, 0.1);
 
-  // Nav geometry — floating pill
+  // Near-zero, ultra-diffuse depth (opacity < 0.05)
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-lift: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  // Nav geometry — flat editorial bar
   --nav-inset: 0.75rem;
   --nav-height: 3.5rem;
   --nav-offset: calc(var(--nav-inset) + var(--nav-height));
@@ -109,8 +122,9 @@ $bp-md: 52em;
   --space-8: 2rem;
   --space-12: 3rem;
   --space-16: 4rem;
+  --space-24: 6rem;
 
-  // Type scale — HIG-flavored, clamp-based display sizes
+  // Type scale — editorial, clamp-based display sizes
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -119,8 +133,8 @@ $bp-md: 52em;
   --text-2xl: clamp(1.75rem, 1.45rem + 1.2vw, 2.25rem);
   --text-3xl: clamp(2.25rem, 1.85rem + 1.8vw, 2.75rem);
   --text-display: clamp(2.5rem, 1.9rem + 2.8vw, 3.625rem);
-  --tracking-tight: -0.011em;
-  --tracking-display: -0.014em;
+  --tracking-tight: -0.014em;
+  --tracking-display: -0.022em;
 
   // Motion
   --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
@@ -130,10 +144,11 @@ $bp-md: 52em;
   --dur-med: 320ms;
   --dur-slow: 560ms;
 
-  // Shape — large, continuous-feel radii
-  --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 28px;
+  // Shape — crisp editorial radii
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 12px;
+  --radius-button: 6px;
   --radius-pill: 999px;
 
   --content-gap: var(--space-8);
@@ -153,32 +168,38 @@ $bp-md: 52em;
   --color-text: #{$light-text};
   --color-inactive: #{$light-inactive};
   --color-accent: #{$light-accent};
-  --color-links: #{$light-accent};
+  --color-links: #{$light-text}; // monochrome, underlined
   --color-highlight: #{$light-accent};
   --color-dates: #{$light-dates};
 
-  --code-bg: #{rgba($light-selected, 0.6)};
+  --code-bg: rgba(29, 31, 36, 0.035);
   --code-comment: #{$light-inactive};
   --code-string: #{$light-rose};
-  --inline-code-bg: #{rgba($light-selected, 0.5)};
-  --inline-code-border: #{rgba($light-inactive, 0.35)};
+  --inline-code-bg: rgba(29, 31, 36, 0.045);
+  --inline-code-border: #{$border-light};
 
-  --glass-bg: rgba(252, 250, 244, 0.55);
-  --glass-bg-strong: rgba(252, 250, 244, 0.8);
-  --glass-fallback: rgba(252, 250, 244, 0.97);
-  --glass-border: rgba(29, 31, 36, 0.08);
-  --glass-inner: rgba(255, 255, 255, 0.65);
-  --glass-shadow:
-    0 1px 1px rgba(29, 31, 36, 0.04),
-    0 12px 32px -12px rgba(29, 31, 36, 0.22);
+  --pastel-bg: rgba(158, 74, 48, 0.09);
+  --pastel-text: #{$light-accent};
 
-  --wash-a: rgba(8, 98, 106, 0.06);
-  --wash-b: rgba(155, 28, 48, 0.04);
+  --surface-1: #{$light-surface};
+  --surface-strong: #{$light-surface};
+  --glass-fallback: #{$light-surface};
 
-  --card-bg: rgba(29, 31, 36, 0.025);
-  --card-border: rgba(29, 31, 36, 0.07);
-  --hairline: rgba(29, 31, 36, 0.1);
+  --glass-bg: #{$light-surface};
+  --glass-bg-strong: #{$light-surface};
+  --glass-border: #{$border-light};
+  --glass-inner: transparent;
+  --glass-shadow: var(--shadow-soft);
+  --glass-blur: 0px;
+  --glass-saturate: 100%;
+
+  --card-bg: rgba(29, 31, 36, 0.02);
+  --card-border: #{$border-light};
+  --hairline: #{$border-light};
   --img-outline: rgba(0, 0, 0, 0.1);
+
+  --shadow-soft: 0 1px 2px rgba(29, 31, 36, 0.03);
+  --shadow-lift: 0 2px 10px rgba(29, 31, 36, 0.04);
 }
 
 // System light preference (no explicit override)
@@ -200,9 +221,7 @@ $bp-md: 52em;
 }
 
 @mixin ui-shadow {
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.1),
-    0 6px 20px -8px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--shadow-lift);
 }
 
 @mixin img-outline {
@@ -215,27 +234,19 @@ $bp-md: 52em;
 }
 
 @mixin text-shadow {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  text-shadow: none;
 }
 
-// Liquid Glass material — blur + saturate, hairline border,
-// inner top bevel, soft depth shadow. Opaque fallback when
-// backdrop-filter is unsupported.
-@mixin glass($bg: var(--glass-bg)) {
-  background-color: var(--glass-fallback);
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    inset 0 1px 0 var(--glass-inner),
-    var(--glass-shadow);
-
-  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    background-color: $bg;
-    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  }
+// Flat surface — solid background, single hairline border, near-zero
+// shadow. Replaces the former Liquid Glass material; signature kept so
+// existing call sites keep working, just flatter.
+@mixin glass($bg: var(--surface-1)) {
+  background-color: $bg;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-soft);
 }
 
-// Soft raised card surface (non-blurred — for content on the base)
+// Soft flat card surface
 @mixin card {
   background-color: var(--card-bg);
   border: 1px solid var(--card-border);
@@ -246,7 +257,7 @@ $bp-md: 52em;
   display: flex;
   flex-flow: column nowrap;
   flex-grow: 1;
-  padding: calc(var(--nav-offset) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-12);
+  padding: calc(var(--nav-offset) + var(--content-gap)) clamp(var(--space-4), 8vw, var(--space-16)) var(--space-16);
   align-items: center;
   h1,
   h2,
@@ -283,14 +294,14 @@ $bp-md: 52em;
   }
 }
 
-// Refined link treatment — accent underline that resolves on hover.
+// Refined link treatment — monochrome underline that resolves on hover.
 @mixin link-setup {
   a {
     color: var(--color-links);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.2em;
-    text-decoration-color: color-mix(in srgb, var(--color-links) 35%, transparent);
+    text-decoration-color: color-mix(in srgb, var(--color-links) 32%, transparent);
     transition:
       color var(--dur-fast) var(--ease-glass),
       text-decoration-color var(--dur-fast) var(--ease-glass),
@@ -306,14 +317,15 @@ $bp-md: 52em;
   }
 }
 
-// Glass pill button — shared by CTAs, chips, controls.
+// Flat button — crisp radius, hairline border, no shadow. Shared by
+// secondary CTAs, chips, controls. Tags override to pill.
 @mixin glass-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-button);
   font-family: $fonts-body;
   font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
@@ -326,17 +338,15 @@ $bp-md: 52em;
     background-color var(--dur-fast) var(--ease-glass),
     border-color var(--dur-fast) var(--ease-glass),
     color var(--dur-fast) var(--ease-glass),
-    transform var(--dur-fast) var(--ease-glass),
-    box-shadow var(--dur-fast) var(--ease-glass);
+    transform var(--dur-fast) var(--ease-glass);
 
   &:hover {
     background-color: var(--color-selected);
     border-color: var(--hairline);
-    transform: translateY(-1px);
   }
 
   &:active {
-    transform: translateY(0) scale(0.96);
+    transform: scale(0.97);
   }
 
   &:focus-visible {
@@ -367,10 +377,12 @@ $bp-md: 52em;
     --inline-code-bg: transparent;
     --inline-code-border: #999;
 
-    --wash-a: transparent;
-    --wash-b: transparent;
+    --pastel-bg: transparent;
+    --pastel-text: #000;
     --card-bg: transparent;
     --card-border: #ccc;
     --hairline: #ccc;
+    --shadow-soft: none;
+    --shadow-lift: none;
   }
 }

@@ -7,36 +7,6 @@ html {
   background-color: var(--color-base);
   color: var(--color-text);
 
-  // Ambient washes — fixed radial gradients the glass chrome can refract.
-  // Live on html (not body) so a body background can't bury a z-index: -1
-  // pseudo-element and break the top-of-page glow on mobile Safari.
-  &::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(52% 44% at 18% -6%, var(--wash-a), transparent 70%),
-      radial-gradient(46% 40% at 88% 12%, var(--wash-b), transparent 70%),
-      radial-gradient(60% 48% at 50% 110%, var(--wash-a), transparent 72%);
-  }
-
-  // The bottom glow is anchored to the fixed (layout-viewport) layer, so it can't
-  // track iOS Safari's floating bottom toolbar — when the toolbar expands, the
-  // glow has faded to base by the visible edge, leaving a seam. env() safe-area
-  // insets only cover the home indicator, not the toolbar, so they can't close
-  // it. On iOS phones we drop the bottom wash and keep the two top washes.
-  @supports (-webkit-touch-callout: none) {
-    @media (width < 768px) {
-      &::before {
-        background:
-          radial-gradient(52% 44% at 18% -6%, var(--wash-a), transparent 70%),
-          radial-gradient(46% 40% at 88% 12%, var(--wash-b), transparent 70%);
-      }
-    }
-  }
-
   #skipToMainContent {
     color: white;
     background: black;
@@ -130,13 +100,11 @@ html {
         box-shadow var(--dur-med) var(--ease-glass),
         border-radius var(--dur-med) var(--ease-glass);
 
-      // Scrolled: compress slightly, strengthen the material
+      // Scrolled: compress slightly, lift with a soft shadow
       &.scrolled {
         --nav-row: calc(var(--nav-height) - 0.5rem - 2px);
-
-        @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-          background-color: var(--glass-bg-strong);
-        }
+        background-color: var(--surface-strong);
+        box-shadow: var(--shadow-lift);
       }
 
       // Home mark — serif italic signature
@@ -632,13 +600,17 @@ html {
 
     .tag-badge {
       @include glass-button;
+      border-radius: var(--radius-pill);
       padding: var(--space-1) var(--space-3);
-      font-size: var(--text-sm);
-      color: var(--color-inactive);
+      font-size: var(--text-xs);
+      letter-spacing: 0.04em;
+      color: var(--pastel-text);
+      background-color: var(--pastel-bg);
+      border-color: transparent;
 
       &:hover {
-        color: var(--color-text);
-        box-shadow: none;
+        color: var(--pastel-text);
+        background-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
       }
 
       &.active {
