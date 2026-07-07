@@ -5,21 +5,18 @@
 /////////////////
 
 // Inline brand name preceded by its logo (e.g. "at [cube] Cursor"),
-// mirroring the company-mark treatment. The wrapper keeps logo + name
-// on one line; the logo inherits the surrounding text colour.
+// mirroring the company-mark treatment. The wrapper stays in normal
+// inline flow so its text matches the surrounding copy exactly; only
+// the logo is offset. white-space: nowrap keeps logo + name together.
 .brand-mention {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
   white-space: nowrap;
-  vertical-align: baseline;
 }
 
 .brand-logo {
-  flex: none;
   width: 1em;
   height: 1em;
   color: currentColor;
-  // Optical nudge so the cube sits centred on the text, not the baseline.
-  transform: translateY(-0.06em);
+  margin-inline: 0.15rem;
+  // Sit the cube optically centred on the text baseline.
+  vertical-align: -0.14em;
 }
