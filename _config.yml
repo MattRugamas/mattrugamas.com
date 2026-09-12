@@ -45,6 +45,7 @@ exclude:
   - Gemfile.lock
   - vendor
   - scripts
+  - docs
   - .github
   - .agents
   - skills-lock.json
