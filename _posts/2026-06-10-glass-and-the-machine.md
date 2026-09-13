@@ -2,6 +2,7 @@
 layout: post
 title: "Glass, and the Machine That Built It"
 date: 2026-06-10
+summary: "Redesigned the site two months after the last redesign, except this time I barely touched it. Fable did the whole thing in under an hour and I spent the next four reading the diff like homework."
 tags:
     - website
     - ideas

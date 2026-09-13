@@ -2,6 +2,7 @@
 layout: post
 title: "Still on Jekyll, Probably Forever"
 date: 2026-04-02
+summary: "Every year or so I seriously consider moving to Next or Astro, and every time I end up right back at a folder of Markdown and a git push. Here's me talking myself out of it again."
 tags:
   - website
   - ideas

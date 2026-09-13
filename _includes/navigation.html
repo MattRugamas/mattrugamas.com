@@ -1,39 +1,37 @@
 <header>
   <a id="skipToMainContent" href="#mainContent">Skip to Main Content</a>
   <nav>
-    <a href="/" class="nav-home" aria-label="Home">MR</a>
-    <ul>
-      {% for item in site.data.navigation %}
-      <li>
-        <a href="{{ item.link }}" class="
-          {%- if page.url == item.link -%}
-            current
-          {%- else -%}
-            not-current
-          {%- endif -%}
-        ">{{ item.name }}</a>
-      </li>
-      {%- endfor -%}
-      {%- if page.layout == 'post' -%}
-      <li>
-        <a href="/" class="current">Blog</a>
-      </li>
-      {%- endif -%}
-    </ul>
-    <div class="nav-actions">
-      <a href="/feed.xml" id="rss-link" aria-label="RSS Feed">
-        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <circle cx="6.18" cy="17.82" r="2.18" />
-          <path
-            d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z" />
-        </svg>
-      </a>
-      {% include theme-toggle.html %}
-      <button type="button" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+    <div class="nav-inner">
+      <a href="/" class="nav-home" aria-label="Home">MR</a>
+      <ul>
+        <span class="nav-indicator" aria-hidden="true"></span>
+        {% for item in site.data.navigation %}
+        <li{% if item.link == '/' %} class="nav-item-home"{% endif %}>
+          <a href="{{ item.link }}" class="
+            {%- if page.url == item.link -%}
+              current
+            {%- else -%}
+              not-current
+            {%- endif -%}
+          ">{{ item.name }}</a>
+        </li>
+        {%- endfor -%}
+        {%- if page.layout == 'post' -%}
+        <li>
+          <a href="/" class="current">Blog</a>
+        </li>
+        {%- endif -%}
+      </ul>
+      <div class="nav-actions">
+        <a href="/feed.xml" id="rss-link" aria-label="RSS Feed">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 11a9 9 0 0 1 9 9" />
+            <path d="M4 4a16 16 0 0 1 16 16" />
+            <circle cx="5" cy="19" r="1.25" />
+          </svg>
+        </a>
+        {% include theme-toggle.html %}
+      </div>
     </div>
   </nav>
 </header>

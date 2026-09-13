@@ -104,7 +104,7 @@ Light (applies under `prefers-color-scheme: light` when no override, and under `
 | `--color-surface` | `#F0F0F0` | Code blocks, 404 codec panel | |
 | `--color-fg-1` | `#292929` | Primary text, headings, current nav | ≥ 12:1 |
 | `--color-fg-2` | `#5D5D5D` | Secondary text: ledes, excerpts, h3, nav idle, summaries | ≥ 6:1 |
-| `--color-fg-3` | `#767676` | Tertiary **text**: dates, tags, captions, footer, labels | ≥ 4.5:1 |
+| `--color-fg-3` | `#737373` | Tertiary **text**: dates, tags, captions, footer, labels | ≥ 4.5:1 |
 | `--color-fg-4` | `#9E9E9E` | **Non-text only**: idle icons, underline color, decorative marks | n/a |
 | `--hairline` | `rgba(0,0,0,0.08)` | Every border | |
 | `--fill-hover` | `rgba(0,0,0,0.04)` | Hover fills | |
@@ -536,7 +536,7 @@ rg -n "#[0-9a-fA-F]{3,6}\b|rgba?\(" _sass -g '!_settings.scss'
 
 # 6. Accent appears in exactly two places.
 #    Expect: _settings.scss (two palette definitions + the focus-ring mixin) and
-#    index.scss (.tag-badge.active, background + border-color). Nothing else.
+#    _tags.scss (.tag-badge.active, background + border-color). Nothing else.
 rg -n "color-accent" _sass
 
 # 7. No transition: all.  Expect: no output.

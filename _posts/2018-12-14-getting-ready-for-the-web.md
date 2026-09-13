@@ -2,6 +2,7 @@
 layout: post
 title: Getting Ready For The Web
 date: 2018-12-14
+summary: "Before I could build anything I had to relearn the basics: terminal, Bash, Homebrew, rbenv, Git. The unglamorous setup stage nobody bothers writing about."
 tags:
   - website
 ---

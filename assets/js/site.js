@@ -1,180 +1,81 @@
 (function () {
-  // Sequenced entrance animations — fade and float elements in on load.
-  function unwrapForAnimation(container) {
-    if (
-      container.matches('.link-hub') ||
-      (container.children.length > 1 && container.matches('section, div, article'))
-    ) {
-      return Array.prototype.slice.call(container.children);
-    }
-    return [container];
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  function collectEntranceItems() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return [];
-    }
+  function themeColor(next) {
+    return next === 'dark' ? '#141414' : '#FAFAFA';
+  }
 
-    var items = [];
-    var nav = document.querySelector('header nav');
-    if (nav) items.push(nav);
+  function syncThemeColor(next) {
+    var metas = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < metas.length; i++) metas[i].setAttribute('content', themeColor(next));
+  }
 
+  function syncGiscus(next) {
+    var frame = document.querySelector('iframe.giscus-frame');
+    if (!frame || !frame.contentWindow) return;
+    try {
+      frame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: next } } },
+        'https://giscus.app'
+      );
+    } catch (err) {}
+  }
+
+  function clearArrive() {
+    document.documentElement.removeAttribute('data-arrive');
+  }
+
+  if (document.documentElement.hasAttribute('data-arrive')) {
     var main = document.getElementById('mainContent');
     if (main) {
-      var children = Array.prototype.slice.call(main.children).filter(function (el) {
-        return !el.hasAttribute('aria-hidden') && el.tagName !== 'SCRIPT';
+      var kids = Array.prototype.filter.call(main.children, function (el) {
+        return el.tagName !== 'SCRIPT' && !el.hasAttribute('aria-hidden');
       });
-
-      if (children.length === 1) {
-        items = items.concat(unwrapForAnimation(children[0]));
-      } else {
-        children.forEach(function (child) {
-          if (child.matches('.link-hub')) {
-            items = items.concat(unwrapForAnimation(child));
-          } else {
-            items.push(child);
-          }
+      var last = kids[Math.min(kids.length, 8) - 1];
+      if (last) {
+        last.addEventListener('animationend', function (event) {
+          if (event.target === last && event.animationName === 'arrive') clearArrive();
         });
       }
-
-      for (var i = 0; i < items.length; i++) {
-        if (items[i].id !== 'blog-list') continue;
-        var yearGroups = Array.prototype.slice.call(items[i].querySelectorAll(':scope > .year-group'));
-        if (yearGroups.length) {
-          items.splice.apply(items, [i, 1].concat(yearGroups));
-        }
-        break;
-      }
     }
-
-    var footer = document.querySelector('body > footer');
-    if (footer) items.push(footer);
-
-    return items;
+    window.setTimeout(clearArrive, 1000);
   }
 
-  function finishEntranceAnimation(el) {
-    el.classList.remove('animate-item', 'animate-pending', 'animate-in', 'animate-fade-only');
-  }
-
-  function onEntranceAnimationEnd(el, event) {
-    if (event.target !== el) return;
-    if (
-      event.animationName !== 'entrance-float-in' &&
-      event.animationName !== 'entrance-float-in-nav' &&
-      event.animationName !== 'entrance-fade-in'
-    ) {
-      return;
-    }
-    finishEntranceAnimation(el);
-  }
-
-  function runEntranceAnimations() {
-    var items = collectEntranceItems();
-    if (!items.length) return;
-
-    items.forEach(function (el) {
-      if (el.matches('.link-hub-section')) {
-        el.classList.add('animate-fade-only');
-      }
-      el.classList.add('animate-item', 'animate-pending');
-      el.addEventListener('animationend', function handler(event) {
-        onEntranceAnimationEnd(el, event);
-        if (
-          event.target === el &&
-          (event.animationName === 'entrance-float-in' ||
-            event.animationName === 'entrance-float-in-nav' ||
-            event.animationName === 'entrance-fade-in')
-        ) {
-          el.removeEventListener('animationend', handler);
-        }
-      });
-    });
-
-    window.setTimeout(function () {
-      items.forEach(function (el, index) {
-        window.setTimeout(function () {
-          el.classList.remove('animate-pending');
-          el.classList.add('animate-in');
-        }, index * 200);
-      });
-    }, 100);
-
-    // Fallback: strip animation classes if animationend never fires.
-    window.setTimeout(function () {
-      items.forEach(finishEntranceAnimation);
-    }, 100 + items.length * 200 + 900);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runEntranceAnimations);
-  } else {
-    runEntranceAnimations();
-  }
-
-  // Resume timeline — reveal role cards as they enter the viewport.
-  var timelineRoles = document.querySelectorAll('.cv-timeline .cv-role');
-  if (
-    timelineRoles.length &&
-    'IntersectionObserver' in window &&
-    !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    var timelineObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var role = entry.target;
-        role.classList.remove('tl-pending');
-        role.classList.add('tl-in');
-        role.addEventListener('transitionend', function onEnd(event) {
-          if (event.target !== role || event.propertyName !== 'transform') return;
-          role.classList.remove('tl-pending', 'tl-in');
-          role.removeEventListener('transitionend', onEnd);
-        });
-        timelineObserver.unobserve(role);
-      });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
-
-    Array.prototype.forEach.call(timelineRoles, function (role) {
-      role.classList.add('tl-pending');
-      timelineObserver.observe(role);
-    });
-  }
-
-  // Theme toggle
   var btn = document.getElementById('theme-toggle');
   if (btn) {
-    // Switch semantics: aria-checked === true means dark theme is active.
     function updateToggleState(isDark) {
       btn.setAttribute('aria-checked', isDark ? 'true' : 'false');
     }
-    var attr = document.documentElement.getAttribute('data-theme');
-    var isDark = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
-    updateToggleState(isDark);
 
-    btn.addEventListener('click', function () {
+    function currentIsDark() {
       var attr = document.documentElement.getAttribute('data-theme');
-      var isDark = attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
-      var next = isDark ? 'light' : 'dark';
+      return attr === 'dark' || (!attr && !window.matchMedia('(prefers-color-scheme: light)').matches);
+    }
+
+    function applyTheme(next) {
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       updateToggleState(next === 'dark');
-      // Sync theme-color meta tags with the new theme
-      var tc = next === 'dark' ? '#17181C' : '#F8F5EE';
-      var metas = document.querySelectorAll('meta[name="theme-color"]');
-      for (var j = 0; j < metas.length; j++) metas[j].setAttribute('content', tc);
-      // Sync Giscus iframe theme if present
-      var giscusFrame = document.querySelector('iframe.giscus-frame');
-      if (giscusFrame) {
-        giscusFrame.contentWindow.postMessage(
-          { giscus: { setConfig: { theme: next } } },
-          'https://giscus.app'
-        );
+      syncThemeColor(next);
+      syncGiscus(next);
+    }
+
+    updateToggleState(currentIsDark());
+
+    btn.addEventListener('click', function () {
+      var next = currentIsDark() ? 'light' : 'dark';
+      if (document.startViewTransition && !prefersReducedMotion()) {
+        document.startViewTransition(function () {
+          applyTheme(next);
+        });
+      } else {
+        applyTheme(next);
       }
     });
   }
 
-  // Email link obfuscation — validate parts inline before setAttribute so
-  // CodeQL sees a sanitized flow from data attributes to href.
   var emailLinks = document.querySelectorAll('.js-email');
   for (var i = 0; i < emailLinks.length; i++) {
     var el = emailLinks[i];
@@ -196,9 +97,6 @@
     }
   }
 
-  // Nav scroll choreography — strengthen the glass once the page scrolls.
-  // A zero-height sentinel at the top of the body is observed instead of
-  // listening to scroll events, so there's no per-frame work.
   var navBar = document.querySelector('header nav');
   if (navBar && 'IntersectionObserver' in window) {
     var sentinel = document.createElement('div');
@@ -210,38 +108,68 @@
     }, { rootMargin: '8px 0px 0px 0px' }).observe(sentinel);
   }
 
-  // Hamburger nav toggle
-  var navToggle = document.getElementById('nav-toggle');
-  if (navToggle) {
-    function closeNav() {
-      var nav = document.querySelector('header nav');
-      if (nav) nav.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-      navToggle.setAttribute('aria-label', 'Open navigation');
+  var navList = document.querySelector('header nav ul');
+  if (navList) {
+    var syncNavScrollable = function () {
+      navList.classList.toggle('is-scrollable', navList.scrollWidth > navList.clientWidth + 1);
+    };
+    syncNavScrollable();
+    window.addEventListener('resize', syncNavScrollable);
+  }
+
+  var indicator = navList && navList.querySelector('.nav-indicator');
+  if (navList && indicator) {
+    // One pill: it rests on the current page and follows the pointer or focus.
+    // The class tells CSS to drop the static fill on .current so the two never
+    // stack; without JS that fill stays and marks the page on its own.
+    navList.classList.add('has-indicator');
+
+    var resting = navList.querySelector('a.current');
+    var active = null;
+
+    function moveIndicator(link, jump) {
+      active = link;
+      // No target, or a target hidden at this breakpoint (Home below tablet).
+      if (!link || !link.offsetWidth) {
+        indicator.style.opacity = '0';
+        return;
+      }
+      // Jumping skips the slide, so the pill never animates in from x=0.
+      if (jump) indicator.style.transition = 'none';
+      indicator.classList.toggle('is-resting', link === resting);
+      indicator.style.transform = 'translateX(' + link.offsetLeft + 'px)';
+      indicator.style.width = link.offsetWidth + 'px';
+      indicator.style.opacity = '1';
+      if (jump) {
+        void indicator.offsetWidth;
+        indicator.style.transition = '';
+      }
     }
 
-    navToggle.addEventListener('click', function () {
-      var nav = document.querySelector('header nav');
-      if (!nav) return;
-      var isOpen = nav.classList.toggle('open');
-      this.setAttribute('aria-expanded', isOpen.toString());
-      this.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
-    });
+    function restIndicator() {
+      moveIndicator(resting, false);
+    }
 
-    document.addEventListener('click', function (e) {
-      var nav = document.querySelector('header nav');
-      if (nav && nav.classList.contains('open') && !nav.contains(e.target)) {
-        closeNav();
-      }
-    });
+    function trackEvent(event) {
+      var link = event.target.closest && event.target.closest('a');
+      if (link && navList.contains(link)) moveIndicator(link, false);
+    }
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
-      var nav = document.querySelector('header nav');
-      if (nav && nav.classList.contains('open')) {
-        closeNav();
-        navToggle.focus();
-      }
+    moveIndicator(resting, true);
+
+    navList.addEventListener('pointerover', function (event) {
+      if (event.pointerType === 'touch') return;
+      trackEvent(event);
+    });
+    navList.addEventListener('pointerleave', function (event) {
+      if (event.pointerType === 'touch') return;
+      restIndicator();
+    });
+    navList.addEventListener('focusin', trackEvent);
+    navList.addEventListener('focusout', restIndicator);
+
+    window.addEventListener('resize', function () {
+      moveIndicator(active, true);
     });
   }
 
@@ -249,6 +177,40 @@
   if (resumePrint) {
     resumePrint.addEventListener('click', function () {
       window.print();
+    });
+  }
+
+  var postImages = document.querySelectorAll('article.blogpost figure img');
+  for (var p = 1; p < postImages.length; p++) {
+    postImages[p].setAttribute('loading', 'lazy');
+  }
+
+  if (window.navigation && typeof PageSwapEvent !== 'undefined') {
+    window.addEventListener('pageswap', function (event) {
+      if (!event.viewTransition || !event.activation || !event.activation.entry) return;
+      try {
+        var dest = new URL(event.activation.entry.url);
+        if (dest.origin !== location.origin) return;
+        var path = dest.pathname.replace(/\/$/, '') || '/';
+        var clicked = document.querySelector('#blog-list h3 a[href="' + dest.pathname + '"]')
+          || document.querySelector('#blog-list h3 a[href="' + path + '"]');
+        // Name the heading, not the link: a link that wraps onto two lines is
+        // a fragmented inline box and cannot be captured.
+        var heading = clicked && clicked.closest('h3');
+        if (heading) heading.style.viewTransitionName = 'post-title';
+      } catch (err) {}
+    });
+
+    window.addEventListener('pagereveal', function (event) {
+      if (!event.viewTransition) return;
+      var title = document.getElementById('post-title');
+      if (!title) return;
+      title.style.viewTransitionName = 'post-title';
+      event.viewTransition.finished.then(function () {
+        title.style.viewTransitionName = '';
+      }, function () {
+        title.style.viewTransitionName = '';
+      });
     });
   }
 })();

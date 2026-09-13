@@ -2,17 +2,6 @@
 <html lang="en">
 
   <head>
-    <script>
-      (function () {
-        var t = localStorage.getItem('theme');
-        if (t) {
-          document.documentElement.setAttribute('data-theme', t);
-          var c = t === 'dark' ? '#17181C' : '#F8F5EE';
-          var m = document.querySelectorAll('meta[name="theme-color"]');
-          for (var i = 0; i < m.length; i++) m[i].setAttribute('content', c);
-        }
-      })();
-    </script>
     {% if site.google_analytics and jekyll.environment == 'production' %}
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
@@ -25,34 +14,40 @@
     {% endif %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    {% if page.minimal_chrome %}
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    {% else %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% endif %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
     <link rel="stylesheet" href="/assets/css/styles.css" />
-    <link
-      rel="preload"
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap"
-      as="style"
-      onload="this.onload=null;this.rel='stylesheet'">
-    <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    </noscript>
     {% include faviconpackage.html %}
+    {% comment %}
+      Runs after the theme-color metas exist so a stored theme can update them,
+      and before first paint so there is no flash of the wrong palette.
+    {% endcomment %}
+    <script>
+      (function () {
+        var t = localStorage.getItem('theme');
+        if (t) {
+          document.documentElement.setAttribute('data-theme', t);
+          var c = t === 'dark' ? '#141414' : '#FAFAFA';
+          var m = document.querySelectorAll('meta[name="theme-color"]');
+          for (var i = 0; i < m.length; i++) m[i].setAttribute('content', c);
+        }
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        var back = nav && nav.type === 'back_forward';
+        var sameOrigin = false;
+        if (document.referrer) {
+          try { sameOrigin = new URL(document.referrer).origin === location.origin; } catch (e) {}
+        }
+        if (!reduce && !back && !sameOrigin) {
+          document.documentElement.setAttribute('data-arrive', '');
+        }
+      })();
+    </script>
     {% feed_meta %}
     {% seo %}
   </head>
 
   <body>
     {% if page.minimal_chrome %}
-    <div class="link-chrome-edge link-chrome-edge--top" aria-hidden="true"></div>
-    <div class="link-chrome-edge link-chrome-edge--bottom" aria-hidden="true"></div>
     {% include minimal-chrome.html %}
     {% else %}
     {% include navigation.html %}

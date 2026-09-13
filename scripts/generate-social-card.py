@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Generate the social share card (Open Graph / Twitter) for the site.
 
-Renders the "Editorial Minimal" card: the MR monogram, the name in Geist,
-the "customers, product & code" line in Instrument Serif Italic, and a
-monospace footer — all in the dark Liquid Glass palette, at 1200x630.
+Quiet Surface card: system-stack sans (SF Pro on macOS, Geist fallback),
+neutral dark palette, no serif, no teal. 1200x630.
 """
 
 from __future__ import annotations
@@ -16,42 +15,40 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = Path(__file__).resolve().parent
 
-# --- Fonts (match _sass/_settings.scss type pairing) ---
-SERIF_PATH = SCRIPTS / "InstrumentSerif-Italic.ttf"
 GEIST_PATH = SCRIPTS / "Geist[wght].ttf"
-GEIST_MONO_PATH = SCRIPTS / "GeistMono[wght].ttf"
+GEIST_URL = (
+    "https://raw.githubusercontent.com/google/fonts/main/ofl/geist/"
+    "Geist%5Bwght%5D.ttf"
+)
 
-FONTS = {
-    SERIF_PATH: (
-        "https://raw.githubusercontent.com/google/fonts/main/ofl/"
-        "instrumentserif/InstrumentSerif-Italic.ttf"
-    ),
-    GEIST_PATH: (
-        "https://raw.githubusercontent.com/google/fonts/main/ofl/geist/"
-        "Geist%5Bwght%5D.ttf"
-    ),
-    GEIST_MONO_PATH: (
-        "https://raw.githubusercontent.com/google/fonts/main/ofl/geistmono/"
-        "GeistMono%5Bwght%5D.ttf"
-    ),
-}
+SYSTEM_SANS = [
+    Path("/System/Library/Fonts/SFNS.ttf"),
+    Path("/System/Library/Fonts/SFProText.ttf"),
+    Path("/System/Library/Fonts/SFProDisplay.ttf"),
+    Path("/System/Library/Fonts/SFCompact.ttf"),
+    Path("/Library/Fonts/SF-Pro.ttf"),
+    Path("/System/Library/Fonts/Helvetica.ttc"),
+    Path("/System/Library/Fonts/Supplemental/Arial.ttf"),
+]
 
-# --- Palette (match _sass/_settings.scss dark mode) ---
-BG = (23, 24, 28)  # #17181C base
-FG = (242, 239, 232)  # #F2EFE8 warm off-white
-ACCENT = (93, 200, 209)  # #5DC8D1 teal-cyan
-MUTED = (168, 164, 155)  # #A8A49B inactive warm gray
+# Quiet Surface dark palette
+BG = (20, 20, 20)  # #141414
+FG = (237, 237, 237)  # #EDEDED
+MUTED = (138, 138, 138)  # #8A8A8A
+HAIRLINE = (93, 93, 93)  # #5D5D5D
 
 W, H = 1200, 630
 MARGIN = 80
 
 
-def ensure_fonts() -> None:
-    for path, url in FONTS.items():
+def resolve_sans() -> Path:
+    for path in SYSTEM_SANS:
         if path.exists():
-            continue
-        print(f"Downloading {path.name}…")
-        urllib.request.urlretrieve(url, path)
+            return path
+    if not GEIST_PATH.exists():
+        print(f"Downloading {GEIST_PATH.name}…")
+        urllib.request.urlretrieve(GEIST_URL, GEIST_PATH)
+    return GEIST_PATH
 
 
 def load(path: Path, size: int, weight: int | None = None) -> ImageFont.FreeTypeFont:
@@ -79,51 +76,46 @@ def draw_tracked(draw, pos, text, font, fill, tracking) -> float:
 
 
 def main() -> None:
-    ensure_fonts()
+    sans = resolve_sans()
 
     img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
 
-    # --- MR monogram badge (outlined rounded square) ---
-    badge = 96
-    bx, by = MARGIN, 70
-    radius = round(badge * 0.22)
+    badge = 72
+    bx, by = MARGIN, 86
     draw.rounded_rectangle(
         (bx, by, bx + badge, by + badge),
-        radius=radius,
-        outline=FG,
-        width=2,
+        radius=8,
+        outline=HAIRLINE,
+        width=1,
     )
-    mono_serif = load(SERIF_PATH, 50)
+    mono = load(sans, 28, weight=500)
     mtext = "MR"
-    mbox = draw.textbbox((0, 0), mtext, font=mono_serif)
+    mbox = draw.textbbox((0, 0), mtext, font=mono)
     mw, mh = mbox[2] - mbox[0], mbox[3] - mbox[1]
     draw.text(
-        (bx + (badge - mw) / 2 - mbox[0], by + (badge - mh) / 2 - mbox[1] + badge * 0.02),
+        (bx + (badge - mw) / 2 - mbox[0], by + (badge - mh) / 2 - mbox[1]),
         mtext,
-        font=mono_serif,
+        font=mono,
         fill=FG,
     )
 
-    # --- Name (Geist, heavy) ---
-    name_font = load(GEIST_PATH, 118, weight=700)
+    name_font = load(sans, 92, weight=500)
     name = "Matt Rugamas"
-    name_y = 232
+    name_y = 220
     nbox = draw.textbbox((0, 0), name, font=name_font)
     draw.text((MARGIN - nbox[0], name_y - nbox[1]), name, font=name_font, fill=FG)
     name_bottom = name_y + (nbox[3] - nbox[1])
 
-    # --- Accent line (Instrument Serif Italic, teal) ---
-    accent_font = load(SERIF_PATH, 76)
-    accent = "customers, product & code"
-    accent_y = name_bottom + 28
-    abox = draw.textbbox((0, 0), accent, font=accent_font)
-    draw.text((MARGIN - abox[0], accent_y - abox[1]), accent, font=accent_font, fill=ACCENT)
+    tag_font = load(sans, 36, weight=400)
+    tag = "customers, product & code"
+    tag_y = name_bottom + 24
+    tbox = draw.textbbox((0, 0), tag, font=tag_font)
+    draw.text((MARGIN - tbox[0], tag_y - tbox[1]), tag, font=tag_font, fill=MUTED)
 
-    # --- Footer (Geist Mono, tracked, uppercase) ---
-    foot_font = load(GEIST_MONO_PATH, 22, weight=400)
-    tracking = 2.5
-    foot_y = H - MARGIN - 22
+    foot_font = load(sans, 20, weight=400)
+    tracking = 1.6
+    foot_y = H - MARGIN - 18
     left = "SUPPORT ENGINEER · MUSICIAN · LOS ANGELES"
     draw_tracked(draw, (MARGIN, foot_y), left, foot_font, MUTED, tracking)
     right = "mattrugamas.com"
@@ -133,7 +125,7 @@ def main() -> None:
     out = ROOT / "assets" / "img" / "site" / "social-card.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     img.save(out, optimize=True)
-    print(f"Wrote {out.relative_to(ROOT)} ({W}x{H})")
+    print(f"Wrote {out.relative_to(ROOT)} ({W}x{H}) with {sans.name}")
 
 
 if __name__ == "__main__":

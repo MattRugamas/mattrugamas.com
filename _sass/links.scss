@@ -1,258 +1,41 @@
 @use 'settings' as *;
-@use 'safari-chrome' as *;
-
-///////////////
-/* LINKS HUB */
-///////////////
-
-// Full-bleed "aurora": a flowing mesh-gradient field that spans the entire
-// viewport. Two oversized, heavily-blurred multi-stop radial layers slowly
-// counter-rotate and pulse so the colour wells bleed into one another and the
-// whole field morphs continuously (OpenAI/Vercel-style). Rendered as a fixed,
-// negative z-index layer so it paints above main's opaque base colour but below
-// the hub content (main becomes a stacking context via `isolation`).
-//
-// Palette: the brand rose + teal, plus two derived accents (a periwinkle
-// bridge and a warm amber glow), punched up for a more saturated, modern field.
-main:has(.link-hub) {
-  position: relative;
-  isolation: isolate;
-  background-color: var(--color-base);
-
-  // Dark-mode aurora hues + intensity (punchier, higher-saturation hues).
-  --aur-rose: #ff6f87;
-  --aur-teal: #00e0ff;
-  --aur-lilac: #9b7bff;
-  --aur-amber: #ffae6b;
-  --aur-opacity: 0.72;
-  --aur-blur: 64px;
-  // `screen` glows beautifully on the dark base; light mode swaps to `normal`.
-  --aur-blend: screen;
-
-  // Shared vignette: full strength in a ring around the centre, gently dimmed
-  // behind the reading column, melting away at the screen edges.
-  --aur-mask: radial-gradient(
-    125% 115% at 50% 42%,
-    rgba(0, 0, 0, 0.45) 0%,
-    #000 28%,
-    #000 60%,
-    rgba(0, 0, 0, 0.5) 82%,
-    transparent 100%
-  );
-}
-
-// Light mode: cream backdrop needs vivid, saturated hues at higher intensity
-// to actually read against the warm paper while staying in-palette.
-@mixin link-aurora-light {
-  --aur-rose: #e51d46;
-  --aur-teal: #00b3c7;
-  --aur-lilac: #6a4cf2;
-  --aur-amber: #f47a12;
-  --aur-opacity: 0.66;
-  --aur-blur: 56px;
-  --aur-blend: normal;
-}
-
-@media (prefers-color-scheme: light) {
-  html:not([data-theme="dark"]) main:has(.link-hub) {
-    @include link-aurora-light;
-  }
-}
-
-html[data-theme="light"] main:has(.link-hub) {
-  @include link-aurora-light;
-}
-
-// Site-wide html washes compete with the aurora for toolbar tint sampling.
-html:has(.link-hub)::before {
-  display: none;
-}
-
-// Pin toolbar tint on /links/ for Chromium and other meta-color samplers.
-body:has(.link-hub) .link-chrome-edge--top {
-  display: block;
-}
-
-.link-aurora {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: calc(-1 * env(safe-area-inset-top, 0px));
-  height: calc(100lvh + env(safe-area-inset-top, 0px) + env(safe-area-inset-bottom, 0px));
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-  background-color: var(--color-base);
-  backdrop-filter: saturate(100%) blur(0px);
-  -webkit-backdrop-filter: saturate(100%) blur(0px);
-  // Isolate the blend group: without this, `mix-blend-mode` reads the scrolling
-  // page content as its backdrop and the blurred mesh re-rasterises every frame
-  // while scrolling. Isolating limits the blend to the two layers themselves.
-  isolation: isolate;
-  contain: layout paint;
-  -webkit-mask-image: var(--aur-mask);
-  mask-image: var(--aur-mask);
-
-  // Two oversized gradient fields, centred and rotated about the viewport.
-  // Heavy blur melts the individual wells into one continuous mesh.
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200%;
-    height: 200%;
-    transform: translate(-50%, -50%);
-    transform-origin: center;
-    // Promote each field to its own GPU layer so the animation is a pure
-    // composited transform (no repaint per frame) and stays smooth on scroll.
-    will-change: transform;
-    backface-visibility: hidden;
-    filter: blur(calc(var(--aur-blur) + 24px));
-    mix-blend-mode: var(--aur-blend);
-  }
-
-  // Primary mesh field.
-  &::before {
-    opacity: var(--aur-opacity);
-    background:
-      radial-gradient(38% 38% at 24% 30%, var(--aur-rose), transparent 62%),
-      radial-gradient(42% 42% at 76% 24%, var(--aur-teal), transparent 64%),
-      radial-gradient(46% 46% at 32% 74%, var(--aur-lilac), transparent 62%),
-      radial-gradient(40% 40% at 72% 78%, var(--aur-amber), transparent 62%);
-    animation: aur-mesh-a 16s linear infinite;
-  }
-
-  // Counter-rotating field: adds depth and keeps the colours morphing so the
-  // mesh never settles into a static-looking arrangement.
-  &::after {
-    opacity: calc(var(--aur-opacity) * 0.85);
-    background:
-      radial-gradient(36% 36% at 62% 34%, var(--aur-teal), transparent 62%),
-      radial-gradient(44% 44% at 24% 52%, var(--aur-amber), transparent 64%),
-      radial-gradient(40% 40% at 70% 66%, var(--aur-rose), transparent 62%),
-      radial-gradient(46% 46% at 46% 84%, var(--aur-lilac), transparent 62%);
-    animation: aur-mesh-b 20s linear infinite;
-  }
-}
-
-// Continuous counter-rotation + a gentle scale pulse so the wells bleed and
-// re-form. Kept brisk so the field reads lively (~2x the original drift pace).
-@keyframes aur-mesh-a {
-  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
-  50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.18); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
-}
-@keyframes aur-mesh-b {
-  0% { transform: translate(-50%, -50%) rotate(360deg) scale(1.12); }
-  50% { transform: translate(-50%, -50%) rotate(180deg) scale(0.96); }
-  100% { transform: translate(-50%, -50%) rotate(0deg) scale(1.12); }
-}
-
-// Honour reduced-motion: hold the mesh still but keep the composition.
-@media (prefers-reduced-motion: reduce) {
-  .link-aurora::before,
-  .link-aurora::after {
-    animation: none;
-  }
-}
-
-// Links minimal nav: glass on an absolute child so Safari doesn't sample the
-// aurora through backdrop-filter on the fixed bar (see safari-color-tinting).
-body:has(.link-hub) header > nav {
-  background-color: transparent;
-  border-color: transparent;
-  box-shadow: none;
-  backdrop-filter: saturate(100%) blur(0px);
-  -webkit-backdrop-filter: saturate(100%) blur(0px);
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    background-color: var(--glass-fallback);
-    border: 1px solid var(--glass-border);
-    box-shadow:
-      inset 0 1px 0 var(--glass-inner),
-      var(--glass-shadow);
-
-    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      background-color: var(--glass-bg);
-      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-    }
-  }
-
-  .nav-home,
-  .nav-actions {
-    position: relative;
-    z-index: 1;
-  }
-
-  &.scrolled::after {
-    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-      background-color: var(--glass-bg-strong);
-    }
-  }
-}
 
 main {
   .link-hub {
     width: 100%;
-    max-width: 28rem;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: var(--space-8);
+    gap: 0;
     font-family: $fonts-body;
+    text-align: left;
 
     .link-hub-header {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: var(--space-4);
-      text-align: center;
-    }
-
-    .link-hub-avatar {
-      display: block;
-      width: 5.5rem;
-      height: 5.5rem;
-      object-fit: cover;
-      border-radius: var(--radius-md);
-      @include img-outline;
-      @include ui-shadow;
+      align-items: flex-start;
+      gap: 0;
     }
 
     h1 {
-      max-width: none;
       margin: 0;
-      font-weight: var(--font-weight-medium);
-      letter-spacing: 0.02em;
     }
 
     .link-hub-tagline {
-      margin: 0;
-      max-width: none;
-      color: var(--color-inactive);
+      margin: var(--space-2) 0 0;
+      color: var(--color-fg-2);
       font-size: var(--text-base);
-      line-height: 1.45;
+      line-height: 1.6;
     }
 
     .link-hub-section {
       h2 {
-        font-family: $fonts-titles;
-        font-size: var(--text-sm);
-        font-weight: var(--font-weight-semi);
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: color-mix(in srgb, var(--color-links) 72%, var(--color-text));
-        margin: 0 0 var(--space-3);
-        text-align: center;
+        font-family: $fonts-body;
+        font-size: var(--text-xs);
+        font-weight: var(--font-weight-medium);
+        color: var(--color-fg-3);
+        margin: var(--space-10) 0 var(--space-2);
+        text-align: left;
       }
     }
 
@@ -262,7 +45,7 @@ main {
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: var(--space-3);
+      gap: var(--space-2);
     }
 
     .link-hub-list li {
@@ -270,51 +53,35 @@ main {
     }
 
     .link-hub-list a {
-      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-      text-align: center;
+      gap: var(--space-3);
+      text-align: left;
       text-decoration: none;
-      padding: var(--space-3) var(--space-4);
-      border-radius: var(--radius-md);
-      color: var(--color-text);
+      padding: var(--space-3);
+      border: 1px solid var(--hairline);
+      border-radius: var(--radius-sm);
+      color: var(--color-fg-1);
       font-size: var(--text-base);
       font-weight: var(--font-weight-medium);
-      // True glass card so links stay legible over the full-bleed glow.
-      @include glass;
       transition:
-        color var(--dur-fast) var(--ease-glass),
-        border-color var(--dur-fast) var(--ease-glass),
-        box-shadow var(--dur-fast) var(--ease-glass),
-        transform var(--dur-fast) var(--ease-glass);
+        background-color var(--dur-fast) var(--ease-standard),
+        color var(--dur-fast) var(--ease-standard),
+        transform var(--dur-fast) var(--ease-standard);
 
-      // Opacity on a pseudo-element composites more cheaply than
-      // repainting background-color inside a backdrop-filter surface.
-      &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        border-radius: inherit;
-        background-color: color-mix(in srgb, var(--color-text) 9%, transparent);
-        opacity: 0;
-        transition: opacity var(--dur-fast) var(--ease-glass);
-      }
+      @media (hover: hover) {
+        &:hover {
+          background-color: var(--fill-hover);
 
-      &:hover {
-        color: var(--color-highlight);
-        border-color: color-mix(in srgb, var(--color-highlight) 45%, transparent);
-        transform: translateY(-2px);
-
-        &::before {
-          opacity: 1;
+          .link-hub-icon,
+          .link-hub-arrow {
+            color: var(--color-fg-1);
+          }
         }
       }
 
       &:active {
-        transform: translateY(0) scale(0.96);
+        transform: scale(0.96);
       }
 
       &:focus-visible {
@@ -324,16 +91,25 @@ main {
 
     .link-hub-icon {
       flex-shrink: 0;
-      width: 1.125em;
-      height: 1.125em;
+      width: 20px;
+      height: 20px;
+      color: var(--color-fg-3);
+    }
+
+    .link-hub-arrow {
+      margin-left: auto;
+      font-size: var(--text-sm);
+      color: var(--color-fg-4);
+      line-height: 1;
     }
 
     .link-hub-hint {
       display: block;
-      text-align: center;
+      text-align: left;
       margin-top: var(--space-1);
-      font-size: var(--text-sm);
-      color: var(--color-dates);
+      font-size: var(--text-xs);
+      line-height: 1.5;
+      color: var(--color-fg-3);
       font-family: $fonts-source;
     }
   }

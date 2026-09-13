@@ -1,17 +1,9 @@
 @use "settings" as *;
 
-///////////////
-/* RESUME/CV  */
-///////////////
-
 .cv {
   width: 100%;
-  max-width: var(--content-cv);
   font-family: $fonts-body;
 
-  // ---- Header ----
-  // Mobile: single column stack (name → tagline → contact → print)
-  // Desktop: 2-col grid — name/print on row 1, tagline/contact on row 2
   .cv-header {
     display: grid;
     grid-template-columns: 1fr;
@@ -20,7 +12,7 @@
       "tagline"
       "contact"
       "print";
-    justify-items: center;
+    justify-items: start;
     gap: var(--space-3);
     margin-bottom: var(--space-12);
     padding-bottom: var(--space-8);
@@ -31,38 +23,22 @@
       grid-template-areas:
         "name    print"
         "tagline contact";
-      justify-items: start;
       align-items: center;
       gap: var(--space-2);
     }
 
     h1 {
       grid-area: name;
-      font-family: $fonts-display;
-      font-size: var(--text-3xl);
-      font-weight: var(--font-weight-normal);
-      letter-spacing: var(--tracking-display);
       margin: 0;
-      color: var(--color-text);
-      text-align: center;
-
-      @media (min-width: $bp-md) {
-        text-align: left;
-      }
     }
 
     .cv-tagline {
       grid-area: tagline;
       font-family: $fonts-source;
-      font-size: var(--text-sm);
-      color: var(--color-dates);
+      font-size: var(--text-xs);
+      line-height: 1.5;
+      color: var(--color-fg-3);
       margin: 0;
-      text-align: center;
-
-      @media (min-width: $bp-md) {
-        text-align: left;
-        max-width: 75%;
-      }
     }
 
     .cv-header-contact {
@@ -70,22 +46,14 @@
 
       a {
         font-family: $fonts-source;
-        font-size: var(--text-sm);
-        color: var(--color-links);
-        text-decoration: none;
-        transition: color var(--dur-fast) var(--ease-glass);
-
-        &:hover {
-          color: var(--color-highlight);
-          background-color: transparent;
-          box-shadow: none;
-        }
+        font-size: var(--text-xs);
+        line-height: 1.5;
       }
     }
 
     #resume-print-btn {
       grid-area: print;
-      @include glass-button;
+      @include button(false);
 
       @media (min-width: $bp-md) {
         justify-self: end;
@@ -93,226 +61,110 @@
     }
   }
 
-  // ---- Section ----
-  // Section headings echo the timeline eyebrow: mono, xs, tracked-out
-  // uppercase in the accent colour over a hairline.
   .cv-section {
     margin-bottom: var(--space-12);
 
     > h2 {
-      font-family: $fonts-source;
+      font-family: $fonts-body;
       font-size: var(--text-xs);
       font-weight: var(--font-weight-medium);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-highlight);
+      color: var(--color-fg-3);
       margin: 0 0 var(--space-6);
       padding-bottom: var(--space-3);
       border-bottom: 1px solid var(--hairline);
     }
 
     > p {
-      line-height: 1.7;
-      color: var(--color-text);
+      line-height: 1.6;
+      color: var(--color-fg-1);
     }
   }
 
-  // ---- Profile ----
-  // Open text, no card — the lead paragraph gets display-adjacent weight
-  // so the page opens with a statement rather than body copy.
   .cv-profile {
     > p {
-      max-width: 62ch;
-      color: var(--color-inactive);
       margin: 0 0 var(--space-4);
+      font-size: var(--text-base);
+      line-height: 1.6;
 
       &:first-of-type {
-        font-size: var(--text-lg);
-        line-height: 1.6;
-        letter-spacing: var(--tracking-tight);
-        color: var(--color-text);
+        color: var(--color-fg-1);
       }
 
       &:last-of-type {
+        color: var(--color-fg-2);
         margin-bottom: 0;
       }
     }
   }
 
-  // ---- Skills ----
-  // Capability cards — same soft surface as the timeline, labels set in
-  // the mono eyebrow voice.
   .cv-skills {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-3);
+    gap: var(--space-4);
     margin: 0;
 
     @media (min-width: $bp-md) {
       grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4) var(--space-8);
     }
   }
 
   .cv-skill-row {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: var(--space-1);
     margin: 0;
-    padding: var(--space-4) var(--space-6);
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
+    padding: 0;
 
     dt {
-      font-family: $fonts-source;
-      font-size: var(--text-xs);
+      font-size: var(--text-sm);
       font-weight: var(--font-weight-medium);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-highlight);
+      line-height: 1.45;
+      color: var(--color-fg-1);
     }
 
     dd {
       margin: 0;
       font-size: var(--text-sm);
-      color: var(--color-text);
-      line-height: 1.6;
+      line-height: 1.5;
+      color: var(--color-fg-2);
     }
   }
 
-  // ---- Experience timeline ----
-  // Each role is a chapter: a soft card carrying a mono index + dates
-  // eyebrow, set along a vertical rail that dissolves at both ends.
-  // Markers sit on the rail, centered on the eyebrow line.
   .cv-timeline {
-    --tl-rail-x: 6px;
-    --tl-gutter: var(--space-8);
-    --tl-pad: var(--space-6);
-    position: relative;
     display: flex;
     flex-direction: column;
-    gap: var(--space-6);
+    gap: 0;
     margin-top: var(--space-2);
-    padding-left: var(--tl-gutter);
-
-    @media (min-width: $bp-md) {
-      --tl-pad: var(--space-8);
-    }
-
-    // Rail
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: var(--tl-rail-x);
-      width: 1px;
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        var(--hairline) var(--space-12),
-        var(--hairline) calc(100% - var(--space-12)),
-        transparent
-      );
-    }
   }
 
-  // ---- Role card ----
   .cv-role {
-    position: relative;
     margin: 0;
-    padding: var(--tl-pad);
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-
-    // Marker — centered on the rail, aligned to the eyebrow line
-    &::before {
-      content: "";
-      position: absolute;
-      left: calc(var(--tl-rail-x) - var(--tl-gutter));
-      top: calc(var(--tl-pad) + var(--text-xs) / 2);
-      width: 7px;
-      height: 7px;
-      box-sizing: border-box;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: var(--color-base);
-      border: 1px solid var(--color-dates);
-    }
-  }
-
-  .cv-role--current {
-    border-color: color-mix(in srgb, var(--color-highlight) 30%, var(--card-border));
-
-    &::before {
-      width: 9px;
-      height: 9px;
-      background: var(--color-highlight);
-      border-color: transparent;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      left: calc(var(--tl-rail-x) - var(--tl-gutter));
-      top: calc(var(--tl-pad) + var(--text-xs) / 2);
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background: var(--color-highlight);
-      opacity: 0.35;
-      pointer-events: none;
-    }
-  }
-
-  // Scroll reveal — driven by site.js; classes are removed after transition
-  // so transform layers don't linger under the glass nav.
-  .cv-role.tl-pending {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  .cv-role.tl-in {
-    opacity: 1;
-    transform: none;
-    will-change: transform, opacity;
-    transition:
-      opacity var(--dur-slow) var(--ease-out-expo),
-      transform var(--dur-slow) var(--ease-out-expo);
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--hairline);
   }
 
   .cv-role-header {
     margin-bottom: var(--space-4);
 
+    // A full month range needs roughly 200px, so the narrow date gutter this
+    // used to sit in wrapped every one of them into a two-line block. The date
+    // leads the role instead, on the same left edge as the title below it.
     .cv-role-eyebrow {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: var(--space-3);
-      margin: 0 0 var(--space-4);
+      margin: 0 0 var(--space-1);
       font-family: $fonts-source;
       font-size: var(--text-xs);
-      line-height: 1;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .cv-role-index {
-      color: var(--color-highlight);
-      @include tabular-nums;
+      line-height: 1.5;
     }
 
     h3 {
-      display: block;
-      width: 100%;
-      font-family: $fonts-titles;
-      font-size: var(--text-xl);
-      font-weight: 600;
-      letter-spacing: var(--tracking-tight);
+      font-family: $fonts-body;
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking);
+      line-height: 1.6;
       margin: 0 0 var(--space-2);
-      color: var(--color-text);
+      color: var(--color-fg-1);
     }
 
     .cv-role-meta {
@@ -321,42 +173,36 @@
       align-items: baseline;
       gap: var(--space-1) var(--space-3);
       margin: 0;
-      font-family: $fonts-source;
       font-size: var(--text-sm);
+      line-height: 1.45;
+      color: var(--color-fg-2);
 
       span + span::before {
         content: "·";
         margin-right: var(--space-3);
-        color: var(--color-inactive);
+        color: var(--color-fg-3);
       }
     }
 
-    .cv-company {
-      color: var(--color-highlight);
-    }
-
-    .cv-location,
     .cv-dates {
-      color: var(--color-dates);
+      color: var(--color-fg-3);
       @include tabular-nums;
     }
   }
 
   .cv-role-summary {
-    line-height: 1.7;
-    color: var(--color-inactive);
+    line-height: 1.6;
+    color: var(--color-fg-2);
     margin: var(--space-4) 0;
-    font-style: italic;
+    font-style: normal;
   }
 
   h4 {
-    font-family: $fonts-titles;
-    font-size: var(--text-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-dates);
-    margin: var(--space-6) 0 var(--space-3);
+    font-family: $fonts-body;
+    font-size: var(--text-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-fg-3);
+    margin: var(--space-6) 0 var(--space-2);
   }
 
   ul {
@@ -365,52 +211,34 @@
     list-style: disc;
 
     li {
-      line-height: 1.7;
-      color: var(--color-text);
+      line-height: 1.6;
+      color: var(--color-fg-1);
       margin-bottom: var(--space-2);
       font-size: var(--text-base);
     }
   }
 
-  // Utility: content visible only when printing
   .print-only {
     display: none;
   }
 
-  // ---- Testimonials ----
-  // Quote cards on the same soft surface as the timeline, opened by an
-  // oversized serif quote mark in the accent colour.
   .cv-testimonial-list {
     display: flex;
     flex-direction: column;
-    gap: var(--space-3);
+    gap: var(--space-6);
   }
 
   .cv-testimonial {
-    position: relative;
     margin: 0;
-    padding: var(--space-6);
-    background-color: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--radius-md);
-
-    &::before {
-      content: "\201C";
-      display: block;
-      font-family: $fonts-display;
-      font-size: var(--text-2xl);
-      line-height: 0.6;
-      margin-bottom: var(--space-3);
-      color: var(--color-highlight);
-    }
+    padding: 0 0 0 var(--space-4);
+    border-left: 1px solid var(--hairline);
 
     p {
       margin: 0 0 var(--space-3);
-      font-family: $fonts-display;
-      font-size: var(--text-lg);
-      font-style: italic;
-      line-height: 1.55;
-      color: var(--color-text);
+      font-size: var(--text-base);
+      font-style: normal;
+      line-height: 1.6;
+      color: var(--color-fg-1);
     }
 
     cite {
@@ -418,52 +246,17 @@
       font-style: normal;
       font-family: $fonts-source;
       font-size: var(--text-xs);
-      letter-spacing: 0.02em;
-      line-height: 1.6;
-      color: var(--color-dates);
-
-      a {
-        color: var(--color-links);
-        text-decoration: none;
-        transition: color var(--dur-fast) var(--ease-glass);
-
-        &:hover {
-          color: var(--color-highlight);
-          background-color: transparent;
-          box-shadow: none;
-        }
-      }
+      line-height: 1.5;
+      color: var(--color-fg-3);
     }
   }
 }
 
-// Current-role marker — slow breathing halo (opacity only; no box-shadow repaint loop).
-@keyframes cv-marker-pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  50% {
-    opacity: 0.12;
-    transform: translate(-50%, -50%) scale(2.2);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .cv .cv-role--current::after {
-    animation: cv-marker-pulse 3.6s ease-in-out infinite;
-  }
-}
-
-// ─── Print styles ──────────────────────────────────────────────────────────
 @page {
   margin: 0.6in;
 }
 
 @media print {
-  // Hide site chrome — target the nav wrapper specifically, not all <header> elements
   body > header,
   footer,
   #skipToMainContent,
@@ -471,7 +264,6 @@
     display: none !important;
   }
 
-  // Reset layout so content fills the page
   html,
   body {
     background: #fff !important;
@@ -483,13 +275,12 @@
   main {
     padding: 0 !important;
     display: block !important;
+    max-width: none !important;
   }
 
-  // Resume container
   .cv {
     max-width: none;
 
-    // Force all colours to black/dark on white
     *,
     h1,
     h2,
@@ -505,7 +296,6 @@
       text-shadow: none !important;
     }
 
-    // Header — keep side-by-side
     .cv-header {
       border-bottom: 2pt solid #000;
       margin-bottom: 18pt;
@@ -522,7 +312,7 @@
 
       .cv-tagline {
         font-size: 9pt;
-        font-family: "Courier New", monospace;
+        font-family: $fonts-source;
       }
 
       .cv-header-contact {
@@ -530,7 +320,7 @@
         line-height: 1.5;
 
         a {
-          font-family: "Courier New", monospace;
+          font-family: $fonts-source;
           font-size: 9pt;
           text-decoration: none;
           color: #000 !important;
@@ -542,7 +332,6 @@
       }
     }
 
-    // Section headings
     .cv-section > h2 {
       font-size: 8pt;
       letter-spacing: 0.12em;
@@ -553,18 +342,14 @@
       margin-bottom: 10pt;
     }
 
-    // Profile — flatten the lead treatment back to body copy
     .cv-profile > p {
       max-width: none;
 
       &:first-of-type {
         font-size: 11pt;
-        letter-spacing: normal;
       }
     }
 
-    // Testimonials — quote cards collapse to classic left-rule quotes,
-    // kept together across page breaks
     .cv-testimonial-list {
       display: block;
     }
@@ -576,11 +361,6 @@
       padding: 4pt 10pt;
       border: none;
       border-left: 1.5pt solid #333;
-      border-radius: 0;
-
-      &::before {
-        content: none;
-      }
 
       &:last-child {
         margin-bottom: 0;
@@ -593,20 +373,24 @@
         line-height: 1.4;
         margin: 0 0 3pt;
 
-        &::before { content: "\201C"; }
-        &::after { content: "\201D"; }
+        &::before {
+          content: "\201C";
+        }
+
+        &::after {
+          content: "\201D";
+        }
       }
 
       cite {
         display: block;
         font-size: 8.5pt;
-        font-family: "Courier New", monospace;
+        font-family: $fonts-source;
         font-style: normal;
         color: #555 !important;
       }
     }
 
-    // Skills — cards collapse back to a compact label/value grid
     .cv-skills {
       display: block;
     }
@@ -617,15 +401,11 @@
       gap: 6pt;
       margin-bottom: 6pt;
       padding: 0;
-      border: none;
-      border-radius: 0;
 
       dt {
         font-family: inherit;
         font-weight: 600;
         font-size: 9pt;
-        text-transform: none;
-        letter-spacing: normal;
       }
 
       dd {
@@ -634,34 +414,16 @@
       }
     }
 
-    // Timeline collapses to plain stacked entries on paper —
-    // no rail, no markers, no card surfaces.
     .cv-timeline {
       display: block;
-      padding-left: 0;
       margin-top: 0;
-
-      &::before {
-        content: none;
-      }
     }
 
-    // Roles — allow page breaks within entries so long roles don't
-    // leave a gap at the bottom of a page. Keep headers attached to
-    // the content that follows them.
     .cv-role {
       border: none;
       border-bottom: 0.5pt solid #ddd;
-      border-radius: 0;
       padding: 0 0 14pt;
       margin: 0 0 14pt;
-      opacity: 1 !important;
-      transform: none !important;
-
-      &::before,
-      &::after {
-        content: none;
-      }
 
       &:last-child {
         border-bottom: none;
@@ -670,31 +432,29 @@
       }
     }
 
-    .cv-role-eyebrow {
-      font-size: 8pt;
-      letter-spacing: 0.08em;
-      margin-bottom: 4pt;
-
-      .cv-role-index,
-      .cv-dates {
-        color: #555 !important;
-      }
-    }
-
     .cv-role-header {
       page-break-after: avoid;
       break-after: avoid;
-    }
 
-    .cv-role-header h3 {
-      font-size: 13pt;
-      font-weight: 700;
-      margin-bottom: 3pt;
-    }
+      .cv-role-eyebrow {
+        font-size: 8pt;
+        margin-bottom: 4pt;
 
-    .cv-role-meta {
-      font-family: "Courier New", monospace;
-      font-size: 8.5pt;
+        .cv-dates {
+          color: #555 !important;
+        }
+      }
+
+      h3 {
+        font-size: 13pt;
+        font-weight: 700;
+        margin-bottom: 3pt;
+      }
+
+      .cv-role-meta {
+        font-family: $fonts-source;
+        font-size: 8.5pt;
+      }
     }
 
     h4 {
@@ -715,7 +475,6 @@
       }
     }
 
-    // Show link URLs after link text, but not on the contact link (it already is the URL)
     a::after {
       content: " (" attr(href) ")";
       font-size: 8pt;

@@ -9,6 +9,7 @@ The source for [mattrugamas.com](https://mattrugamas.com). A small personal site
 - **Jekyll 4.4** for the static site generator
 - **Ruby 3.2** (see [`.ruby-version`](.ruby-version); matches CI)
 - **Kramdown** (GFM) and **Rouge** for Markdown parsing and syntax highlighting
+- **System font stack** (SF Pro on Apple, Segoe on Windows, Roboto on Android). No web fonts.
 - **GitHub Pages** for hosting
 - **GitHub Actions** for build and deploy (see [`.github/workflows/jekyll.yml`](.github/workflows/jekyll.yml))
 
@@ -65,7 +66,8 @@ Syntax highlighting is handled by **Rouge** via `highlighter: rouge` in `_config
 
 ### Site features
 
-- **Dark / light theme** — `data-theme` on `<html>`, toggled via [`theme-toggle.html`](_includes/theme-toggle.html); a synchronous inline script in `base.liquid` reads `localStorage` before first paint to avoid flash
+- **Dark / light theme** — `data-theme` on `<html>`, toggled via [`theme-toggle.html`](_includes/theme-toggle.html); a synchronous inline script in `base.liquid` reads `localStorage` before first paint to avoid flash. The toggle wraps the change in `document.startViewTransition` when the browser supports it.
+- **View transitions** — same-origin navigations crossfade `main` while the sticky nav and footer hold. A first-load-only arrival animation (`data-arrive`) plays on cold entry.
 - **Giscus comments** — loaded on post pages via [`giscus-loader.js`](assets/js/giscus-loader.js)
 - **Google Analytics (GA4)** — production only (`JEKYLL_ENV=production`); bootstrap inlined in `base.liquid`
 - **Obfuscated email** — [`obfuscated-email.html`](_includes/obfuscated-email.html) + [`site.js`](assets/js/site.js) assemble `mailto:` links client-side
@@ -133,7 +135,7 @@ git push origin main:release
 
 The GitHub Actions workflow (triggered by pushes to `release`) builds the site with `JEKYLL_ENV=production` and deploys to GitHub Pages. After deploy, `main` and `release` should point at the same commit.
 
-**Branches:** `main` (development) · `release` (production deploy) · `archive/legacy-site` (frozen pre-redesign site, Travis-era `master`)
+**Branches:** `main` (development) · `release` (production deploy) · `archive/glass-design` (frozen Liquid Glass design, last live September 2026) · `archive/legacy-site` (frozen pre-redesign site, Travis-era `master`)
 
 Update [`changelog.html`](changelog.html) before deploying site changes.
 

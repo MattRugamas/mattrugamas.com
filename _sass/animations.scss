@@ -1,91 +1,78 @@
 @use 'settings' as *;
 
-// Sequenced entrance — fade and float up on load (see site.js).
-// Classes are removed on animationend so transform layers don't linger
-// and interfere with later hover interactions.
-@keyframes entrance-float-in {
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-med);
+  animation-timing-function: var(--ease-standard);
+}
+
+// Only the nav is named. It is sticky at the top of every page, so its old and
+// new boxes coincide and it holds still while main crossfades. The footer sits
+// at a different offset on every page; naming it would animate that difference.
+header > nav {
+  view-transition-name: site-nav;
+}
+
+// Post title morph (set on the clicked list heading in site.js).
+::view-transition-group(post-title) {
+  animation-duration: var(--dur-med);
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+html[data-arrive] main > * {
+  animation: arrive var(--dur-slow) var(--ease-out) both;
+
+  @for $i from 1 through 8 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{($i - 1) * 40}ms;
+    }
+  }
+}
+
+// The first block holds the h1, which is the largest paint on every page.
+// It rises without fading so the paint is not deferred behind the animation.
+html[data-arrive] main > *:first-child {
+  animation-name: arrive-rise;
+}
+
+@keyframes arrive {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(6px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes entrance-float-in-nav {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(24px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-
-// Opacity-only entrance for containers of backdrop-filter interactives
-// (e.g. link-hub sections) — avoids a parent transform layer that
-// makes child hovers repaint the glass surface every frame.
-@keyframes entrance-fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-item {
-  &.animate-pending,
-  &.animate-in {
-    will-change: transform, opacity;
-  }
-
-  &.animate-pending {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  &.animate-in {
-    animation: entrance-float-in 0.8s var(--ease-out-expo) forwards;
-  }
-}
-
-header > nav.animate-item {
-  &.animate-pending {
-    transform: translateX(-50%) translateY(24px);
-  }
-
-  &.animate-in {
-    animation: entrance-float-in-nav 0.8s var(--ease-out-expo) forwards;
-  }
-}
-
-.animate-item.animate-fade-only {
-  &.animate-pending,
-  &.animate-in {
-    will-change: opacity;
-  }
-
-  &.animate-pending {
-    opacity: 0;
     transform: none;
   }
+}
 
-  &.animate-in {
-    animation: entrance-fade-in 0.8s var(--ease-out-expo) forwards;
+@keyframes arrive-rise {
+  from {
+    transform: translateY(6px);
+  }
+
+  to {
+    transform: none;
   }
 }
 
-// Never let a pending entrance state hide content on paper.
 @media print {
-  .animate-item.animate-pending {
-    opacity: 1 !important;
-    transform: none !important;
+  html[data-arrive] main > * {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

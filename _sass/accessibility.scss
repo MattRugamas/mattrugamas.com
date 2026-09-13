@@ -1,7 +1,7 @@
 @use 'settings' as *;
 
-// --- Focus visibility (links use @mixin link-setup in index) ---
 html {
+  a:focus-visible,
   button:focus-visible,
   summary:focus-visible,
   [tabindex]:not([tabindex="-1"]):focus-visible {
@@ -13,13 +13,16 @@ html {
     outline-offset: 4px;
   }
 
-  #mainContent:focus {
+  // main carries tabindex="-1" so the skip link can move focus into it. Chrome
+  // also focuses tabindex="-1" elements on mouse click, so :focus would ring
+  // the whole column whenever you clicked the page; :focus-visible still fires
+  // for the skip link because the last interaction was a keypress.
+  #mainContent:focus-visible {
     @include focus-ring;
     outline-offset: 4px;
   }
 }
 
-// --- Reduced motion ---
 @media (prefers-reduced-motion: reduce) {
   html *,
   html *::before,

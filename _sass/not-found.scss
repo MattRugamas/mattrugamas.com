@@ -2,87 +2,68 @@
 
 main .not-found {
   width: 100%;
-  max-width: var(--content-hero);
-  min-width: 0; // flex child — allow shrink below content min-size on narrow viewports
-  text-align: center;
+  min-width: 0;
+  text-align: left;
 
   .not-found-emblem {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: var(--space-8);
-    color: #e8940f;
+    color: var(--color-fg-2);
 
     .not-found-fox-logo {
-      width: min(11rem, 52vw);
+      width: 4rem;
       height: auto;
-      filter: drop-shadow(0 0 28px color-mix(in srgb, #e8940f 30%, transparent));
     }
   }
 
   .not-found-status {
     margin: 0 0 var(--space-2);
     font-family: $fonts-source;
-    font-size: var(--text-sm);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-accent);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--color-fg-3);
     @include tabular-nums;
   }
 
   h1 {
     margin: 0 0 var(--space-6);
-    font-size: var(--text-display);
-    max-width: none;
+    color: var(--color-fg-2);
+
+    strong {
+      color: var(--color-fg-1);
+    }
   }
 
   .not-found-codec {
-    @include card;
-    @include link-setup;
     text-align: left;
-    box-sizing: border-box; // width: 100% + padding must stay inside the column on mobile
     width: 100%;
     padding: var(--space-6);
     margin-bottom: var(--space-8);
-    position: relative;
-    overflow: hidden;
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        color-mix(in srgb, var(--color-accent) 4%, transparent) 2px,
-        color-mix(in srgb, var(--color-accent) 4%, transparent) 4px
-      );
-      opacity: 0.35;
-    }
+    background-color: var(--color-surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-md);
 
     .not-found-codec-header {
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--space-4);
-      margin-bottom: var(--space-5);
+      margin-bottom: var(--space-4);
       padding-bottom: var(--space-3);
       border-bottom: 1px solid var(--hairline);
       font-family: $fonts-source;
       font-size: var(--text-xs);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-dates);
+      line-height: 1.5;
+      color: var(--color-fg-3);
     }
 
     .not-found-codec-live {
       display: inline-flex;
       align-items: center;
       gap: var(--space-2);
-      color: var(--color-accent);
+      color: var(--color-fg-2);
 
       &::before {
         content: "";
@@ -95,7 +76,6 @@ main .not-found {
     }
 
     dl {
-      position: relative;
       margin: 0;
       display: grid;
       gap: var(--space-4);
@@ -105,9 +85,9 @@ main .not-found {
       margin: 0;
       font-family: $fonts-source;
       font-size: var(--text-xs);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--color-accent);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+      color: var(--color-fg-1);
     }
 
     dd {
@@ -115,11 +95,11 @@ main .not-found {
       font-size: var(--text-base);
       line-height: 1.6;
       text-wrap: pretty;
-      color: var(--color-text);
+      color: var(--color-fg-1);
 
       code {
         font-family: $fonts-source;
-        font-size: 0.92em;
+        font-size: 0.9em;
         overflow-wrap: anywhere;
       }
     }
@@ -128,24 +108,32 @@ main .not-found {
   .not-found-path {
     margin: 0 0 var(--space-8);
     font-family: $fonts-source;
-    font-size: var(--text-sm);
-    color: var(--color-dates);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--color-fg-3);
     word-break: break-all;
 
     code {
-      color: var(--color-inactive);
+      color: var(--color-fg-3);
     }
   }
 
   .not-found-actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: var(--space-3);
 
     a {
-      @include glass-button;
       text-decoration: none;
+    }
+
+    a:first-child {
+      @include button(true);
+    }
+
+    a:not(:first-child) {
+      @include button(false);
     }
   }
 }

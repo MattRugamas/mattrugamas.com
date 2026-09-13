@@ -1,225 +1,334 @@
 @use 'settings' as *;
 
-///////////////
-/* POST PAGE */
-///////////////
-
 article.blogpost {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  align-items: flex-start;
+  hanging-punctuation: first allow-end;
+
+  h1#post-title {
+    margin-bottom: var(--space-2);
+  }
+
+  .post-meta {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row wrap;
+    align-items: baseline;
+    gap: 0 0.35em;
+    margin: 0 0 var(--space-10);
+    font-family: $fonts-source;
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--color-fg-3);
+
+    time#post-date {
+      display: inline;
+      margin: 0;
+      @include tabular-nums;
+    }
+
+    .post-meta-sep {
+      color: var(--color-fg-4);
+    }
+
+    .post-tags {
+      margin: 0;
+      padding-inline-start: 0;
+      list-style: none;
+    }
+  }
+
+  h2 {
+    font-family: $fonts-body;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--tracking);
+    line-height: 1.6;
+    color: var(--color-fg-1);
+    margin: var(--space-10) 0 var(--space-2);
+  }
+
+  h3 {
+    font-family: $fonts-body;
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--tracking);
+    line-height: 1.6;
+    color: var(--color-fg-2);
+    margin: var(--space-8) 0 var(--space-2);
+  }
+
+  p {
+    margin: 0 0 var(--space-4);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    color: var(--color-fg-1);
+  }
+
+  strong,
+  b {
+    font-weight: var(--font-weight-medium);
+  }
+
+  ul,
+  ol {
+    margin: 0 0 var(--space-4);
+    padding-inline-start: var(--space-6);
+    font-size: var(--text-base);
+    line-height: 1.65;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: var(--space-1);
+    text-wrap: pretty;
+
+    &::marker {
+      color: var(--color-fg-3);
+    }
+  }
+
+  figure.shadow_image {
+    margin: var(--space-8) 0;
     width: 100%;
-    max-width: var(--content-post);
-    align-items: flex-start;
 
-    h1#post-title {
-      font-family: $fonts-display;
-      font-size: var(--text-2xl);
-      font-weight: var(--font-weight-normal);
-      letter-spacing: var(--tracking-display);
-      line-height: 1.18;
-      margin-bottom: 0;
-
-      @media (min-width: $bp-md) {
-        font-size: var(--text-3xl);
-      }
+    img.img-responsive {
+      width: 100%;
+      max-width: 100%;
+      max-height: 75vh;
+      height: auto;
+      border-radius: var(--radius-md);
+      @include img-outline;
     }
 
-    .post-meta {
-      margin: var(--space-3) 0 var(--space-8);
+    figcaption {
+      margin-top: var(--space-2);
+      font-size: var(--text-xs);
+      line-height: 1.5;
+      text-align: left;
+      color: var(--color-fg-3);
+    }
+  }
 
-      time#post-date {
-        display: block;
-        margin: 0;
-        font-family: $fonts-source;
-        font-size: var(--text-sm);
-        font-weight: var(--font-weight-normal);
-        color: var(--color-dates);
-        @include tabular-nums;
-      }
+  sup a.footnote {
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    padding: 0 0.15em;
+  }
 
-      .post-tags {
-        margin-top: var(--space-2);
-        padding-inline-start: 0;
-        list-style: none;
-      }
+  .footnotes {
+    margin-top: var(--space-12);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--hairline);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    color: var(--color-fg-3);
+
+    ol {
+      margin: 0;
+      padding-inline-start: var(--space-6);
+      list-style-type: decimal;
+      font-size: var(--text-xs);
+      line-height: 1.5;
     }
 
-    h2 {
-      font-family: $fonts-titles;
-      font-size: var(--text-xl);
-      font-weight: var(--font-weight-semi);
-      letter-spacing: var(--tracking-tight);
-      line-height: 1.35;
-      margin: var(--space-8) 0 var(--space-2);
-    }
+    li {
+      margin-bottom: var(--space-3);
 
-    h3 {
-      font-family: $fonts-titles;
-      font-size: var(--text-lg);
-      font-weight: var(--font-weight-semi);
-      letter-spacing: var(--tracking-tight);
-      line-height: 1.4;
-      margin: var(--space-6) 0 var(--space-2);
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     p {
-      margin: 0 0 var(--space-4);
-      font-family: $fonts-body;
-      font-size: var(--text-base);
-      line-height: 1.7;
+      display: inline;
+      margin: 0;
+      font-size: var(--text-xs);
+      line-height: 1.5;
+      color: var(--color-fg-3);
     }
 
-    ul,
-    ol {
-      margin: 0 0 var(--space-4);
-      padding-inline-start: var(--space-6);
-      font-family: $fonts-body;
-      font-size: var(--text-base);
-      line-height: 1.7;
+    a.reversefootnote {
+      margin-left: 0.35em;
+      text-decoration: none;
     }
+  }
+}
 
-    ul { list-style-type: disc; }
-    ol { list-style-type: decimal; }
+// ── Post footer and comments ────────────────────────────────────────────────
 
-    li {
-      margin-bottom: var(--space-2);
-      text-wrap: pretty;
-    }
+.post-comments {
+  width: 100%;
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--hairline);
+}
 
-    figure.shadow_image {
-      margin: var(--space-8) auto;
-      width: fit-content;
-      img.img-responsive {
-        width: 100%;
-        max-width: 100%;
-        max-height: 75vh;
-        height: auto;
-        @include img-outline;
-      }
-      figcaption {
-        text-align: center;
-      }
-    }
+.post-footer {
+  display: grid;
+  gap: var(--space-8);
+  width: 100%;
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--hairline);
+  font-size: var(--text-sm);
+  line-height: 1.45;
 
-    sup {
-      a.footnote {
-        text-decoration: none;
-        font-weight: var(--font-weight-semi);
-        padding: 0 0.15em;
-      }
-    }
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr auto;
+    gap: var(--space-8) var(--space-16);
+  }
+}
 
-    .footnotes {
-      margin-top: var(--space-12);
-      padding-top: var(--space-6);
-      border-top: 1px solid var(--hairline);
-      font-family: $fonts-body;
-      font-size: var(--text-sm);
-      line-height: 1.6;
-      color: var(--color-dates);
+.post-footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  margin: 0;
 
-      ol {
-        margin: 0;
-        padding-inline-start: var(--space-6);
-        list-style-type: decimal;
-        font-size: var(--text-sm);
-        line-height: 1.6;
-      }
+  .post-footer-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 var(--space-2);
+    align-items: start;
+  }
 
-      li {
-        margin-bottom: var(--space-3);
-        &:last-child { margin-bottom: 0; }
-      }
+  dt {
+    margin: 0;
+    font-weight: var(--font-weight-normal);
+    color: var(--color-fg-3);
+    white-space: nowrap;
 
-      p {
-        display: inline;
-        margin: 0;
-        font-size: var(--text-sm);
-        line-height: 1.6;
-        color: var(--color-dates);
-      }
-
-      a.reversefootnote {
-        margin-left: 0.35em;
-        text-decoration: none;
-      }
+    &::after {
+      content: ":";
     }
   }
 
-  @media all and (max-width: 800px) {
-    article.blogpost {
-      img.img-responsive {
-        max-width: 100%;
-      }
+  dd {
+    margin: 0;
+    min-width: 0;
+
+    em {
+      color: var(--color-fg-2);
+      font-style: italic;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+.post-footer-elsewhere {
+  margin: 0;
+  padding-left: var(--space-6);
+  list-style: decimal;
+  font-size: var(--text-sm);
+
+  li {
+    padding-left: var(--space-1);
+
+    &::marker {
+      color: var(--color-fg-3);
     }
   }
 
-///////////////////////////
-/* ROUGE SYNTAX THEME    */
-///////////////////////////
-// Maps Rouge token classes to the site's palette (via custom properties in
-// _settings.scss), so dark, light, and print modes share one set of rules.
+  a {
+    text-decoration: none;
+  }
+}
+
+// ── Code ────────────────────────────────────────────────────────────────────
+
+div.highlighter-rouge {
+  width: 100%;
+  max-width: 100%;
+}
+
+pre.highlight {
+  max-height: 60vh;
+  padding: var(--space-4);
+  overflow: auto;
+  scrollbar-width: none;
+  color: var(--color-fg-1);
+  background-color: var(--color-surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-sm);
+
+  code {
+    font-family: $fonts-source;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+}
 
 .highlight table td {
   padding: 5px;
 }
+
 .highlight table pre {
   margin: 0;
 }
 
-pre.highlight {
-  color: var(--color-text);
-  background-color: var(--code-bg);
-}
-
 code.highlighter-rouge {
-  color: var(--color-text);
-  background-color: var(--inline-code-bg);
-  border: 1px solid var(--inline-code-border);
-  border-radius: 6px;
+  color: var(--color-fg-1);
+  background-color: var(--color-surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-xs);
   padding: 0.05em 0.35em;
+  font-size: 0.9em;
 }
 
 .highlight .w {
-  color: var(--color-text);
+  color: var(--color-fg-1);
 }
 
 .highlight .err {
-  color: var(--color-base);
-  background-color: var(--code-string);
+  color: var(--color-fg-1);
+  background-color: var(--fill-active);
 }
 
-// Comments
 .highlight .c,
 .highlight .cd,
 .highlight .cm,
 .highlight .c1,
 .highlight .cs,
 .highlight .cp {
-  color: var(--code-comment);
+  color: var(--color-fg-3);
+  font-style: italic;
 }
 
-// Operators / punctuation — default text
 .highlight .o,
 .highlight .ow,
 .highlight .p,
 .highlight .pi {
-  color: var(--color-text);
+  color: var(--color-fg-2);
 }
 
-// Diff
 .highlight .gi {
-  color: var(--color-dates);
-}
-.highlight .gd {
-  color: var(--code-string);
-}
-.highlight .gh {
-  color: var(--color-highlight);
-  font-weight: bold;
+  color: var(--color-fg-2);
 }
 
-// Keywords (incl. constants, types, declarations)
+.highlight .gd {
+  color: var(--color-fg-2);
+  text-decoration: line-through;
+}
+
+.highlight .gh {
+  color: var(--color-fg-1);
+  font-weight: var(--font-weight-medium);
+}
+
 .highlight .k,
 .highlight .kn,
 .highlight .kp,
@@ -228,10 +337,10 @@ code.highlighter-rouge {
 .highlight .kc,
 .highlight .kt,
 .highlight .kd {
-  color: var(--color-highlight);
+  color: var(--color-fg-1);
+  font-weight: var(--font-weight-medium);
 }
 
-// Strings + regex / interpolation / escape
 .highlight .s,
 .highlight .sb,
 .highlight .sc,
@@ -243,21 +352,21 @@ code.highlighter-rouge {
 .highlight .sr,
 .highlight .si,
 .highlight .se {
-  color: var(--code-string);
+  color: var(--color-fg-2);
 }
 
-// Names: tags use highlight; namespace / class / constant / attr use dates
 .highlight .nt {
-  color: var(--color-highlight);
+  color: var(--color-fg-1);
+  font-weight: var(--font-weight-medium);
 }
+
 .highlight .nn,
 .highlight .nc,
 .highlight .no,
 .highlight .na {
-  color: var(--color-dates);
+  color: var(--color-fg-1);
 }
 
-// Numbers + symbols
 .highlight .m,
 .highlight .mf,
 .highlight .mh,
@@ -267,5 +376,5 @@ code.highlighter-rouge {
 .highlight .mb,
 .highlight .mx,
 .highlight .ss {
-  color: var(--color-dates);
+  color: var(--color-fg-2);
 }

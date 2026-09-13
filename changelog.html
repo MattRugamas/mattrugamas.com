@@ -9,6 +9,50 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">September 12, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>Post rows on the homepage and tag pages can now carry a hand-written <code>summary</code> in front matter, rendered by <code>_includes/post-list.html</code> in place of Jekyll's auto-generated excerpt, which simply took the post's opening paragraph. All eight posts got a one-or-two-line conversational summary. The generated <code>excerpt</code> is untouched, so the RSS feed and <code>jekyll-seo-tag</code> descriptions still quote the real opening; posts without a <code>summary</code> fall back to the old behaviour.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Changed</h3>
+      <ul>
+        <li>Shipped a full <strong>Quiet Surface</strong> redesign. The Liquid Glass material is gone: no <code>backdrop-filter</code>, no ambient washes, no floating pill nav, no aurora on <code>/links/</code>. The site is now a flat document in a system font stack (<code>-apple-system</code> / Segoe / Roboto), four type sizes (13 / 14 / 16 / 24), regular and medium weights only, and a three-tier gray hierarchy. Teal survives in exactly two places: <code>:focus-visible</code> rings and the active tag-filter chip. Links are text-colored and underlined. Google Fonts (Instrument Serif, Geist, Geist Mono) were removed from <code>base.liquid</code>.</li>
+        <li>Replaced the floating glass nav with a sticky, opaque bar aligned to the same <code>--measure</code> column as the page. The hamburger is gone; Home hides below tablet so the row stays one line. A single sliding <code>.nav-indicator</code> rests on the current page and follows pointer hover and keyboard focus. Same-origin navigations crossfade <code>main</code> via the View Transition API while the nav holds; a first-load-only <code>data-arrive</code> rise (6px, 40ms stagger) plays on cold entry. Theme changes use <code>document.startViewTransition</code> when available.</li>
+        <li>Homepage dates hang in a 6rem left gutter at <code>≥ 60em</code>, baseline-matched to titles. Post syntax highlighting is grayscale. The résumé dropped its timeline rail, markers, pulse, cards, and role index numbers. <code>/links/</code> is a left-aligned list of hairline rows with a trailing <code>↗</code>; <code>_sass/safari-chrome.scss</code> and the toolbar-tint sampling strips were deleted with the blur they existed to paper over.</li>
+        <li>Removed the avatar photo from the top of <code>/links/</code>, so the page now opens on the handle. The image itself is still in <code>assets/img/site/</code> if it comes back.</li>
+        <li>Regenerated <code>assets/img/site/social-card.png</code> in the Quiet Surface dark palette (no serif, no teal) via <code>scripts/generate-social-card.py</code>, which now prefers SF Pro on macOS.</li>
+        <li>Text-on-page contrast against <code>--color-bg</code>: light <code>#292929</code> 13.94:1, <code>#5D5D5D</code> 6.31:1, <code>#737373</code> 4.54:1; dark <code>#EDEDED</code> 15.74:1, <code>#A8A8A8</code> 7.75:1, <code>#8A8A8A</code> 5.34:1. Primary buttons invert the page (<code>#FAFAFA</code> on <code>#292929</code>, <code>#141414</code> on <code>#EDEDED</code>, both 13.94+/15.74+). Active chip text on accent is 6.78:1 light and 9.34:1 dark.</li>
+        <li>Restructured the stylesheets around the partial boundaries they advertise. <code>_sass/index.scss</code> no longer nests the whole site inside <code>html { body { … } }</code> — selectors are flat and the blog list dropped from eight levels of nesting to two. Post footer, comments, figure captions, and code-block rules moved to <code>_sass/posts.scss</code>; the tag-filter chips moved to <code>_sass/_tags.scss</code> alongside the other tag styles. The nav, content column, and footer now share one frame rule instead of repeating the same four width and padding declarations, and the wide résumé and changelog columns come from one <code>max-width</code> override on <code>main</code> rather than patching <code>max-width</code> in three places. The theme-toggle icon crossfade reads its state from palette custom properties, replacing three duplicated selector blocks. Post rows use a <code>.post-row</code> element with a <code>.post-row-body</code> wrapper in place of the <code>&lt;aside&gt;</code> and <code>&lt;header&gt;</code> the date and title were misusing, and the hanging date column aligns with <code>align-items: baseline</code> instead of a hand-computed <code>padding-top</code>.</li>
+      </ul>
+    </div>
+
+    <div class="changelog-group">
+      <h3>Fixed</h3>
+      <ul>
+        <li>Every page scrolled sideways by roughly 38px below <code>44em</code>. <code>_sass/reset.scss</code> is normalize.css v8, which deliberately does not set <code>box-sizing</code>, so the <code>width: 100%</code> on the nav inner wrapper, <code>main</code>, and the footer added <code>--page-pad</code> on top of a full-width box. Added the global <code>border-box</code> rule and gave the shared frame a <code>max-width</code> of <code>calc(var(--measure) + var(--page-pad) * 2)</code>, which keeps the 40rem reading column exact at desktop while the box now fits the viewport on phones.</li>
+        <li>The print stylesheet lost to the screen palette. <code>@media (prefers-color-scheme: light) :root:not([data-theme="dark"])</code> outranks the <code>:root</code> block inside <code>@media print</code>, so any visitor who had never used the theme toggle printed <code>#292929</code> on a <code>#FAFAFA</code> wash instead of black on white. Scoped the auto-theme query to <code>screen</code>.</li>
+        <li>The nav pill animated in from the left edge of the row on the first hover of every page, and stacked its own fill on top of the <code>--fill-active</code> already under the current item. It is now placed without a transition on first paint, carries the active tone at rest and the hover tone in flight, and returns to the current page on pointer leave and blur.</li>
+        <li>The nav list carried a permanent 16px <code>mask-image</code> fade on both ends, dimming the first and last items even though the row fits. The fade now appears only when the row genuinely overflows, and post pages — which carry a fifth item — fit without scrolling from 360px up after tightening item padding below <code>40em</code>.</li>
+        <li>Résumé dates sat in a 128px gutter to the left of each job title, but a full month range like <em>February 2020 – February 2022</em> needs about 220px, so every one of them wrapped into a right-aligned two-line block that read as a box. The date now leads its role as a single line above the title, sharing the same left edge as the title and the company. The printed résumé is unchanged — it already used this stacked layout.</li>
+        <li>The nav shifted 32px left when you navigated to the résumé or the changelog. Those two pages run on a wider measure, and the nav and footer inherited it so their left edge would line up with the content. The wide measure now applies to <code>main</code> alone, so the nav mark and the nav row sit in exactly the same place on every page.</li>
+        <li><code>#mainContent</code> drew a 2px accent outline around the entire content column on <code>:focus</code>. The element carries <code>tabindex="-1"</code> only so the skip link can move focus into it, but <code>:focus</code> matches for any non-keyboard focus and then persists while you read. Narrowed to <code>:focus-visible</code>, which still fires for the skip link when it is activated from the keyboard.</li>
+        <li>Nav, footer, and RSS links had no visible focus ring: <code>_sass/index.scss</code> scoped <code>a:focus-visible</code> under <code>main</code>, and <code>_sass/accessibility.scss</code> covered only buttons, summaries, and <code>[tabindex]</code>. Links outside <code>main</code> now get the accent ring.</li>
+        <li>Touch targets overlapped. The <code>hit-area</code> mixin extends tag chips and nav icons to 40×40 with a pseudo-element, but the 8px chip row gap and 4px icon gap were narrower than the overhang, so adjacent invisible targets collided; both gaps now clear it.</li>
+        <li>The first-load arrival animation faded in the <code>h1</code>, deferring the largest contentful paint behind a 480ms opacity animation on exactly the cold navigations Lighthouse measures. The first block now rises without fading.</li>
+        <li>Dropped <code>view-transition-name: site-footer</code>. The footer sits at a different offset on every page, so naming it asked the transition to animate that difference rather than hold the element still. The post title morph now names the list <code>h3</code> instead of the link inside it, because a title that wraps onto two lines is a fragmented inline box and cannot be captured.</li>
+        <li>The theme-color meta sync in the <code>base.liquid</code> head script ran before <code>faviconpackage.html</code> had been parsed, so a stored theme never reached the browser chrome on first load; the script now runs after the meta tags and still before first paint. <code>syncGiscus</code> also guards its <code>postMessage</code>, which previously could throw inside the <code>startViewTransition</code> callback.</li>
+        <li>A June 22 entry below wrote <code>{% raw %}{% include findme.html %}{% endraw %}</code> without escaping it, so Liquid executed the example and rendered a live copy of the About page's contact buttons inside a <code>&lt;code&gt;</code> element — which also meant the <code>.findme a</code> analytics binding fired <code>social_link_click</code> events from this page. Wrapped in <code>{% raw %}{% raw %}{% endraw %}</code>.</li>
+        <li>Replaced the remaining hardcoded values the token system was meant to own: raw <code>font-weight: 500</code> in the Rouge theme, <code>opacity: 0.55</code> on the post-meta and tag separators (now <code>--color-fg-4</code>, the token for decorative marks), and vestigial <code>letter-spacing: inherit</code>, <code>text-transform: none</code>, and <code>max-width: none</code> resets left behind by the old design.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">July 7, 2026</h2>
 
     <div class="changelog-group">
@@ -137,7 +181,7 @@ title: Changelog
     <div class="changelog-group">
       <h3>Added</h3>
       <ul>
-        <li>About page CTAs are now driven by <code>_data/findme.yml</code> via <code>{% include findme.html %}</code>, so contact and social links can be edited in one place without touching HTML.</li>
+        <li>About page CTAs are now driven by <code>_data/findme.yml</code> via <code>{% raw %}{% include findme.html %}{% endraw %}</code>, so contact and social links can be edited in one place without touching HTML.</li>
         <li>Post pages now hide the Giscus comments section when the embed reports an unrecoverable error (for example a giscus.app outage), instead of leaving a broken widget on the page.</li>
         <li>Added blog tags (<strong>website</strong>, <strong>projects</strong>, <strong>ideas</strong>, <strong>music</strong>) with archive pages at <code>/tags/&lt;tag&gt;/</code>, tag front matter on every post, and a homepage filter nav driven by <code>_data/tags.yml</code>.</li>
       </ul>

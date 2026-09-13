@@ -2,6 +2,7 @@
 layout: post
 title: Playing With Jekyll
 date: 2018-12-24
+summary: "Why I landed on Jekyll: SCSS, Markdown, and just enough Liquid to be dangerous. Mostly this is me stripping the tutorial project down to the parts I actually wanted."
 tags:
   - website
 ---

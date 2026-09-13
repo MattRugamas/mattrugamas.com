@@ -1,43 +1,40 @@
 @use 'settings' as *;
 
-////////////////
-/* ABOUT PAGE */
-////////////////
-
 main {
   section.aboutMe {
     display: flex;
     flex-flow: column;
     width: 100%;
-    max-width: var(--content-prose);
     font-family: $fonts-body;
-    row-gap: var(--space-6);
+    row-gap: 0;
 
     h1 {
-      margin: 0;
-      max-width: none;
+      margin: 0 0 var(--space-4);
       text-align: left;
-      font-size: var(--text-3xl);
+      color: var(--color-fg-2);
+
+      strong {
+        color: var(--color-fg-1);
+      }
     }
 
     img#selfie {
       display: block;
       width: 100%;
-      max-width: 480px;
-      align-self: center;
       height: auto;
-      @include img-outline;
-      @include ui-shadow;
+      margin: 0 0 var(--space-8);
       border-radius: var(--radius-md);
+      @include img-outline;
     }
 
     div#aboutMeText {
       p.about-me {
-        margin: var(--space-4) 0;
-        line-height: 1.7;
+        margin: 0 0 var(--space-4);
+        line-height: 1.65;
+        color: var(--color-fg-1);
 
-        &:first-child {
-          margin-top: 0;
+        &:last-of-type {
+          margin-bottom: 0;
         }
       }
     }
@@ -45,25 +42,19 @@ main {
     .about-cta {
       display: flex;
       flex-flow: row wrap;
-      gap: var(--space-3);
-      margin-top: var(--space-6);
+      gap: var(--space-2);
+      margin-top: var(--space-8);
 
       a {
-        @include glass-button;
-        padding: var(--space-2) var(--space-6);
-        font-size: var(--text-base);
+        text-decoration: none;
       }
 
       .cta-primary {
-        background-color: var(--color-highlight);
-        border-color: var(--color-highlight);
-        color: var(--color-base);
+        @include button(true);
+      }
 
-        &:hover {
-          background-color: color-mix(in srgb, var(--color-highlight) 85%, var(--color-text));
-          border-color: transparent;
-          color: var(--color-base);
-        }
+      .cta-secondary {
+        @include button(false);
       }
     }
   }
