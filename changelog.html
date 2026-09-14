@@ -8,7 +8,37 @@ title: Changelog
     <p class="changelog-subtitle">A running log of changes to mattrugamas.com since the April 2026 redesign.</p>
   </header>
 
-  <details class="disclosure changelog-entry" id="2026-09-13" open>
+  <details class="disclosure changelog-entry" id="2026-09-14" open>
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">September 14, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>There is no display size on this site any more. Every heading now sets at body size and separates itself by weight and colour instead of scale: the name is medium weight at <code>--color-fg-1</code>, the bio drops to <code>fg-2</code>, dates and labels to <code>fg-3</code>. Base type went from 16px to 15px, leading from 1.6 to 1.5, and the measure from 40rem to 36rem. The change cost almost nothing structurally because <code>--text-lg</code> turned out to have exactly one consumer in the whole stylesheet — the <code>main h1</code> rule — so it and its paired <code>--tracking-lg</code> are gone rather than redefined. The wide column for the résumé and changelog moved to 40rem to hold the same 4rem lead over the standard measure it has always had; widening that gap made the outdent read as a mistake rather than a decision.</li>
+          <li>The homepage post list is now one row per post: title on the left, date on the right, hairline between. Summaries are no longer printed in the list. The year is set only on the first row of each group and hangs in a gutter to the left of the titles, so a run of posts from the same year reads as one block instead of repeating itself four times; row hairlines start at the title column while the rule between year groups runs the full width, which is what keeps the two levels distinguishable. Hovering anywhere in the list recedes every row to 40% except the one under the pointer. The gutter sits inside the measure rather than hanging off it, so the layout holds at every width and the old <code>$bp-hang</code> breakpoint is gone. Dates are numeric and tabular. The full date including the year stays in each row's <code>&lt;time&gt;</code> for assistive tech even where the layout only shows month and day.</li>
+          <li>Tagging is hidden behind a <code>features.tags</code> flag in <code>_config.yml</code>. Nothing was deleted: posts keep their <code>tags:</code> front matter, <code>_data/tags.yml</code> keeps the canonical list, and the includes, tag layout and <code>_sass/_tags.scss</code> all stay in the build. The <code>/tags/&lt;tag&gt;/</code> archives are excluded, so they no longer appear in <code>sitemap.xml</code>. Previously the filter had been switched off by wrapping its include in an HTML comment, which does not actually work — Liquid renders before the HTML is parsed, so the markup was still being written into the page, just inside a comment.</li>
+          <li>Home and About left the nav. Home was already redundant with the <code>MR</code> mark, and the homepage is a four-paragraph bio now, which is what About was for.</li>
+          <li><code>assets/js/analytics.js</code> and the view-transition handler in <code>assets/js/site.js</code> follow the new list markup. Post-click tracking reads the year off the <code>datetime</code> attribute rather than looking for a year heading, since that heading is only printed once per group and most rows no longer have one.</li>
+          <li>Body copy moved one step toward the foreground in both themes — <code>fg-2</code> goes from <code>#5d5d5d</code> to <code>#474747</code> in light and from <code>#a8a8a8</code> to <code>#c4c4c4</code> in dark, lifting contrast against the page from roughly 6.6:1 to 9:1 and 7.8:1 to 10.8:1. Dropping to 15px left the old values sitting too far back to hold a reader through four paragraphs. This is the shared body tone rather than a homepage override, so About, the changelog, the résumé, <code>/music/</code>, <code>/links/</code> and the 404 all come forward with it. Headings, dates and labels are untouched, and the name still separates from the bio by weight rather than colour.</li>
+          <li>The eight hand-written post summaries are now <code>description:</code> instead of <code>summary:</code> in front matter. The key was only ever read by the homepage list, which no longer prints it, so the copy would have gone dark; under the name <code>jekyll-seo-tag</code> looks for, each post gets a written meta description and Open Graph summary instead of an auto-clipped first paragraph.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>The four bio paragraphs on the homepage all carried <code>id="lede"</code>, which is invalid — an id has to be unique in the document. They are a <code>.lede</code> class now.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-09-13">
     <summary class="disclosure-summary">
       <h2 class="changelog-date">September 13, 2026</h2>
       <span class="disclosure-hint" data-count="li" data-unit="change"></span>
@@ -22,6 +52,13 @@ title: Changelog
           <li>The résumé and <code>/music/</code> are now lists of collapsible tiles. Profile, Recommendations, Skills, and Experience each close to a single row, as does every role inside Experience and every project on the music page. A closed row carries a count of what is behind it — <em>4 roles</em>, <em>3 credits</em> — which disappears once you open it. Tiles are independent, so opening one does not close another, and each has an <code>id</code>: <code>/resume#experience</code> or <code>/music#wark</code> opens the target along with any tile it is nested in. Tiles start closed, except the band I'm currently playing in, which is open when the music page loads.</li>
           <li>The pattern is <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> behind a shared <code>_sass/_disclosure.scss</code>, so the rows are buttons to a screen reader and both pages still open and close with JavaScript off. The height animation is scripted in <code>assets/js/site.js</code>, because animating to <code>height: auto</code> in CSS still needs <code>interpolate-size</code> and only Chromium ships it; panels travel on a new <code>--ease-expand</code> token, a gentler curve than the two tap-feedback eases the site already had, which spend roughly 80% of their distance in the first quarter of the time and read as a snap when something panel-sized is moving. The panel's padding animates along with its height, because these boxes are <code>border-box</code> and padding sets a floor the box cannot shrink under: animating height alone left the panel pinned at its 32px bottom padding for the first stretch of every expansion, so each one opened with a 32px jump, a visible 40ms pause, and only then the slide. <code>prefers-reduced-motion</code> skips the travel entirely. Before the print dialog every tile is forced open and then restored afterwards, with a CSS fallback for the no-JS case, so the printed résumé is complete either way.</li>
           <li>This page got the same treatment at release granularity. All 32 dated entries are tiles now, each closing to one row that carries its change count, with the most recent entry open on arrival and ids like <code>/changelog#2026-06-22</code> for linking to a specific release. A 729-line wall you had to scroll is now a list you can read the shape of. The tallest entry — September 12, at nearly 3000px — is also what pushed the animation's duration ceiling from 440ms to 560ms, since a panel that size hit the old cap at roughly 7px per millisecond and unfurled faster than you could follow.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Updated employer branding from Cursor to SpaceXAI after the merger. About, the résumé (meta description, profile line, current role, and the role hash <code>#spacexai</code>), and the June 2026 Glass post now name SpaceXAI and link to <a href="https://x.ai/">x.ai</a>. The official SpaceXAI symbol is a wide SpaceX-style X whose trailing stroke breaks the rhythm of running copy, so it is not used as an inline mark the way the compact Atlassian and Edlio squares are — the name stands alone.</li>
         </ul>
       </div>
     </div>

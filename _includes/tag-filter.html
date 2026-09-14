@@ -1,4 +1,4 @@
-{% if site.data.tags.size > 0 %}
+{% if site.features.tags and site.data.tags.size > 0 %}
 <nav class="tag-filter" aria-label="Filter posts by tag">
   <a href="/" class="tag-badge{% unless page.tag %} active{% endunless %}">All</a>
   {% for tag in site.data.tags %}

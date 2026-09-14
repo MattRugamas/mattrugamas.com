@@ -23,13 +23,15 @@ $fonts-source:
 
 $bp-sm: 40em;
 $bp-md: 52em;
-$bp-hang: 60em;
 
 // --- Dark (default) ---
 $dark-bg: #141414;
 $dark-surface: #1c1c1c;
 $dark-fg-1: #ededed;
-$dark-fg-2: #a8a8a8;
+// fg-2 is body copy everywhere but post pages — the homepage bio, About, the
+// changelog, the résumé. At 15px the old values sat too far back to read
+// comfortably for four paragraphs, so both ends moved one step toward fg-1.
+$dark-fg-2: #c4c4c4;
 $dark-fg-3: #8a8a8a;
 $dark-fg-4: #5d5d5d;
 $dark-accent: #5dc8d1;
@@ -38,7 +40,7 @@ $dark-accent: #5dc8d1;
 $light-bg: #fafafa;
 $light-surface: #f0f0f0;
 $light-fg-1: #292929;
-$light-fg-2: #5d5d5d;
+$light-fg-2: #474747;
 $light-fg-3: #737373;
 $light-fg-4: #9e9e9e;
 $light-accent: #08626a;
@@ -62,8 +64,11 @@ $light-accent: #08626a;
 
   --nav-height: 3rem;
   --page-pad: clamp(1rem, 5vw, 2rem);
-  --measure: 40rem;
-  --measure-wide: 44rem;
+  --measure: 36rem;
+  // Holds the same 4rem lead over --measure it has always had. The résumé and
+  // changelog outdent from the nav frame by design; widen the gap and the
+  // outdent starts reading as a mistake.
+  --measure-wide: 40rem;
 
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -79,12 +84,15 @@ $light-accent: #08626a;
   --space-16: 4rem;
   --space-24: 6rem;
 
+  // There is no display size. Headings are set at --text-base and separate
+  // themselves by weight and colour instead of scale, which is what keeps the
+  // page quiet when the content is mostly one voice. --text-sm is interactive
+  // chrome (nav, buttons) and --text-xs is metadata; both are deliberately
+  // small steps, not a scale to compose with.
   --text-xs: 0.8125rem;
   --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.5rem;
+  --text-base: 0.9375rem;
   --tracking: -0.15px;
-  --tracking-lg: -0.4px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);

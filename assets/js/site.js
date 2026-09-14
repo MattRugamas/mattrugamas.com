@@ -329,11 +329,11 @@
         var dest = new URL(event.activation.entry.url);
         if (dest.origin !== location.origin) return;
         var path = dest.pathname.replace(/\/$/, '') || '/';
-        var clicked = document.querySelector('#blog-list h3 a[href="' + dest.pathname + '"]')
-          || document.querySelector('#blog-list h3 a[href="' + path + '"]');
-        // Name the heading, not the link: a link that wraps onto two lines is
-        // a fragmented inline box and cannot be captured.
-        var heading = clicked && clicked.closest('h3');
+        var clicked = document.querySelector('.writing-row[href="' + dest.pathname + '"]')
+          || document.querySelector('.writing-row[href="' + path + '"]');
+        // Name the heading, not the row: the row also holds the date, which
+        // has nowhere to morph to on the post page.
+        var heading = clicked && clicked.querySelector('.writing-title');
         if (heading) heading.style.viewTransitionName = 'post-title';
       } catch (err) {}
     });

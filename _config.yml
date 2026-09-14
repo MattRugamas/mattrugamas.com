@@ -18,6 +18,20 @@ twitter:
   card: summary_large_image
 github_username: MattRugamas
 
+# Feature flags
+#
+# tags — tagging is built and working but hidden for now; there is not enough
+# writing here yet for filtering to earn its place. Nothing was deleted: posts
+# keep their `tags:` front matter, _data/tags.yml keeps the canonical list, and
+# the includes, tag layout and _sass/_tags.scss all stay in the build.
+#
+# To bring tagging back, do both:
+#   1. set `tags: true` below
+#   2. remove `- tags` from the `exclude:` list further down, which is what
+#      keeps the /tags/<tag>/ archive pages out of the site and the sitemap
+features:
+  tags: false
+
 # Build settings
 repository: MattRugamas/mattrugamas.com
 markdown: kramdown
@@ -50,6 +64,9 @@ exclude:
   - .agents
   - skills-lock.json
   - assets/favicon-source.svg
+  # Paired with `features.tags` above — remove this line to restore the
+  # /tags/<tag>/ archive pages.
+  - tags
 
 defaults:
   - scope:

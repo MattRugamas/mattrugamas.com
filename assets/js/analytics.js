@@ -76,19 +76,21 @@
   }
 
   // ─── 3. Blog post clicks (home page listing) ──────────────────────────────
-  var blogList = document.getElementById('blog-list');
+  var blogList = document.querySelector('.writing');
   if (blogList) {
-    blogList.querySelectorAll('article h3 a').forEach(function (link) {
+    blogList.querySelectorAll('.writing-row').forEach(function (link) {
       link.addEventListener('click', function () {
-        var article = this.closest('article');
-        var dateEl = article && article.querySelector('.date');
-        var yearEl = this.closest('.year-group');
-        var yearHead = yearEl && yearEl.querySelector('.year-heading');
+        var titleEl = this.querySelector('.writing-title');
+        var dateEl = this.querySelector('.writing-date');
+        // The visible year is only printed once per group, so read it off the
+        // datetime attribute rather than hunting for a label that may not
+        // exist on this row.
+        var stamp = dateEl ? dateEl.getAttribute('datetime') || '' : '';
         track('blog_post_click', {
-          post_title: this.textContent.trim(),
+          post_title: titleEl ? titleEl.textContent.trim() : '',
           post_url: this.getAttribute('href'),
           post_date: dateEl ? dateEl.textContent.trim() : '',
-          post_year: yearHead ? yearHead.textContent.trim() : ''
+          post_year: stamp.slice(0, 4)
         });
       });
     });

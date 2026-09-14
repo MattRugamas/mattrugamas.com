@@ -2,7 +2,7 @@
 layout: post
 title: Playing With Jekyll Pt. II (Pages Whitelist)
 date: 2018-12-25
-summary: "GitHub Pages only lets you build with plugins from its own whitelist, which is a drag. So I handed the build to Travis CI and let it push the finished pages over instead."
+description: "GitHub Pages only lets you build with plugins from its own whitelist, which is a drag. So I handed the build to Travis CI and let it push the finished pages over instead."
 tags:
   - website
 ---

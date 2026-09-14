@@ -2,7 +2,7 @@
 layout: post
 title: "The Redesign"
 date: 2026-03-31
-summary: "The 2019 version of this site finally got treated like a real project instead of a practice sandbox. Design tokens, mobile-first CSS, a light mode, and a bio that actually says something."
+description: "The 2019 version of this site finally got treated like a real project instead of a practice sandbox. Design tokens, mobile-first CSS, a light mode, and a bio that actually says something."
 tags:
   - website
   - ideas
