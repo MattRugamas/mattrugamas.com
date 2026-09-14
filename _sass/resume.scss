@@ -14,9 +14,9 @@
       "print";
     justify-items: start;
     gap: var(--space-3);
+    // No rule of its own: the tile list below opens with one, and two
+    // hairlines a gap apart read as an empty row.
     margin-bottom: var(--space-12);
-    padding-bottom: var(--space-8);
-    border-bottom: 1px solid var(--hairline);
 
     @media (min-width: $bp-md) {
       grid-template-columns: 1fr auto;
@@ -61,27 +61,32 @@
     }
   }
 
+  // Each section is a closed tile by default, so the hairlines stack them into
+  // one list instead of separating blocks of running text.
   .cv-section {
-    margin-bottom: var(--space-12);
+    border-bottom: 1px solid var(--hairline);
 
-    > h2 {
-      font-family: $fonts-body;
-      font-size: var(--text-xs);
-      font-weight: var(--font-weight-medium);
-      color: var(--color-fg-3);
-      margin: 0 0 var(--space-6);
-      padding-bottom: var(--space-3);
-      border-bottom: 1px solid var(--hairline);
+    &:first-of-type {
+      border-top: 1px solid var(--hairline);
     }
 
-    > p {
+    > .disclosure-summary h2 {
+      font-family: $fonts-body;
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      letter-spacing: var(--tracking);
       line-height: 1.6;
       color: var(--color-fg-1);
+      margin: 0;
+    }
+
+    > .disclosure-body {
+      padding-bottom: var(--space-8);
     }
   }
 
   .cv-profile {
-    > p {
+    > .disclosure-body > p {
       margin: 0 0 var(--space-4);
       font-size: var(--text-base);
       line-height: 1.6;
@@ -135,22 +140,33 @@
     display: flex;
     flex-direction: column;
     gap: 0;
-    margin-top: var(--space-2);
   }
 
+  // Roles nest one level down, so they carry lighter separators than the
+  // sections above them and no rule against the section heading.
   .cv-role {
     margin: 0;
-    padding: var(--space-8) 0;
+    // Padding is left to .disclosure, which uses it to hold the hover fill
+    // off the hairlines.
     border-top: 1px solid var(--hairline);
+
+    &:first-child {
+      border-top: 0;
+    }
+
+    > .disclosure-body {
+      padding-bottom: var(--space-6);
+    }
   }
 
   .cv-role-header {
-    margin-bottom: var(--space-4);
+    display: block;
 
     // A full month range needs roughly 200px, so the narrow date gutter this
     // used to sit in wrapped every one of them into a two-line block. The date
     // leads the role instead, on the same left edge as the title below it.
     .cv-role-eyebrow {
+      display: block;
       margin: 0 0 var(--space-1);
       font-family: $fonts-source;
       font-size: var(--text-xs);
@@ -332,17 +348,38 @@
       }
     }
 
-    .cv-section > h2 {
-      font-size: 8pt;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 700;
-      border-bottom: 0.5pt solid #aaa;
-      padding-bottom: 3pt;
-      margin-bottom: 10pt;
+    // On paper every section is open and the tile affordances are gone, so the
+    // summary goes back to being a plain ruled heading.
+    .cv-section {
+      border: none;
+      margin-bottom: 18pt;
+
+      // Outranks the screen rule, which is a :first-of-type and so beats a
+      // plain `border: none`. Left in, it doubles up with the header rule.
+      &:first-of-type {
+        border-top: none;
+      }
+
+      > .disclosure-body {
+        padding-bottom: 0;
+      }
+
+      > .disclosure-summary {
+        border-bottom: 0.5pt solid #aaa;
+        padding-bottom: 3pt;
+        margin-bottom: 10pt;
+
+        h2 {
+          font-size: 8pt;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          font-weight: 700;
+          margin: 0;
+        }
+      }
     }
 
-    .cv-profile > p {
+    .cv-profile > .disclosure-body > p {
       max-width: none;
 
       &:first-of-type {
@@ -416,7 +453,6 @@
 
     .cv-timeline {
       display: block;
-      margin-top: 0;
     }
 
     .cv-role {
@@ -424,6 +460,10 @@
       border-bottom: 0.5pt solid #ddd;
       padding: 0 0 14pt;
       margin: 0 0 14pt;
+
+      > .disclosure-body {
+        padding-bottom: 0;
+      }
 
       &:last-child {
         border-bottom: none;

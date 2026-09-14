@@ -1,0 +1,146 @@
+@use 'settings' as *;
+
+// A <details> that expands fluidly. Structure is:
+//
+//   <details class="disclosure">
+//     <summary class="disclosure-summary">…<span class="disclosure-icon"></span></summary>
+//     <div class="disclosure-body">…</div>
+//   </details>
+//
+// The height animation itself lives in site.js. Animating to height:auto in
+// CSS still needs interpolate-size, which only Chromium ships, so scripting it
+// is the only way every browser gets the same motion. Without JS the element
+// still opens and closes — natively, just without the slide.
+
+.disclosure {
+  // Holds the hover fill clear of the hairlines above and below. Padding
+  // rather than a margin on the summary, which would collapse out through
+  // the sides of the details that have no border.
+  padding-block: var(--space-1);
+  // Deep links open a section and scroll to it, so clear the sticky nav.
+  scroll-margin-top: calc(var(--nav-height) + var(--space-4));
+}
+
+.disclosure-summary {
+  --disclosure-icon: 0.75rem;
+
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  // The row bleeds past the text column so the hover fill reads as a target,
+  // while the hairline between sections stays flush with the page edge.
+  margin-inline: calc(var(--space-3) * -1);
+  padding: var(--space-3);
+  padding-inline-end: calc(var(--space-3) * 2 + var(--disclosure-icon));
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--dur-fast) var(--ease-standard);
+
+  // Safari still paints its own marker without this.
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:hover {
+    background-color: var(--fill-hover);
+  }
+}
+
+.disclosure-body {
+  // Always a block formatting context. Without it the first child's margin
+  // collapses through the wrapper at rest but not mid-animation, when the
+  // scripted overflow:hidden contains it — so the panel would settle a few
+  // pixels off the height it just animated to.
+  display: flow-root;
+}
+
+.disclosure-hint {
+  margin-inline-start: auto;
+  font-family: $fonts-source;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--color-fg-3);
+  @include tabular-nums;
+  transition: opacity var(--dur-fast) var(--ease-standard);
+}
+
+.disclosure-icon {
+  position: absolute;
+  inset-inline-end: var(--space-3);
+  inset-block-start: 50%;
+  width: var(--disclosure-icon);
+  height: var(--disclosure-icon);
+  color: var(--color-fg-3);
+  translate: 0 -50%;
+  transition:
+    rotate var(--dur-med) var(--ease-expand),
+    color var(--dur-fast) var(--ease-standard);
+
+  // Two identical bars, one turned upright, so the plus is always square.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline: 0;
+    height: 1px;
+    background-color: currentColor;
+    translate: 0 -50%;
+  }
+
+  &::after {
+    rotate: 90deg;
+  }
+}
+
+.disclosure-summary:hover .disclosure-icon {
+  color: var(--color-fg-1);
+}
+
+.disclosure[open] > .disclosure-summary {
+  // The count is redundant once you can see the contents.
+  .disclosure-hint {
+    opacity: 0;
+  }
+
+  // A plus turned 45° is a close mark, so one rotation covers both states.
+  .disclosure-icon {
+    rotate: 45deg;
+    color: var(--color-fg-2);
+  }
+}
+
+@media print {
+  .disclosure {
+    padding-block: 0;
+  }
+
+  .disclosure-summary {
+    margin-inline: 0;
+    padding: 0;
+    // Pages underline these to make headings, and a rule on a rounded box
+    // curls up at both ends.
+    border-radius: 0;
+    background: none !important;
+  }
+
+  .disclosure-hint,
+  .disclosure-icon {
+    display: none !important;
+  }
+
+  // site.js opens everything before the print dialog. These are the fallback
+  // for a printed page with no JS, covering both the legacy UA rule and the
+  // content slot browsers use now.
+  .disclosure > .disclosure-body {
+    display: flow-root !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .disclosure::details-content {
+    content-visibility: visible !important;
+  }
+}

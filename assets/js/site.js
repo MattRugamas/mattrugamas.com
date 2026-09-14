@@ -180,6 +180,143 @@
     });
   }
 
+  var disclosures = document.querySelectorAll('details.disclosure');
+
+  // Same curve the icon rotates on, kept in the stylesheet so the two cannot
+  // drift apart.
+  var easeExpand =
+    getComputedStyle(document.documentElement)
+      .getPropertyValue('--ease-expand')
+      .trim() || 'ease-out';
+
+  var ZERO_PAD = ['0px', '0px'];
+
+  function padding(el) {
+    var style = getComputedStyle(el);
+    return [style.paddingTop, style.paddingBottom];
+  }
+
+  function disclosureBody(details) {
+    for (var d = 0; d < details.children.length; d++) {
+      if (details.children[d].classList.contains('disclosure-body')) return details.children[d];
+    }
+    return null;
+  }
+
+  function setupDisclosure(details) {
+    var summary = details.querySelector('summary');
+    var body = disclosureBody(details);
+    if (!summary || !body) return;
+    var animation = null;
+
+    function settle(closing) {
+      animation = null;
+      // Order matters: drop the open state first so the full-height content
+      // never paints for a frame between clearing the height and closing.
+      if (closing) details.open = false;
+      body.style.height = '';
+      body.style.overflow = '';
+    }
+
+    function slide(opening) {
+      // A closed panel is zero tall by definition. It cannot be measured:
+      // browsers hide it with content-visibility on the content slot, and a
+      // descendant of that still reports its last laid-out size, so reading
+      // the box here would return the open height and animate nothing.
+      var from = details.open ? body.getBoundingClientRect().height : 0;
+      // Read while the previous run is still applied, so interrupting one
+      // picks the padding up where it is instead of snapping.
+      var fromPad = details.open ? padding(body) : ZERO_PAD;
+      if (animation) animation.cancel();
+      // A closed <details> keeps its content out of layout, so it has to be
+      // opened before there is anything to measure.
+      if (opening) details.open = true;
+      body.style.overflow = 'hidden';
+      body.style.height = from + 'px';
+
+      var to = opening ? body.scrollHeight : 0;
+      // Read after the cancel above, so this is the stylesheet's padding and
+      // not whatever an interrupted run had it at.
+      var toPad = opening ? padding(body) : ZERO_PAD;
+      if (from === to || prefersReducedMotion()) {
+        settle(!opening);
+        return;
+      }
+
+      // Everything but the longest roles lands on the floor, which keeps the
+      // sections feeling like one control; only a panel far taller than the
+      // viewport is given extra time so it does not have to race.
+      var duration = Math.min(440, Math.max(280, Math.abs(to - from) * 0.36));
+      animation = body.animate(
+        {
+          height: [from + 'px', to + 'px'],
+          // Padding travels with the height. These boxes are border-box, so
+          // padding sets a floor the box cannot shrink under: animating
+          // height alone leaves the panel visually stuck at its padding for
+          // the first slice of the run, which reads as the motion stalling
+          // before it starts.
+          paddingTop: [fromPad[0], toPad[0]],
+          paddingBottom: [fromPad[1], toPad[1]]
+        },
+        { duration: duration, easing: easeExpand }
+      );
+      animation.onfinish = function () {
+        settle(!opening);
+      };
+    }
+
+    summary.addEventListener('click', function (event) {
+      event.preventDefault();
+      slide(!details.open);
+    });
+  }
+
+  for (var d = 0; d < disclosures.length; d++) setupDisclosure(disclosures[d]);
+
+  var hints = document.querySelectorAll('.disclosure-hint[data-count]');
+  for (var h = 0; h < hints.length; h++) {
+    var hint = hints[h];
+    var scope = hint.closest('details');
+    var unit = hint.getAttribute('data-unit');
+    if (!scope || !unit) continue;
+    var total = scope.querySelectorAll(hint.getAttribute('data-count')).length;
+    if (total) hint.textContent = total + ' ' + unit + (total === 1 ? '' : 's');
+  }
+
+  if (disclosures.length) {
+    // Fragment navigation has to open the target and everything above it,
+    // because a nested role is inside a section that may also be closed.
+    function revealFromHash() {
+      var id = location.hash.slice(1);
+      if (!id) return;
+      var target = document.getElementById(id);
+      if (!target) return;
+      for (var node = target; node && node !== document.body; node = node.parentElement) {
+        if (node.tagName === 'DETAILS') node.open = true;
+      }
+      target.scrollIntoView();
+    }
+
+    revealFromHash();
+    window.addEventListener('hashchange', revealFromHash);
+
+    // Printing a half-collapsed résumé would drop most of it, so everything
+    // opens for the dialog and goes back to how the reader left it.
+    var printState = null;
+    window.addEventListener('beforeprint', function () {
+      printState = [];
+      for (var i = 0; i < disclosures.length; i++) {
+        printState.push(disclosures[i].open);
+        disclosures[i].open = true;
+      }
+    });
+    window.addEventListener('afterprint', function () {
+      if (!printState) return;
+      for (var i = 0; i < disclosures.length; i++) disclosures[i].open = printState[i];
+      printState = null;
+    });
+  }
+
   var postImages = document.querySelectorAll('article.blogpost figure img');
   for (var p = 1; p < postImages.length; p++) {
     postImages[p].setAttribute('loading', 'lazy');

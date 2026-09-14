@@ -9,6 +9,18 @@ title: Changelog
   </header>
 
   <section class="changelog-entry">
+    <h2 class="changelog-date">September 13, 2026</h2>
+
+    <div class="changelog-group">
+      <h3>Added</h3>
+      <ul>
+        <li>The résumé and <code>/music/</code> are now lists of collapsible tiles. Profile, Recommendations, Skills, and Experience each close to a single row, as does every role inside Experience and every project on the music page. A closed row carries a count of what is behind it — <em>4 roles</em>, <em>3 credits</em> — which disappears once you open it. Tiles are independent, so opening one does not close another, and each has an <code>id</code>: <code>/resume#experience</code> or <code>/music#wark</code> opens the target along with any tile it is nested in. Everything starts closed, which turns two pages you used to scroll into two you can take in at a glance.</li>
+        <li>The pattern is <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> behind a shared <code>_sass/_disclosure.scss</code>, so the rows are buttons to a screen reader and both pages still open and close with JavaScript off. The height animation is scripted in <code>assets/js/site.js</code>, because animating to <code>height: auto</code> in CSS still needs <code>interpolate-size</code> and only Chromium ships it; panels travel on a new <code>--ease-expand</code> token, a gentler curve than the two tap-feedback eases the site already had, which spend roughly 80% of their distance in the first quarter of the time and read as a snap when something panel-sized is moving. The panel's padding animates along with its height, because these boxes are <code>border-box</code> and padding sets a floor the box cannot shrink under: animating height alone left the panel pinned at its 32px bottom padding for the first stretch of every expansion, so each one opened with a 32px jump, a visible 40ms pause, and only then the slide. <code>prefers-reduced-motion</code> skips the travel entirely. Before the print dialog every tile is forced open and then restored afterwards, with a CSS fallback for the no-JS case, so the printed résumé is complete either way.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="changelog-entry">
     <h2 class="changelog-date">September 12, 2026</h2>
 
     <div class="changelog-group">

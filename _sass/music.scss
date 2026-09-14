@@ -15,22 +15,27 @@ main {
     gap: 0;
   }
 
+  // Each project is a closed tile, the same pattern the résumé uses, so the
+  // hairlines stack them into one scannable list of names.
   .music-project {
     margin: 0;
-    padding: var(--space-6) 0;
     border-top: 1px solid var(--hairline);
 
     &:last-child {
       border-bottom: 1px solid var(--hairline);
     }
 
-    h2 {
+    > .disclosure-summary h2 {
       font-family: $fonts-body;
       font-size: var(--text-base);
       font-weight: var(--font-weight-medium);
       letter-spacing: var(--tracking);
       color: var(--color-fg-1);
-      margin: 0 0 var(--space-2);
+      margin: 0;
+    }
+
+    > .disclosure-body {
+      padding-bottom: var(--space-4);
     }
 
     ul {

@@ -88,6 +88,12 @@ $light-accent: #08626a;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  // For things that change size. The two curves above are tap-feedback eases
+  // that cover ~80% of the distance in the first quarter of the time, which
+  // reads as a snap and a crawl when a whole panel is moving. This one is
+  // closer to even — roughly a third of the way at a quarter of the time —
+  // so it leaves rest promptly and still settles instead of arriving.
+  --ease-expand: cubic-bezier(0.33, 0, 0.15, 1);
   --dur-fast: 160ms;
   --dur-med: 240ms;
   --dur-slow: 480ms;
