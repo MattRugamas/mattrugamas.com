@@ -28,7 +28,10 @@ $bp-md: 52em;
 $dark-bg: #141414;
 $dark-surface: #1c1c1c;
 $dark-fg-1: #ededed;
-$dark-fg-2: #a8a8a8;
+// fg-2 is body copy everywhere but post pages — the homepage bio, About, the
+// changelog, the résumé. At 15px the old values sat too far back to read
+// comfortably for four paragraphs, so both ends moved one step toward fg-1.
+$dark-fg-2: #c4c4c4;
 $dark-fg-3: #8a8a8a;
 $dark-fg-4: #5d5d5d;
 $dark-accent: #5dc8d1;
@@ -37,7 +40,7 @@ $dark-accent: #5dc8d1;
 $light-bg: #fafafa;
 $light-surface: #f0f0f0;
 $light-fg-1: #292929;
-$light-fg-2: #5d5d5d;
+$light-fg-2: #474747;
 $light-fg-3: #737373;
 $light-fg-4: #9e9e9e;
 $light-accent: #08626a;
