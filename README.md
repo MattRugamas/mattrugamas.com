@@ -126,16 +126,20 @@ Tag pages inherit `layout: tag` from `_config.yml` defaults. Assign the tag in p
 
 ### Deploy workflow
 
-Day-to-day work happens on `main`. When changes are ready to publish, push `main` and promote the same commit to `release`:
+Three tiers: work on a branch, merge to `main`, promote to `release` to go live.
 
 ```bash
+git switch -c redesign/editorial-type   # work here
+git switch main && git merge --no-ff redesign/editorial-type
 git push origin main
-git push origin main:release
+git push origin main:release            # this is what deploys
 ```
 
 The GitHub Actions workflow (triggered by pushes to `release`) builds the site with `JEKYLL_ENV=production` and deploys to GitHub Pages. After deploy, `main` and `release` should point at the same commit.
 
-**Branches:** `main` (development) · `release` (production deploy) · `archive/glass-design` (frozen Liquid Glass design, last live September 2026) · `archive/legacy-site` (frozen pre-redesign site, Travis-era `master`)
+Because `release` is just a pointer, rolling the live site back is `git push origin <good-sha>:release --force` — no rewrite of `main` required.
+
+**Branches:** `<type>/<slug>` (working branches) · `main` (integration) · `release` (production deploy) · `archive/glass-design` (frozen Liquid Glass design, last live September 2026) · `archive/legacy-site` (frozen pre-redesign site, Travis-era `master`) · `archive/minimalist-ui` (abandoned flat-editorial type pass)
 
 Update [`changelog.html`](changelog.html) before deploying site changes.
 

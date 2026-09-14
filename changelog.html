@@ -8,7 +8,35 @@ title: Changelog
     <p class="changelog-subtitle">A running log of changes to mattrugamas.com since the April 2026 redesign.</p>
   </header>
 
-  <details class="disclosure changelog-entry" id="2026-09-13" open>
+  <details class="disclosure changelog-entry" id="2026-09-14" open>
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">September 14, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>There is no display size on this site any more. Every heading now sets at body size and separates itself by weight and colour instead of scale: the name is medium weight at <code>--color-fg-1</code>, the bio drops to <code>fg-2</code>, dates and labels to <code>fg-3</code>. Base type went from 16px to 15px, leading from 1.6 to 1.5, and the measure from 40rem to 36rem. The change cost almost nothing structurally because <code>--text-lg</code> turned out to have exactly one consumer in the whole stylesheet — the <code>main h1</code> rule — so it and its paired <code>--tracking-lg</code> are gone rather than redefined. The wide column for the résumé and changelog moved to 40rem to hold the same 4rem lead over the standard measure it has always had; widening that gap made the outdent read as a mistake rather than a decision.</li>
+          <li>The homepage post list is now one row per post: title on the left, date on the right, hairline between. Summaries are no longer printed in the list. The year is set only on the first row of each group and hangs in a gutter to the left of the titles, so a run of posts from the same year reads as one block instead of repeating itself four times; row hairlines start at the title column while the rule between year groups runs the full width, which is what keeps the two levels distinguishable. Hovering anywhere in the list recedes every row to 40% except the one under the pointer. The gutter sits inside the measure rather than hanging off it, so the layout holds at every width and the old <code>$bp-hang</code> breakpoint is gone. Dates are numeric and tabular. The full date including the year stays in each row's <code>&lt;time&gt;</code> for assistive tech even where the layout only shows month and day.</li>
+          <li>Tagging is hidden behind a <code>features.tags</code> flag in <code>_config.yml</code>. Nothing was deleted: posts keep their <code>tags:</code> front matter, <code>_data/tags.yml</code> keeps the canonical list, and the includes, tag layout and <code>_sass/_tags.scss</code> all stay in the build. The <code>/tags/&lt;tag&gt;/</code> archives are excluded, so they no longer appear in <code>sitemap.xml</code>. Previously the filter had been switched off by wrapping its include in an HTML comment, which does not actually work — Liquid renders before the HTML is parsed, so the markup was still being written into the page, just inside a comment.</li>
+          <li>Home and About left the nav. Home was already redundant with the <code>MR</code> mark, and the homepage is a four-paragraph bio now, which is what About was for.</li>
+          <li><code>assets/js/analytics.js</code> and the view-transition handler in <code>assets/js/site.js</code> follow the new list markup. Post-click tracking reads the year off the <code>datetime</code> attribute rather than looking for a year heading, since that heading is only printed once per group and most rows no longer have one.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>The four bio paragraphs on the homepage all carried <code>id="lede"</code>, which is invalid — an id has to be unique in the document. They are a <code>.lede</code> class now.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-09-13">
     <summary class="disclosure-summary">
       <h2 class="changelog-date">September 13, 2026</h2>
       <span class="disclosure-hint" data-count="li" data-unit="change"></span>

@@ -1,29 +1,33 @@
+{% comment %}
+  Year-grouped writing index. One row per post: title left, date right.
+
+  The year is printed only on the first row of each group and hangs in the
+  left gutter, so a run of posts from the same year reads as one block instead
+  of repeating itself. That copy is aria-hidden; the full date stays in each
+  row's <time> for assistive tech, with the year visually hidden.
+
+  `heading` is optional — the homepage passes one, tag archives supply their
+  own <h1> and pass nothing.
+{% endcomment %}
 {% assign list_posts = include.posts %}
 {% assign posts_by_year = list_posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-<ul id="blog-list">
-  {% for year_group in posts_by_year %}
-    <li class="year-group">
-      <h2 class="year-heading">{{ year_group.name }}</h2>
-      <ul class="year-posts">
-        {% for post in year_group.items %}
-          <li>
-            <article class="post-row">
-              <time class="date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %d" }}</time>
-              <div class="post-row-body">
-                <h3>
-                  <a href="{{ post.url }}">{{ post.title }}</a>
-                </h3>
-                {% if post.summary %}
-                  {{ post.summary | markdownify }}
-                {% else %}
-                  {{ post.excerpt }}
-                {% endif %}
-                {% include post-tags.html tags=post.tags %}
-              </div>
-            </article>
-          </li>
-        {% endfor %}
-      </ul>
-    </li>
-  {% endfor %}
-</ul>
+<section class="writing">
+  {% if include.heading %}<h2 class="writing-heading">{{ include.heading }}</h2>{% endif %}
+  <ul class="writing-years">
+    {% for year_group in posts_by_year %}
+      <li class="writing-year">
+        <ul class="writing-posts">
+          {% for post in year_group.items %}
+            <li>
+              <a class="writing-row" href="{{ post.url }}">
+                {% if forloop.first %}<span class="writing-year-label" aria-hidden="true">{{ year_group.name }}</span>{% endif %}
+                <h3 class="writing-title">{{ post.title }}</h3>
+                <time class="writing-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%m/%d" }}<span class="visually-hidden">/{{ post.date | date: "%Y" }}</span></time>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
