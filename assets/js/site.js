@@ -243,10 +243,10 @@
         return;
       }
 
-      // Everything but the longest roles lands on the floor, which keeps the
-      // sections feeling like one control; only a panel far taller than the
-      // viewport is given extra time so it does not have to race.
-      var duration = Math.min(440, Math.max(280, Math.abs(to - from) * 0.36));
+      // Most panels land on the floor, which keeps them feeling like one
+      // control; only the ones far taller than the viewport get extra time,
+      // and the ceiling keeps even a 3000px changelog entry from dragging.
+      var duration = Math.min(560, Math.max(280, Math.abs(to - from) * 0.36));
       animation = body.animate(
         {
           height: [from + 'px', to + 'px'],

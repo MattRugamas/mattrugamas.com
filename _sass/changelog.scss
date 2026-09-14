@@ -21,15 +21,15 @@
     margin: 0;
   }
 
+  // Each release is a closed tile, the same pattern the résumé and the music
+  // page use, so thirty-odd entries stack into one dated list you can scan
+  // instead of a page you have to scroll. The header's rule caps the top, so
+  // entries carry a bottom border only.
   .changelog-entry {
-    margin-bottom: var(--space-12);
-    padding-bottom: var(--space-12);
     border-bottom: 1px solid var(--hairline);
 
-    &:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    > .disclosure-body {
+      padding-bottom: var(--space-8);
     }
   }
 
@@ -38,7 +38,7 @@
     font-size: var(--text-base);
     font-weight: var(--font-weight-medium);
     color: var(--color-fg-1);
-    margin: 0 0 var(--space-6);
+    margin: 0;
     display: flex;
     align-items: center;
     gap: var(--space-2);

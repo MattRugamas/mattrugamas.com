@@ -8,722 +8,915 @@ title: Changelog
     <p class="changelog-subtitle">A running log of changes to mattrugamas.com since the April 2026 redesign.</p>
   </header>
 
-  <section class="changelog-entry">
-    <h2 class="changelog-date">September 13, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>The résumé and <code>/music/</code> are now lists of collapsible tiles. Profile, Recommendations, Skills, and Experience each close to a single row, as does every role inside Experience and every project on the music page. A closed row carries a count of what is behind it — <em>4 roles</em>, <em>3 credits</em> — which disappears once you open it. Tiles are independent, so opening one does not close another, and each has an <code>id</code>: <code>/resume#experience</code> or <code>/music#wark</code> opens the target along with any tile it is nested in. Everything starts closed, which turns two pages you used to scroll into two you can take in at a glance.</li>
-        <li>The pattern is <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> behind a shared <code>_sass/_disclosure.scss</code>, so the rows are buttons to a screen reader and both pages still open and close with JavaScript off. The height animation is scripted in <code>assets/js/site.js</code>, because animating to <code>height: auto</code> in CSS still needs <code>interpolate-size</code> and only Chromium ships it; panels travel on a new <code>--ease-expand</code> token, a gentler curve than the two tap-feedback eases the site already had, which spend roughly 80% of their distance in the first quarter of the time and read as a snap when something panel-sized is moving. The panel's padding animates along with its height, because these boxes are <code>border-box</code> and padding sets a floor the box cannot shrink under: animating height alone left the panel pinned at its 32px bottom padding for the first stretch of every expansion, so each one opened with a 32px jump, a visible 40ms pause, and only then the slide. <code>prefers-reduced-motion</code> skips the travel entirely. Before the print dialog every tile is forced open and then restored afterwards, with a CSS fallback for the no-JS case, so the printed résumé is complete either way.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">September 12, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Post rows on the homepage and tag pages can now carry a hand-written <code>summary</code> in front matter, rendered by <code>_includes/post-list.html</code> in place of Jekyll's auto-generated excerpt, which simply took the post's opening paragraph. All eight posts got a one-or-two-line conversational summary. The generated <code>excerpt</code> is untouched, so the RSS feed and <code>jekyll-seo-tag</code> descriptions still quote the real opening; posts without a <code>summary</code> fall back to the old behaviour.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Shipped a full <strong>Quiet Surface</strong> redesign. The Liquid Glass material is gone: no <code>backdrop-filter</code>, no ambient washes, no floating pill nav, no aurora on <code>/links/</code>. The site is now a flat document in a system font stack (<code>-apple-system</code> / Segoe / Roboto), four type sizes (13 / 14 / 16 / 24), regular and medium weights only, and a three-tier gray hierarchy. Teal survives in exactly two places: <code>:focus-visible</code> rings and the active tag-filter chip. Links are text-colored and underlined. Google Fonts (Instrument Serif, Geist, Geist Mono) were removed from <code>base.liquid</code>.</li>
-        <li>Replaced the floating glass nav with a sticky, opaque bar aligned to the same <code>--measure</code> column as the page. The hamburger is gone; Home hides below tablet so the row stays one line. A single sliding <code>.nav-indicator</code> rests on the current page and follows pointer hover and keyboard focus. Same-origin navigations crossfade <code>main</code> via the View Transition API while the nav holds; a first-load-only <code>data-arrive</code> rise (6px, 40ms stagger) plays on cold entry. Theme changes use <code>document.startViewTransition</code> when available.</li>
-        <li>Homepage dates hang in a 6rem left gutter at <code>≥ 60em</code>, baseline-matched to titles. Post syntax highlighting is grayscale. The résumé dropped its timeline rail, markers, pulse, cards, and role index numbers. <code>/links/</code> is a left-aligned list of hairline rows with a trailing <code>↗</code>; <code>_sass/safari-chrome.scss</code> and the toolbar-tint sampling strips were deleted with the blur they existed to paper over.</li>
-        <li>Removed the avatar photo from the top of <code>/links/</code>, so the page now opens on the handle. The image itself is still in <code>assets/img/site/</code> if it comes back.</li>
-        <li>Regenerated <code>assets/img/site/social-card.png</code> in the Quiet Surface dark palette (no serif, no teal) via <code>scripts/generate-social-card.py</code>, which now prefers SF Pro on macOS.</li>
-        <li>Text-on-page contrast against <code>--color-bg</code>: light <code>#292929</code> 13.94:1, <code>#5D5D5D</code> 6.31:1, <code>#737373</code> 4.54:1; dark <code>#EDEDED</code> 15.74:1, <code>#A8A8A8</code> 7.75:1, <code>#8A8A8A</code> 5.34:1. Primary buttons invert the page (<code>#FAFAFA</code> on <code>#292929</code>, <code>#141414</code> on <code>#EDEDED</code>, both 13.94+/15.74+). Active chip text on accent is 6.78:1 light and 9.34:1 dark.</li>
-        <li>Restructured the stylesheets around the partial boundaries they advertise. <code>_sass/index.scss</code> no longer nests the whole site inside <code>html { body { … } }</code> — selectors are flat and the blog list dropped from eight levels of nesting to two. Post footer, comments, figure captions, and code-block rules moved to <code>_sass/posts.scss</code>; the tag-filter chips moved to <code>_sass/_tags.scss</code> alongside the other tag styles. The nav, content column, and footer now share one frame rule instead of repeating the same four width and padding declarations, and the wide résumé and changelog columns come from one <code>max-width</code> override on <code>main</code> rather than patching <code>max-width</code> in three places. The theme-toggle icon crossfade reads its state from palette custom properties, replacing three duplicated selector blocks. Post rows use a <code>.post-row</code> element with a <code>.post-row-body</code> wrapper in place of the <code>&lt;aside&gt;</code> and <code>&lt;header&gt;</code> the date and title were misusing, and the hanging date column aligns with <code>align-items: baseline</code> instead of a hand-computed <code>padding-top</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Every page scrolled sideways by roughly 38px below <code>44em</code>. <code>_sass/reset.scss</code> is normalize.css v8, which deliberately does not set <code>box-sizing</code>, so the <code>width: 100%</code> on the nav inner wrapper, <code>main</code>, and the footer added <code>--page-pad</code> on top of a full-width box. Added the global <code>border-box</code> rule and gave the shared frame a <code>max-width</code> of <code>calc(var(--measure) + var(--page-pad) * 2)</code>, which keeps the 40rem reading column exact at desktop while the box now fits the viewport on phones.</li>
-        <li>The print stylesheet lost to the screen palette. <code>@media (prefers-color-scheme: light) :root:not([data-theme="dark"])</code> outranks the <code>:root</code> block inside <code>@media print</code>, so any visitor who had never used the theme toggle printed <code>#292929</code> on a <code>#FAFAFA</code> wash instead of black on white. Scoped the auto-theme query to <code>screen</code>.</li>
-        <li>The nav pill animated in from the left edge of the row on the first hover of every page, and stacked its own fill on top of the <code>--fill-active</code> already under the current item. It is now placed without a transition on first paint, carries the active tone at rest and the hover tone in flight, and returns to the current page on pointer leave and blur.</li>
-        <li>The nav list carried a permanent 16px <code>mask-image</code> fade on both ends, dimming the first and last items even though the row fits. The fade now appears only when the row genuinely overflows, and post pages — which carry a fifth item — fit without scrolling from 360px up after tightening item padding below <code>40em</code>.</li>
-        <li>Résumé dates sat in a 128px gutter to the left of each job title, but a full month range like <em>February 2020 – February 2022</em> needs about 220px, so every one of them wrapped into a right-aligned two-line block that read as a box. The date now leads its role as a single line above the title, sharing the same left edge as the title and the company. The printed résumé is unchanged — it already used this stacked layout.</li>
-        <li>The nav shifted 32px left when you navigated to the résumé or the changelog. Those two pages run on a wider measure, and the nav and footer inherited it so their left edge would line up with the content. The wide measure now applies to <code>main</code> alone, so the nav mark and the nav row sit in exactly the same place on every page.</li>
-        <li><code>#mainContent</code> drew a 2px accent outline around the entire content column on <code>:focus</code>. The element carries <code>tabindex="-1"</code> only so the skip link can move focus into it, but <code>:focus</code> matches for any non-keyboard focus and then persists while you read. Narrowed to <code>:focus-visible</code>, which still fires for the skip link when it is activated from the keyboard.</li>
-        <li>Nav, footer, and RSS links had no visible focus ring: <code>_sass/index.scss</code> scoped <code>a:focus-visible</code> under <code>main</code>, and <code>_sass/accessibility.scss</code> covered only buttons, summaries, and <code>[tabindex]</code>. Links outside <code>main</code> now get the accent ring.</li>
-        <li>Touch targets overlapped. The <code>hit-area</code> mixin extends tag chips and nav icons to 40×40 with a pseudo-element, but the 8px chip row gap and 4px icon gap were narrower than the overhang, so adjacent invisible targets collided; both gaps now clear it.</li>
-        <li>The first-load arrival animation faded in the <code>h1</code>, deferring the largest contentful paint behind a 480ms opacity animation on exactly the cold navigations Lighthouse measures. The first block now rises without fading.</li>
-        <li>Dropped <code>view-transition-name: site-footer</code>. The footer sits at a different offset on every page, so naming it asked the transition to animate that difference rather than hold the element still. The post title morph now names the list <code>h3</code> instead of the link inside it, because a title that wraps onto two lines is a fragmented inline box and cannot be captured.</li>
-        <li>The theme-color meta sync in the <code>base.liquid</code> head script ran before <code>faviconpackage.html</code> had been parsed, so a stored theme never reached the browser chrome on first load; the script now runs after the meta tags and still before first paint. <code>syncGiscus</code> also guards its <code>postMessage</code>, which previously could throw inside the <code>startViewTransition</code> callback.</li>
-        <li>A June 22 entry below wrote <code>{% raw %}{% include findme.html %}{% endraw %}</code> without escaping it, so Liquid executed the example and rendered a live copy of the About page's contact buttons inside a <code>&lt;code&gt;</code> element — which also meant the <code>.findme a</code> analytics binding fired <code>social_link_click</code> events from this page. Wrapped in <code>{% raw %}{% raw %}{% endraw %}</code>.</li>
-        <li>Replaced the remaining hardcoded values the token system was meant to own: raw <code>font-weight: 500</code> in the Rouge theme, <code>opacity: 0.55</code> on the post-meta and tag separators (now <code>--color-fg-4</code>, the token for decorative marks), and vestigial <code>letter-spacing: inherit</code>, <code>text-transform: none</code>, and <code>max-width: none</code> resets left behind by the old design.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">July 7, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added inline brand logos beside company mentions, in the spirit of the treatment on <a href="https://haydenbleasel.com" target="_blank" rel="noopener">haydenbleasel.com</a>. Three reusable includes — <code>_includes/cursor-logo.html</code> (the official Cursor cube), <code>_includes/atlassian-logo.html</code> (the Atlassian mark), and <code>_includes/edlio-logo.html</code> (the Edlio <em>e</em>, lifted from their wordmark) — are each inline <code>fill="currentColor"</code> SVGs styled by a shared <code>_sass/brand.scss</code>. The marks sit immediately before the brand name in the About intro and across the Résumé (the profile line and every experience company slot), rendered in normal inline flow at <code>1em</code> and nudged onto the text baseline so their line matches the surrounding copy exactly, inheriting the surrounding colour so they read as body text in prose and as the highlight colour in the CV company slots, in both themes.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 30, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Ran a dead-code and asset audit across the site. Removed the unused <code>.changelog-since</code> selector from <code>_sass/changelog.scss</code> — it shared a rule with <code>.changelog-hash</code> but was referenced in no template — and deleted the orphaned <code>assets/img/site/foxhound-logo.svg</code>, a 3.9&nbsp;KB leftover from the 404 work that nothing referenced once <code>_includes/fox-logo.html</code> inlined its own SVG path.</li>
-        <li>Stopped publishing two source-only files to the live site by excluding them in <code>_config.yml</code>: <code>assets/favicon-source.svg</code> (an output of the offline <code>generate-favicons.py</code> that no page links to) and the local <code>skills-lock.json</code>.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 22, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Custom <code>404.html</code> not-found page for missing URLs on GitHub Pages — later replaced with the codec-style FOX page (see Changed).</li>
-        <li><code>.ruby-version</code> pinning Ruby 3.2.0 to match the GitHub Actions workflow.</li>
-        <li>Shared <code>_includes/post-list.html</code> partial for the year-grouped blog index markup.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Replaced the plain <code>404.html</code> with a codec-style not-found page: a hand-traced SVG of the FOX unit insignia (full silhouette including the detached mouth and front leg) in <code>_includes/fox-logo.html</code>, Colonel/Snake dialogue personalized to the site's actual pages and Jekyll setup, live requested-path readout via client-side script, and recovery links to the homepage, <em>Still on Jekyll, Probably Forever</em>, and a fallback post. Styled in new <code>_sass/not-found.scss</code>.</li>
-        <li>Expanded <code>README.md</code> into a maintainer guide: project structure, data files, URL shapes, site features (theme, Giscus, analytics, obfuscated email), asset scripts, and workflows for adding posts and tags.</li>
-        <li>Extracted duplicate blog-list markup from <code>index.html</code> and <code>_layouts/tag.liquid</code> into <code>post-list.html</code>.</li>
-        <li>Tag archive pages under <code>tags/</code> now inherit <code>layout: tag</code> from a <code>_config.yml</code> default instead of repeating it in every stub file.</li>
-        <li>Closed two gaps left by the prior interface-polish pass. The nav menu link pills now scale to <code>scale(0.96)</code> on press, matching the press feedback already on the adjacent icon controls and glass buttons (previously they cross-faded color only). And <code>text-wrap: pretty</code> now extends to blog-post list items, so bulleted and numbered body copy gets the same orphan-avoidance the prose paragraphs already had.</li>
-        <li>Renamed the development branch from <code>tmp-checkpoint</code> to <code>main</code> and documented the deploy loop in <code>README.md</code> and the Cursor deploy rule: push <code>main</code>, then <code>git push origin main:release</code> so both branches stay aligned without merge-commit drift. Renamed the frozen Travis-era site branch from <code>master</code> to <code>archive/legacy-site</code>.</li>
-        <li>Bumped GitHub Pages workflow actions to Node 24–native majors (<code>checkout@v5</code>, <code>configure-pages@v6</code>, <code>upload-pages-artifact@v5</code>, <code>deploy-pages@v5</code>) to clear runner deprecation warnings ahead of GitHub’s Node 20 removal.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>404 codec transmission card no longer overflows right on mobile: <code>box-sizing: border-box</code> on <code>.not-found-codec</code> so <code>width: 100%</code> includes its padding, plus <code>min-width: 0</code> on the section flex child and <code>overflow-wrap: anywhere</code> on inline <code>code</code> in the dialogue.</li>
-        <li>Google Analytics stopped initializing in production because the CodeQL-driven <code>.js.liquid</code> rename caused Jekyll to emit <code>ga-bootstrap.js.liquid</code> instead of <code>/assets/js/ga-bootstrap.js</code>, so the layout’s script tag 404’d. Inlined the four-line bootstrap in <code>base.liquid</code>, reverted <code>random-post</code> to <code>assets/js/random-post.js</code> with <code>layout: null</code>, and narrowed the CodeQL <code>paths-ignore</code> to that file only.</li>
-        <li>Bumped <code>concurrent-ruby</code> from 1.3.5 to 1.3.7 in <code>Gemfile.lock</code> (Dependabot security update).</li>
-        <li>Fixed GitHub CodeQL parse errors on Jekyll-templated JavaScript by renaming <code>ga-bootstrap.js</code> and <code>random-post.js</code> to <code>.js.liquid</code> (build output URLs unchanged) and excluding those templates in <code>.github/codeql/codeql-config.yml</code>.</li>
-        <li>Hardened client-side email link assembly in <code>site.js</code>: <code>data-u</code>/<code>data-d</code> values are trimmed, regex-validated, and passed through <code>encodeURIComponent</code> before <code>setAttribute('href', …)</code>, clearing a CodeQL DOM XSS warning.</li>
-        <li>Replaced <code>href.includes(…)</code> platform detection in <code>analytics.js</code> with hostname parsing via <code>URL</code> and an allowlist, fixing CodeQL incomplete URL substring sanitization warnings on music and link-hub click tracking.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 21, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Applied interface-polish fixes from a design-engineering skills audit: normalized press feedback to <code>scale(0.96)</code> on glass buttons, link-hub cards, and nav icon controls; enlarged nav icon hit areas to 40×40px; retuned the theme-toggle sun/moon crossfade to <code>scale(0.25)</code> with a <code>blur(4px)</code> enter/exit and <code>cubic-bezier(0.2, 0, 0, 1)</code>; swapped tinted image borders for pure black/white <code>--img-outline</code> on the About photo, link-hub avatar, and post figures; added <code>text-wrap: balance</code> on headings and <code>text-wrap: pretty</code> on prose via <code>content-base</code>; applied <code>tabular-nums</code> to dates and footer years; switched music-project hovers to a <code>::before</code> opacity cross-fade; and completed the <code>nav-item-in</code> keyframe <code>to</code> block.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 17, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Published a new post, "Glass, and the Machine That Built It" (<code>_posts/2026-06-10-glass-and-the-machine.md</code>), on the latest redesign and on letting an AI model carry out the implementation while the direction and taste stayed human. The post leads with a generated abstract image — a frosted glass pane refracting a teal wash, assembling itself from drifting shards — at <code>assets/img/posts/glass-and-the-machine.png</code>, placed after the opening paragraph so the homepage excerpt stays text. Tagged <code>website</code> and <code>ideas</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Aligned the homepage and tag-archive blog index with a shared date gutter: year headings now right-align in the same fixed column as post dates, and each date vertically centers on its title row via matched header padding plus a cap-height offset. Fixed a selector leak where nested tag <code>&lt;li&gt;</code>s were inheriting the post-row subgrid layout.</li>
-        <li>Softened a word in the About page's second paragraph, changing "hobbyist road cyclist" to "recreational road cyclist".</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 16, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added a social share card so links to the site render a rich preview in iMessage and on social platforms. A new <code>scripts/generate-social-card.py</code> renders a 1200×630 card from the site's own type and palette — the MR monogram, the name in Geist, "customers, product & code" in Instrument Serif Italic, and a Geist Mono footer — to <code>assets/img/site/social-card.png</code>. It is wired into <code>jekyll-seo-tag</code> through a front-matter default <code>image</code> (with width and height) in <code>_config.yml</code>, which every page inherits and which upgrades the Twitter card to <code>summary_large_image</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Polished the homepage lede and the About and Music copy. The lede now reads "help support teams scale"; the About opener leads with the remote Cursor role and closes with a more self-aware take on defining good support as technology enters a new paradigm, with tightened phrasing and a pronoun fix; and the Music intro tightens the instrument progression to guitar, drums, and bass and refines the collaboration line. The About opener was further tightened to drop the "quietly" qualifier and the closing "as daunting as it is exciting" line.</li>
-        <li>Updated the site <code>description</code> and <code>tagline</code> in <code>_config.yml</code> to reflect the current Technical Support Engineer role and the "customers, product, and code" ordering used throughout the new copy.</li>
-        <li>Rewrote the homepage lede beneath the name to reflect current work: it now frames the role around the intersection of customers, product, and code, with a drive to help young support teams scale and define what support looks like in an AI-native world. Renamed the element from <code>#tagline</code> to <code>#lede</code> in <code>index.html</code> and its style block in <code>_sass/_settings.scss</code>, since the paragraph functions as an introductory lede rather than a tagline.</li>
-        <li>Rewrote the About page in a tighter, more self-aware voice. The opening paragraph now leads with the current Cursor role and the customers/product/code intersection, including the work of scaling young support teams and defining support in an AI-native environment; the remaining paragraphs trim corporate phrasing, add a note on a love for art and life, and drop em dashes and colons in favor of plainer punctuation.</li>
-        <li>Rewrote the Music page intro, replacing the previous "Playing music has been a constant" opener with a more personal account: making and collaborating on music since sixteen, moving from guitar to drums to bass, framing collaboration as one of the joys of music and an open invitation to new projects, and presenting the page as a rough archive of projects.</li>
-        <li>Redesigned per-post tags on the homepage, tag archives, and blog post layouts as a quiet metadata line — lowercase monospace labels in the muted dates color with middot separators, rendered through a shared <code>_includes/post-tags.html</code> partial. On listing rows the tags sit below the excerpt and the date column is pinned to a fixed width, so titles and rows stay aligned no matter how many tags a post carries; on post pages the tags sit on their own line beneath the date. The interactive filter-nav pills are unchanged.</li>
-        <li>The Google Analytics loader now reads the measurement ID from <code>{{ site.google_analytics }}</code> in <code>_config.yml</code> instead of a hardcoded <code>G-</code> ID in the base layout, making the config the single source of truth for both the <code>gtag.js</code> tag and the bootstrap script.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>On iOS Safari, the ambient bottom glow on the homepage and other full-chrome pages left a flat seam above the floating bottom toolbar. The glow is anchored to a fixed (layout-viewport) layer, so it can't track the toolbar as it expands, and <code>env(safe-area-inset-*)</code> only accounts for the home indicator rather than the toolbar height. The bottom wash is now dropped on iOS phones (<code>@supports (-webkit-touch-callout: none)</code> at narrow widths) while the two top washes remain; the bottom simply renders as clean base color. An earlier attempt to close the seam with site-wide <code>viewport-fit=cover</code> and safe-area bleeds was reverted because it could not reach past the toolbar.</li>
-        <li>Google Analytics stopped initializing because <code>ga-bootstrap.js</code> was being wrapped in the default layout at build time, so the browser received a full HTML page instead of JavaScript. Added <code>layout: null</code> to the file's front matter so Jekyll emits only the processed bootstrap script.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 12, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>About page CTAs are now driven by <code>_data/findme.yml</code> via <code>{% raw %}{% include findme.html %}{% endraw %}</code>, so contact and social links can be edited in one place without touching HTML.</li>
-        <li>Post pages now hide the Giscus comments section when the embed reports an unrecoverable error (for example a giscus.app outage), instead of leaving a broken widget on the page.</li>
-        <li>Added blog tags (<strong>website</strong>, <strong>projects</strong>, <strong>ideas</strong>, <strong>music</strong>) with archive pages at <code>/tags/&lt;tag&gt;/</code>, tag front matter on every post, and a homepage filter nav driven by <code>_data/tags.yml</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Collapsed <code>_layouts/minimal.liquid</code> into <code>default.liquid</code>; the links hub now sets <code>minimal_chrome: true</code> in front matter instead of a separate layout.</li>
-        <li>Renamed legacy post files to kebab-case and added explicit <code>layout: post</code> and <code>date:</code> front matter to every post.</li>
-        <li>Split <code>assets/img/</code> into <code>assets/img/site/</code> (photos and UI images) and <code>assets/img/posts/</code> (blog figures).</li>
-        <li>Excluded <code>scripts/</code> from the Jekyll build so favicon tooling no longer ships to production.</li>
-        <li>Replaced the terminal-style favicon set with an <strong>MR wordmark</strong> that matches the nav home mark — Instrument Serif italic on the site charcoal base, across every size in the package (<code>favicon.ico</code>, PNGs, Apple touch icon, Android chrome icons, Safari pinned tab, and Windows tile). Cache-bust query bumped to <code>?v=3</code>; manifest and tile theme colors now use the current palette.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Removed</h3>
-      <ul>
-        <li>Deleted unused <code>_includes/pagetitles.html</code>; page titles are handled by <code>jekyll-seo-tag</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Link hub hovers felt sluggish because entrance animations were applying <code>transform</code> and <code>will-change: transform</code> to <code>.link-hub-section</code> parents of glass link cards, and hover was repainting <code>background-color</code> inside <code>backdrop-filter</code> surfaces. Sections now use an opacity-only entrance (<code>animate-fade-only</code>), link hovers cross-fade a <code>::before</code> overlay like the nav, and <code>animationend</code> handlers only detach after the entrance animation on the target element itself.</li>
-        <li>On <code>/links/</code>, Safari 26+ was tinting the tab/status bar from the animated aurora and the nav's <code>backdrop-filter</code> instead of the active theme. The aurora now carries an explicit <code>--color-base</code> fill plus a neutral <code>backdrop-filter</code> to opt out of toolbar sampling; the links nav's glass moved to an absolute <code>::after</code> so the fixed bar stays transparent; ambient washes moved to <code>html::before</code> so they aren't buried by <code>body</code> background; and <code>viewport-fit=cover</code> is scoped to the links layout only.</li>
-        <li>On iOS Safari (<code>/links/</code>), Liquid Glass left a seam between the URL bar tint and page paint. The aurora bleeds into <code>env(safe-area-inset-*)</code> and hidden mobile sampling strips pin toolbar tint to the theme base.</li>
-        <li>On Chromium (<code>/links/</code>, e.g. Dia), the title bar was still tracking the animated aurora. A fixed top <code>.link-chrome-edge</code> strip pins sampling to <code>--color-base</code>, site-wide html washes are suppressed behind the aurora, and the links nav opts out of backdrop sampling.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 11, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li><strong>Résumé experience timeline</strong> — each role is now a chapter card on a vertical rail with mono index + dates eyebrows, scroll-triggered reveal, and a breathing marker on the current role. Section headings, skill cards, and recommendation cards share the same soft surface vocabulary (<code>--card-bg</code>, hairline border, <code>--radius-md</code>).</li>
-        <li>Sequenced <strong>page entrance animations</strong> (<code>_sass/animations.scss</code>, <code>site.js</code>): main content blocks float in on load with staggered timing. Animation classes are stripped on <code>animationend</code> so compositor layers don't linger and post-load hovers stay responsive.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Restyled the résumé beyond the timeline: profile opens with a lead paragraph, recommendations collapsed into one section of serif quote cards, and skills became a two-column grid of capability cards with mono labels. Print styles collapse cards back to plain stacked copy.</li>
-        <li>Nav and blog post hovers now fade a <code>::before</code> overlay (opacity) instead of repainting <code>background-color</code> inside the glass nav — faster interaction on <code>backdrop-filter</code> surfaces.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 10, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Opening the mobile menu no longer shifts the nav's top-row controls. The bar relied on <code>min-height</code> centering, so when the menu wrapped in as a second flex row the first row collapsed to content height, squeezing the MR mark, RSS, theme, and close controls against the nav edge. The first row is now pinned to a fixed height (<code>--nav-row</code>) that the scrolled state compresses instead, so the controls hold position whether the menu is open or not.</li>
-        <li>Mobile menu items now have proper spacing (<code>gap</code>) between the stacked pills, so a tapped item's focus ring no longer touches the active item's lozenge.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Removed</h3>
-      <ul>
-        <li>Deleted the unfinished <code>link-in-bio-platform-who.md</code> draft in favor of an upcoming post introducing the redesign.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Shipped a full <strong>Liquid Glass redesign</strong> across every page, guided by Apple's Human Interface Guidelines. The fixed full-width nav became a <strong>floating glass pill</strong> — inset from the top, centred, capped at 760px — built from real glass material (<code>backdrop-filter</code> blur + saturate, hairline border, inner top bevel, soft depth shadow) with an opaque fallback when <code>backdrop-filter</code> is unsupported. The bar compresses and strengthens its material once the page scrolls (an <code>IntersectionObserver</code> sentinel, no scroll listeners), nav links became sentence-case lozenge pills with a soft active highlight, and the mobile menu expands the pill into a glass sheet with staggered item entrances.</li>
-        <li>New <strong>type pairing</strong>: <em>Instrument Serif</em> for display headings (with italic accent words in the hero, page titles, and the new serif-italic "MR" home mark) and <em>Geist</em> for body and UI, with <em>Geist Mono</em> replacing Source Code Pro for code, dates, and metadata. The scale was rebuilt around clamp-based display sizes with tighter heading tracking.</li>
-        <li><strong>Evolved the palette</strong>: the charcoal base deepened to near-black with layered surface tints, cream text softened toward warm off-white, and the old pink/cyan pair was demoted to a single refined teal accent (pink survives only decoratively — code strings and background washes). Both themes pick up faint fixed radial <strong>ambient washes</strong> behind the content for the glass to refract.</li>
-        <li>Reskinned every page on the new system: blog rows trade the hard <code>border-left</code> hover for soft rounded surfaces, tag chips became quiet glass pills, music entries became cards, the about CTAs and résumé print button became glass buttons, code blocks picked up rounded hairline borders, heavy accent rules were replaced with hairlines throughout, and the <code>/links/</code> hub cards upgraded to the shared glass material. The iOS-style theme switch was replaced with a single <strong>sun/moon icon button</strong> that cross-fades and rotates between modes.</li>
-        <li>New shared design tokens in <code>_settings.scss</code>: glass material (<code>--glass-*</code>), motion (<code>--ease-glass</code>, duration steps), shape (12/20/28px radii + pill), and card/hairline surfaces. All animation respects <code>prefers-reduced-motion</code>, the résumé print stylesheet is untouched, and <code>theme-color</code> metas track the new base colours.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 5, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Smoothed out <strong>scroll jank</strong> on the <code>/links/</code> mesh-gradient background. Three culprits were making the field feel "glitchy" while scrolling: the <code>mix-blend-mode: screen</code> layers were reading the scrolling page as their blend backdrop, forcing the heavily-blurred mesh to re-rasterise every frame; the layer used <code>inset: 0</code>, so its height tracked the <em>dynamic</em> viewport and the centred mesh lurched as mobile browser chrome collapsed on scroll; and the oversized, blurred fields were expensive to repaint. Fixed by adding <code>isolation: isolate</code> (so the blend stays within the two gradient layers instead of the page behind them), pinning the layer to the <em>large</em> viewport (<code>height: 100lvh</code> with a <code>vh</code> fallback, via <code>top/left/right</code> instead of <code>inset</code>), and promoting each field to its own GPU layer (<code>contain: layout paint</code> + <code>backface-visibility: hidden</code>) so the animation is a pure composited transform. No visual change — the look is identical, just steady while scrolling.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 4, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Reworked the <code>/links/</code> <strong>aurora background</strong> into a full-viewport <strong>flowing mesh gradient</strong>. The four discrete drifting colour blobs were replaced with two oversized, heavily-blurred multi-stop radial layers (rendered on <code>.link-aurora</code>'s <code>::before</code>/<code>::after</code>) that slowly counter-rotate and pulse-scale, so the palette-derived colour wells bleed into one continuous, morphing field rather than reading as separate orbs. The layer now spans the entire viewport (<code>inset: 0</code>) instead of a top-of-page band, the previous vertical fade was swapped for a soft radial vignette that frames and gently dims the reading column while melting the field into the screen edges, the brand hues were punched up a notch in both themes, and the motion runs roughly twice as fast. Link buttons also picked up a <strong>frosted-glass</strong> treatment (<code>backdrop-filter</code> blur + a translucent base) so they stay legible over the brighter full-bleed field. The whole effect still holds still under <code>prefers-reduced-motion</code>.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 3, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added an animated <strong>aurora background</strong> to the <code>/links/</code> page: four slow-drifting, palette-derived colour blobs (the brand rose and teal, plus a periwinkle bridge and a warm amber glow) rendered as a fixed, negative <code>z-index</code> layer behind the hub. The layer is masked with a vertical gradient so the glow concentrates above the fold and dissolves into the page around the first link, and it scales fluidly from mobile to desktop via <code>clamp()</code>-sized blobs. Intensity is tuned per theme — gentler on dark, more vivid and saturated on light — and the whole effect holds still under <code>prefers-reduced-motion</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Replaced the link hub's static <code>--link-hub-wash</code> radial gradient with the new aurora layer, promoting <code>main:has(.link-hub)</code> to a stacking context (<code>isolation: isolate</code>) so the animated background paints above the opaque base colour but below both the links and the fixed nav.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">June 2, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Updated <strong>about.html</strong> to reflect the new role as Technical Support Engineer at Cursor. Removed the "open to new opportunities" paragraph.</li>
-        <li>Updated <strong>resume.html</strong>: added Cursor as the current position (Technical Support Engineer, June 2026 – Present, no bullet points yet), updated the page meta description, header tagline, and profile blurb to reflect the role change.</li>
-        <li>Updated <strong>index.html</strong> homepage intro to read "Support Engineer based in Los Angeles", keeping the homepage line minimal while role details live on About and Résumé.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">May 15, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added an inline <strong>Discord glyph</strong> to any link-hub item whose URL points to <code>discord.gg</code> or <code>discord.com</code>, using the same sizing/coloring conventions as the Instagram and Steam icons.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Expanded the link-hub click-tracking platform detection to recognize <strong>Steam</strong> and <strong>Discord</strong> as named platforms instead of bucketing them under <code>other</code>, so the GA breakdown stays consistent with the icons rendered on the page.</li>
-        <li>Refreshed the <strong><code>README.md</code></strong> so it actually describes the project: replaced the dead Travis CI badge with a live GitHub Actions deploy badge, updated the stack and plugin list to match the current <code>Gemfile</code> and <code>_config.yml</code>, documented the <code>tmp-checkpoint</code> → <code>release</code> deploy workflow, and removed the long-stale "Goals" list.</li>
-        <li>Audited <strong><code>_config.yml</code></strong>: split the homepage identity into a short <code>tagline</code> ("Customers, code, and product") that jekyll-seo-tag uses for the homepage <code>&lt;title&gt;</code> concat, and a longer <code>description</code> reserved for the meta description and social cards. Removed stale <code>twitter_username</code> and <code>codepen_username</code> entries, deleted a no-op <code>defaults</code> rule that set <code>image: true</code> on every file under <code>assets/img/</code>, and added an explicit <code>exclude</code> block so <code>README.md</code>, <code>LICENSE</code>, <code>Gemfile</code>(<code>.lock</code>), <code>vendor/</code>, and <code>.github/</code> stop getting copied into the built site.</li>
-        <li>Audited <strong><code>.gitignore</code></strong>: added <code>vendor/</code> and <code>.bundle/</code> for bundler vendoring directories that don't belong in version control, and tightened the existing <code>*swp</code> pattern to <code>*.swp</code> so it only matches the actual vim swap extension.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Styled <strong>lists inside blog posts</strong>. The global reset strips bullets and indent from every <code>&lt;ul&gt;</code>, and no rule restored them inside <code>article.blogpost</code>, so <code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code>/<code>&lt;li&gt;</code> fell back to the browser-default serif (Times New Roman) with no markers. Added matching <code>$fonts-body</code>, indent, bullets, and item spacing inside the post article. The issue was latent until the first post that actually used a list.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added a <strong>citations / footnotes</strong> treatment for posts: kramdown's <code>.footnotes</code> block now renders as a muted, smaller-type section below the post body with a thin top divider, an inline-rendered paragraph per item (so the marker stays inline with the text), and a subtly styled <code>↩</code> back-reference. Inline <code>sup a.footnote</code> reference markers also get a small bump in weight so they read as citations rather than orphan numerals.</li>
-        <li>Backfilled <strong>inline links and footnotes</strong> in <em>The Redesign</em> and <em>Still on Jekyll, Probably Forever</em>: brand names (Jekyll, GitHub Pages, Next.js, Astro, Netlify, Cloudflare Pages) now link to their respective homepages, and each post picks up a single explanatory footnote where the original prose was lightly hand-waving a technical claim.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">May 14, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Extracted the inline body scripts from the base layout and event-tracking include into external files at <code>/assets/js/site.js</code> and <code>/assets/js/analytics.js</code>, loaded with <code>defer</code>. Keeps the HTML cleaner, lets the browser cache the scripts across pages, and is friendlier to a future Content Security Policy. The pre-paint theme-flash script in <code>&lt;head&gt;</code> intentionally stays inline so it can run before first paint.</li>
-        <li>Extracted the Google Analytics bootstrap into a Jekyll-processed <code>/assets/js/ga-bootstrap.js</code> (the <code>{{ site.google_analytics }}</code> token still gets substituted at build), and dissolved the now-redundant <code>event-tracking.html</code> and <code>GoogleAnalytics.html</code> includes back into the base layout.</li>
-        <li>Extracted the post-layout inline scripts into <code>/assets/js/giscus-loader.js</code> (comments embed) and <code>/assets/js/random-post.js</code> (Jekyll-processed so the full post list is still rendered at build, but filtering of the current page now happens client-side against <code>window.location.pathname</code>).</li>
-        <li>Merged the standalone <code>syntax.css</code> Rouge theme into <code>_sass/posts.scss</code> and dropped the extra stylesheet link from the base layout, so syntax tokens now compile into the main <code>styles.css</code> bundle alongside the rest of the post styles.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">May 13, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added a <strong>links hub</strong> at <code>/links/</code>: a stacked, mobile-first profile page that pulls sections and items from <code>_data/links.yml</code>, rendered through the minimal layout. Includes outbound-click tracking with platform detection (Spotify / YouTube / SoundCloud / Instagram).</li>
-        <li>Added an inline <strong>Instagram glyph</strong> to any link-hub item whose URL points to <code>instagram.com</code>, sized in <code>em</code> so it tracks the button's font size and inherits the link color on hover.</li>
-        <li>Added an inline <strong>Steam glyph</strong> to any link-hub item whose URL points to <code>steamcommunity.com</code> or <code>steampowered.com</code>, using the same sizing/coloring conventions as the Instagram icon.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Swapped the link-hub's <strong>radial wash</strong> from rose to teal in <strong>light mode</strong> (via a new <code>--link-hub-wash</code> custom property), so the page sits inside the rest of the site's light-mode palette instead of fighting it.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Associated each link's optional <strong>hint text</strong> with its anchor via <code>aria-describedby</code>, so screen readers announce the hint as part of the link's accessible description instead of as orphaned text below it.</li>
-        <li>Aligned the links-hub <strong>avatar</strong>'s <code>width</code>/<code>height</code> attributes (88×88) with its rendered CSS size to prevent a small layout shift on slow connections.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">May 10, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Aligned the theme toggle with proper <strong>switch semantics</strong>: the control is now named <em>Dark mode</em> and its <code>aria-checked</code> state matches the active theme (true when dark mode is on).</li>
-        <li>Improved the mobile navigation behavior by scoping toggling logic to the header nav (so it doesn't interact with the tag filter nav) and adding <strong>Escape-to-close</strong> with focus return to the toggle.</li>
-        <li>Upgraded date markup across the site to use semantic <code>&lt;time&gt;</code> elements with machine-readable <code>datetime</code> attributes (homepage listing, tag archives, and post headers).</li>
-        <li>Refactored the post footer navigation from a <code>&lt;table&gt;</code> to a <strong>semantic definition list</strong> (<code>&lt;dl&gt;</code>) inside a labeled <code>&lt;nav&gt;</code>, preserving the same visual layout while improving meaning.</li>
-        <li>Removed inline JS on the résumé print button and attached printing behavior via the site script instead, keeping markup cleaner and more CSP-friendly.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added an <strong>accessibility stylesheet</strong> with consistent <code>:focus-visible</code> rings and a <code>prefers-reduced-motion</code> mode to reduce animations and transitions for motion-sensitive users.</li>
-        <li>Labeled the Giscus container as a <strong>Comments</strong> region so it’s discoverable as a landmark/region for assistive tech.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Fixed the <strong>Skip to Main Content</strong> link on post and tag pages by ensuring the target exists everywhere (<code>id=&quot;mainContent&quot;</code>) and is focusable for reliable keyboard navigation.</li>
-        <li>Fixed the post footer <strong>random post</strong> link for no-JS / script-failure scenarios by giving it a real server-rendered fallback URL and title.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 25, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Rewrote the <strong>code syntax theme</strong> to align with the site's brand palette. Block code (<code>pre.highlight</code>) and inline code (<code>code.highlighter-rouge</code>) now consume CSS variables, so light and dark modes share one cohesive scheme: keywords use highlight (cyan in dark / deep teal in light), strings use links (pink / deep rose), numbers and names use dates (sage / dark teal), and comments use a mode-specific muted tone.</li>
-        <li>Added <code>--code-bg</code>, <code>--code-comment</code>, <code>--inline-code-bg</code>, and <code>--inline-code-border</code> custom properties to <code>_settings.scss</code>, with values defined for dark, light, and print modes.</li>
-        <li>Removed the hardcoded rose border on <code>pre.highlight</code> blocks; the themed background now defines the well on its own.</li>
-        <li>Redesigned the <strong>post footer</strong>. The two-column flex layout is now a <code>1fr auto</code> grid: the left rail (next/previous/random) absorbs slack, the right rail (RSS / about / reply via email) sits flush at content width. Section headings are dropped — structure carries the meaning. The left rail is now a <code>&lt;table&gt;</code> with <em>Next</em>/<em>Previous</em>/<em>Random</em> labels and post-title links; the right rail is an <code>&lt;ol&gt;</code> with visible numerals.</li>
-        <li>The post footer's <strong>random link</strong> now picks a post on page load and renders its actual title in the footer (rather than a generic "Random post" label that picks at click time).</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Fixed inline code chips (<code>--safe</code>, <code>.travis.yml</code>, etc.) rendering as cream text on a dark slab in <strong>light mode</strong>, failing WCAG contrast. Light mode now uses dark text on a near-transparent <code>$light-selected</code> tint with a hairline <code>$light-inactive</code> border.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 23, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added a <strong>post footer</strong> below Giscus comments on every blog post with two columns: Navigate (next/previous/random post links) and Elsewhere (RSS, about page, reply via email).</li>
-        <li>Added <strong>tag system infrastructure</strong>: tag filter bar include, tag archive page layout, and inline tag display on posts and homepage. Ready to use once tags are assigned to posts.</li>
-        <li>Added <strong>email obfuscation</strong> across the site. Contact email is now constructed at runtime via JavaScript data attributes, keeping it out of the HTML source to deter scrapers. Falls back to the about page for no-JS visitors.</li>
-        <li>Added event tracking for tag filter clicks and post footer link clicks.</li>
-        <li>Added an <strong>RSS icon</strong> (SVG) to the navigation bar actions, to the left of the theme toggle. Visible on all screen sizes.</li>
-        <li>Added a <strong>"MR" home wordmark</strong> on the left side of the mobile navigation bar for quick tap-to-home navigation. Hidden on desktop where the full nav is visible.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Replaced the plaintext <code>mailto:</code> link on the about page with the new obfuscated email include.</li>
-        <li>Replaced the sun/moon theme toggle icons with an <strong>iOS-style toggle switch</strong>. Pill-shaped track with a sliding circular thumb; track highlights on light mode.</li>
-        <li>Moved the RSS link from the site footer to the navigation bar.</li>
-        <li>Scoped site navigation CSS from bare <code>nav</code> to <code>header > nav</code> to prevent styles leaking into the tag filter <code>&lt;nav&gt;</code> element.</li>
-        <li>Bumped <code>addressable</code> from 2.8.7 to 2.9.0 and <code>json</code> from 2.15.1 to 2.15.2.1 (transitively pulling <code>public_suffix</code> from 6.0.2 to 7.0.5).</li>
-        <li>Resized the navigation <strong>RSS icon</strong> from 16px to 20px so it visually matches the height of the theme toggle track.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Fixed the nav link hover underline animation appearing on touch devices (phones/tablets) where hover is not supported. Wrapped the <code>::after</code> underline in <code>@media (hover: hover)</code>.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 21, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Browser URL bar now matches the active color scheme. The <code>theme-color</code> meta tag updates on page load (from stored preference) and on every toggle click, so the chrome reflects dark or light mode in real time.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 20, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added a third <strong>Résumé</strong> testimonial from Daren Nkomo (Software Engineer – Trello, Atlassian) highlighting resilience, energy, and ownership under pressure.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Fixed résumé print output on iOS Safari rendering with a black background and black text when the device is in dark mode. Added <code>color-scheme</code> declarations and forced light-palette CSS custom properties in the print media query.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Tightened wording across five résumé <strong>Skills</strong> rows for clarity and industry-standard terminology: <em>Frontend</em> now reads "step-through debugging" instead of "live breakpoint tracing," <em>Local development</em> replaced the task-description phrasing with "Full-stack local environments, codebase navigation, feature branch UAT," <em>Observability</em> splits out "distributed tracing" as its own keyword, <em>Incidents</em> leads with "Critical incidents (Sev-1/2)" for context, and <em>Product</em> uses "Pre-release validation" and "release readiness" instead of the redundant "UAT (pre-release testing)" and vague "release feedback."</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 16, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Rebuilt the <strong>About</strong> page as a single-column layout on all viewports. The previous CSS grid (text-left / image-right on desktop) was replaced with a simple flex column ordered H1 → photo → body. The hero photo now spans the full container width and preserves its native 4:3 aspect ratio at every breakpoint. Container max-width is 900px.</li>
-        <li>Updated the About page H1 to "Hey, I'm Matthew Rugamas," and lightly polished the body copy: combined the opener into a value-forward sentence, surfaced a quantified outcome from the Atlassian role (15% YoY escalation reduction), and added a one-line tools/keywords mention (Splunk, Jira, Postman, LaunchDarkly, MongoDB).</li>
-        <li>Revised the <strong>Résumé</strong> across most sections: tightened the profile opener to match the About page voice, broadened the tagline with a "debugging, escalations, customer engineering" keyword bridge, dropped a page-specific SEO <code>description</code> into the front matter, tightened the Atlassian role summary to remove duplication with the first bullet, reordered the Atlassian summary bullets so enterprise customer impact leads, trimmed long bullets on incidents and product-influence, and swept verbs so <em>Reduced</em> no longer opens consecutive bullets.</li>
-        <li>Specific dates across the résumé are now month + year on every role for consistency: <strong>Atlassian</strong> March 2022 – March 2026, <strong>Accessibility Lead</strong> (Edlio) February 2020 – February 2022, <strong>Lead Technical Support Engineer</strong> (Edlio) February 2019 – January 2020. Tenure framing on both the résumé profile and the About page moved from "8 years" to "nearly a decade" to match the actual timeline.</li>
-        <li>Expanded the résumé <strong>Skills</strong> section with a clearer breakdown that surfaces work done on Halp / JSM Chat: added <em>Languages</em> (TypeScript, JavaScript, HTML, CSS, SQL, Bash), <em>Frontend</em> (React, GraphQL, Chrome DevTools, live breakpoint tracing), <em>Local development</em> (running product instances locally, tracing through code, UAT against feature branches), and <em>Observability</em> rows, and split <em>Accessibility</em> (WCAG 2.1 AA, ADA, ARIA) out of the old "Web" row so a full role of accessibility work isn't undersold.</li>
-        <li>Consolidated the <strong>Accessibility Lead</strong> bullets from 8 to 5, merged overlap, and folded in concrete scale (50+ templates, 100+ audits, 100+ districts).</li>
-        <li>Flipped the <strong>Lead Technical Support Engineer</strong> opener so ownership of the hardest escalations leads and case volume (80–120 / month) trails as a qualifier. Named the stakeholder type ("non-technical school district administrators and IT staff") on the translation bullet for Customer/Solutions Engineer keyword coverage.</li>
-        <li>Constrained the résumé <code>.cv-tagline</code> to <code>max-width: 75%</code> at the <code>md</code> breakpoint and above so the now-longer tagline ("Senior Support Engineer · Debugging, escalations, customer engineering · Los Angeles, CA") no longer runs the full header width on desktop. Mobile layout is unchanged.</li>
-        <li>Narrowed prose containers to portfolio-standard widths: <strong>About</strong> page container <code>900px → 720px</code>, and blog <strong>post article</strong> container <code>1000px → 760px</code>. The Giscus <code>.post-comments</code> widget was re-pegged to match the article body. The About hero photo (<code>#selfie</code>) is now capped at <code>max-width: 480px</code> and centered via <code>align-self: center</code>, so it no longer pushes the body copy below the fold on desktop. Post images (<code>figure.shadow_image img.img-responsive</code>) got a <code>max-height: 75vh</code> cap so tall screenshots can't dominate the viewport.</li>
-        <li>Introduced <strong>content-width design tokens</strong> as CSS custom properties in <code>:root</code>: <code>--content-hero</code> (675px), <code>--content-prose</code> (720px), <code>--content-post</code> (760px), <code>--content-cv</code> (800px), <code>--content-wide</code> (1000px). Replaced all magic-number <code>max-width</code> values across <code>_settings.scss</code>, <code>about.scss</code>, <code>posts.scss</code>, <code>index.scss</code>, <code>resume.scss</code>, and <code>changelog.scss</code> with the corresponding token. Content widths are now defined in one place and reusable sitewide.</li>
-        <li>Scoped <code>posts.scss</code> from bare <code>article</code> selectors to <code>article.blogpost</code> so blog-post styles no longer bleed into homepage article cards. The <code>.blogpost</code> class was added to the <code>&lt;article&gt;</code> element in <code>post.html</code>. Backfilled explicit <code>font-size</code> and <code>line-height</code> on the homepage <code>article header p</code> rule in <code>index.scss</code> to replace values that were previously leaking from the unscoped <code>posts.scss</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added a primary <strong>"Get in touch →"</strong> CTA (mailto:) and a secondary <strong>LinkedIn</strong> button to the About page so visitors hiring out of the page have an unambiguous next action.</li>
-        <li>Added a <strong>print-only</strong> expanded contact row to the résumé header (email, site URL, GitHub) so the saved/printed PDF stands on its own even though screen viewers already have those links on the About page. Implemented via a <code>.print-only</code> utility that's hidden on screen and inline inside <code>@media print</code>.</li>
-        <li>Added two short <strong>testimonial</strong> blocks to the résumé, pulled from LinkedIn recommendations. The first (Don Pierce, Manager of Cloud Growth Products, Atlassian) sits between Profile and Skills as an opening hook. The second (Al Lawlor, Director / Sr. Manager, CX &amp; Support Operations, Atlassian) closes the page after Experience, introducing a concrete project reference — legacy product sunset ownership and customer migration — that doesn't appear elsewhere on the page. Styled as left-bordered blockquotes on screen with a tightened variant in print. Each citation links to the LinkedIn recommendations page (<code>view on LinkedIn</code>) so readers can verify the quotes; the URL suffix otherwise appended to print links is suppressed for these to keep the printed attribution line readable.</li>
-        <li>Added an <code>@page { margin: 0.6in; }</code> rule and <code>break-inside: avoid</code> on testimonials to keep print margins comfortable and prevent quotes from orphaning across a page break.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Removed</h3>
-      <ul>
-        <li>Removed the "See what I've been playing →" music link from the About page. The Music page is already reachable from the nav, and the contact CTAs now occupy that visual slot.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 11, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Added <strong>Giscus</strong> reactions and comments to all blog posts, powered by GitHub Discussions. Visitors with a GitHub account can leave emoji reactions (👍 ❤️ 🎉 etc.) and comments directly on each post. The widget reads from <code>localStorage</code> on load and responds to the dark/light theme toggle via the Giscus <code>postMessage</code> API. Data lives entirely in the repository's Discussions tab — no third-party tracking.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Centered code blocks in blog posts and constrained them to the same 1000px max-width as prose content. Previously <code>pre.highlight</code> had no width constraint and appeared left-aligned relative to body text.</li>
-        <li>Changed <code>pre.highlight</code> from <code>overflow: scroll</code> to <code>overflow: auto</code> so scrollbars only appear when content actually overflows. On macOS this restores the native overlay scrollbar behavior — bars appear on scroll and fade when idle.</li>
-        <li>Constrained <code>.post-comments</code> (Giscus widget) to 1000px max-width so it aligns with post content rather than stretching to full container width.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Updated</h3>
-      <ul>
-        <li>Updated résumé: revised Skills section to use more concise, role-aligned categories (Debugging, Incidents, Enablement, Product, Tools, Web). Expanded Accessibility Lead role with a summary paragraph and additional detail bullets. Refreshed Lead Technical Support Engineer bullet wording. Updated Atlassian start date to March 2022.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 10, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Eliminated a chained CSS request that was adding ~120ms to the critical render path. <code>styles.scss</code> was using <code>@import "syntax.css"</code>, which SASS passes through as a literal CSS <code>@import</code> — causing the browser to download <code>syntax.css</code> sequentially after <code>styles.css</code>. Removed the <code>@import</code> and added <code>syntax.css</code> as a direct <code>&lt;link&gt;</code> in <code>base.html</code> so both files download in parallel.</li>
-        <li>Fixed render-blocking Google Fonts. Replaced <code>rel="stylesheet"</code> with the <code>rel="preload"</code> + <code>onload</code> non-blocking pattern (with a <code>&lt;noscript&gt;</code> fallback) in <code>base.html</code>. Fonts now load asynchronously and do not block initial render.</li>
-        <li>Moved <code>preconnect</code> hints for <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code> before the stylesheet links in <code>base.html</code> so connections warm up earlier in the page load sequence.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 9, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Switched the site font from the OS system stack to <strong>Inter</strong> (Google Fonts) across all pages. Both <code>$fonts-body</code> and <code>$fonts-titles</code> in <code>_sass/_settings.scss</code> now use Inter with the system stack as a fallback. Weights 400, 500, 600, and 700 are loaded via a single Google Fonts request in the base layout alongside Source Code Pro. Source Code Pro is retained as the monospace face for code and CV metadata. A <code>--font-weight-medium: 500</code> token was added to the design-token set in <code>:root</code>.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 8, 2026</h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Résumé content fully updated. Profile rewritten to position as Senior Support Engineer with 8 years of experience; split into two paragraphs leading with the value proposition. Header tagline updated from "Support Engineer" to "Senior Support Engineer".</li>
-        <li>Atlassian role rewritten with a new structure: opening summary paragraph, three high-signal overview bullets, then three sub-sections — <em>Debugging &amp; Incident Ownership</em>, <em>Product &amp; Engineering Impact</em>, and <em>Process &amp; Team Impact</em>. Dates simplified to 2022–2026. Old sub-sections (Core Responsibilities, Product &amp; Engineering Partnership, Process &amp; Impact, Team Enablement) removed.</li>
-        <li>Accessibility Lead and Lead Technical Support Engineer roles at Edlio condensed: removed summary paragraphs from both, updated bullets to match tighter, outcome-focused copy.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 7, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">fa87257</span></h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>GA4 custom event tracking across all pages via <code>_includes/event-tracking.html</code>, injected through the base layout. Tracks: navigation link clicks (with desktop vs. hamburger context), theme toggle direction, blog post clicks from the homepage listing, music page external link clicks with platform detection (Spotify / YouTube / SoundCloud / Instagram), social link clicks from the Elsewhere section, the About page music CTA, the résumé LinkedIn link, footer links, the résumé print button, and scroll depth at 25 / 50 / 75 / 100%. All <code>gtag()</code> calls are guarded with a typeof check, making the script a no-op in local development.</li>
-        <li>Save/Print button on the résumé page, placed inside the <code>cv-header</code> grid alongside the name. Triggers <code>window.print()</code> and fires a <code>resume_print_click</code> GA4 event. Styled to match the existing CTA button pattern from the About page. Hidden in print.</li>
-        <li><code>@media print</code> stylesheet for the résumé. Hides site chrome, resets to black-on-white, sets print-appropriate font sizes and spacing, and appends full link URLs inline — suppressed on the contact link, which already displays as a URL.</li>
-        <li>This changelog page (<code>/changelog</code>), styled in the site theme with a dedicated SCSS partial (<code>_sass/changelog.scss</code>).</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Résumé <code>.cv-header</code> restructured from a flexbox row into a two-column CSS grid. Name and Save/Print button share the top row; tagline and LinkedIn link sit below. Mobile stacks all items centered.</li>
-        <li>Footer year is now rendered dynamically via <code>&#123;&#123; 'now' | date: '%Y' &#125;&#125;</code> instead of a hardcoded value.</li>
-        <li>All external links on the Music page and in the Elsewhere section on About now include <code>target="_blank" rel="noopener noreferrer"</code>. Previously, clicking any of them navigated away from the site with no new-tab behavior.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Fixed</h3>
-      <ul>
-        <li>Hardcoded <code>&lt;link rel="canonical" href="https://mattrugamas.com"/&gt;</code> removed from <code>base.html</code>. Every page was incorrectly declaring the homepage as its canonical URL. The <code>jekyll-seo-tag</code> plugin already handles per-page canonicals correctly via the <code>&#123;% seo %&#125;</code> tag.</li>
-        <li>Print stylesheet was targeting <code>header { display: none }</code>, which hid all semantic <code>&lt;header&gt;</code> elements on the résumé — including the name/contact row and every job title header. Corrected to <code>body > header</code> to target only the site navigation wrapper.</li>
-        <li>Résumé <code>.cv-role</code> entries had <code>break-inside: avoid</code> set, which caused the Atlassian role (the longest entry) to push entirely to page two, leaving a blank gap on page one. Removed the rule from roles; added <code>break-after: avoid</code> on <code>.cv-role-header</code> instead, keeping each role's title attached to its content without blocking mid-role page breaks.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 3, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">99181d7</span></h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Converted all SCSS placeholder selectors (<code>%content-base</code>, <code>%link-setup</code>, <code>%nav-animate</code>, etc.) to <code>@mixin</code> and added <code>@use 'settings' as *</code> imports to every SCSS partial, aligning with the Dart Sass module system.</li>
-        <li>Added <code>--text-2xl</code>, <code>--text-3xl</code>, and <code>--content-gap</code> to the design token set in <code>_settings.scss</code>.</li>
-        <li>Content area padding switched to <code>clamp()</code> for fluid responsive spacing instead of a fixed value.</li>
-        <li>Homepage blog listing redesigned: posts are now grouped by year, each row shows the date in a right-aligned aside alongside the post title and excerpt, and the full row gets a left-border highlight on hover at desktop widths. Markup in <code>index.html</code> restructured with <code>group_by_exp</code> to generate the year groups.</li>
-        <li><code>scrollbar-gutter: stable</code> added to the root to prevent layout shift when the scrollbar appears on long pages.</li>
-        <li>Site description in <code>_config.yml</code> updated to reflect current role and location.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 2, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">94e6ffa</span></h2>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Added <code>--font-weight-normal</code>, <code>--font-weight-semi</code>, and <code>--font-weight-bold</code> tokens; replaced all hardcoded <code>font-weight</code> values with token references.</li>
-        <li>Corrected <code>--text-sm</code> from <code>0.875rem</code> to <code>0.8125rem</code>.</li>
-        <li>Blog post typography overhauled: explicit h2/h3 styles with correct size, weight, and spacing; post date styled using <code>--color-dates</code> and body font; paragraph line-height set to 1.7; removed legacy breakpoint overrides that were fighting the new system.</li>
-        <li>Both blog posts converted from bold-text section headings (<code>**Bold**</code>) to proper Markdown H2s, which now render with the correct semantic hierarchy and visual treatment.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="changelog-entry">
-    <h2 class="changelog-date">April 2, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">c063f77</span></h2>
-
-    <div class="changelog-group">
-      <h3>Added</h3>
-      <ul>
-        <li>Music page (<code>music.html</code>) with a full archive of projects, roles, and links to Spotify, YouTube, SoundCloud, and Instagram.</li>
-        <li>Résumé page (<code>resume.html</code>) as a proper web CV: semantic HTML with <code>&lt;article&gt;</code> per role, a <code>&lt;dl&gt;</code> for skills, and full employment history replacing placeholder content.</li>
-        <li>Music and Résumé added to site navigation in <code>_data/navigation.yml</code>.</li>
-        <li>Light/dark mode theme toggle with <code>localStorage</code> persistence. A flash-prevention script in <code>&lt;head&gt;</code> reads the stored preference before first paint. System <code>prefers-color-scheme</code> is used as the default when no stored value exists.</li>
-        <li>Hamburger navigation for mobile viewports, with animated icon, <code>aria-expanded</code> state tracking, and close-on-outside-click behavior.</li>
-        <li>Skip-to-main-content link for keyboard and assistive technology navigation.</li>
-        <li>Two blog posts: <em>The Redesign</em> (March 31) and <em>Still on Jekyll, Probably Forever</em> (April 2).</li>
-        <li>Music-specific SCSS partial (<code>_sass/music.scss</code>) and corresponding <code>@use</code> import in <code>main.scss</code>.</li>
-      </ul>
-    </div>
-
-    <div class="changelog-group">
-      <h3>Changed</h3>
-      <ul>
-        <li>Full CSS rebuild. All stylesheets converted to mobile-first, all color values replaced with CSS custom properties, a spacing scale and type scale established. Dark mode is the default; light mode maps the same palette to warm-background equivalents via a <code>data-theme</code> attribute on the root element.</li>
-        <li>About page rebuilt with CSS Grid (heading → photo → text on mobile; two-column on desktop) in place of the previous <code>column-reverse</code> flexbox approach.</li>
-        <li>Font stack simplified: removed Rubik and Work Sans, retained Source Code Pro for monospace use only. Body and UI text now use the system font stack.</li>
-        <li>Google Fonts loading updated to use <code>preconnect</code> hints and the modern <code>display=swap</code> API.</li>
-        <li>Jekyll updated from 4.2.0 to 4.4.1. <code>jekyll-sass-converter</code> updated from 2.x to 3.x (Dart Sass via <code>sass-embedded</code>). Rouge updated from 3.x to 4.x. Various other dependency bumps in <code>Gemfile.lock</code>.</li>
-      </ul>
-    </div>
-  </section>
+  <details class="disclosure changelog-entry" id="2026-09-13" open>
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">September 13, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>The résumé and <code>/music/</code> are now lists of collapsible tiles. Profile, Recommendations, Skills, and Experience each close to a single row, as does every role inside Experience and every project on the music page. A closed row carries a count of what is behind it — <em>4 roles</em>, <em>3 credits</em> — which disappears once you open it. Tiles are independent, so opening one does not close another, and each has an <code>id</code>: <code>/resume#experience</code> or <code>/music#wark</code> opens the target along with any tile it is nested in. Tiles start closed, except the band I'm currently playing in, which is open when the music page loads.</li>
+          <li>The pattern is <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code> behind a shared <code>_sass/_disclosure.scss</code>, so the rows are buttons to a screen reader and both pages still open and close with JavaScript off. The height animation is scripted in <code>assets/js/site.js</code>, because animating to <code>height: auto</code> in CSS still needs <code>interpolate-size</code> and only Chromium ships it; panels travel on a new <code>--ease-expand</code> token, a gentler curve than the two tap-feedback eases the site already had, which spend roughly 80% of their distance in the first quarter of the time and read as a snap when something panel-sized is moving. The panel's padding animates along with its height, because these boxes are <code>border-box</code> and padding sets a floor the box cannot shrink under: animating height alone left the panel pinned at its 32px bottom padding for the first stretch of every expansion, so each one opened with a 32px jump, a visible 40ms pause, and only then the slide. <code>prefers-reduced-motion</code> skips the travel entirely. Before the print dialog every tile is forced open and then restored afterwards, with a CSS fallback for the no-JS case, so the printed résumé is complete either way.</li>
+          <li>This page got the same treatment at release granularity. All 32 dated entries are tiles now, each closing to one row that carries its change count, with the most recent entry open on arrival and ids like <code>/changelog#2026-06-22</code> for linking to a specific release. A 729-line wall you had to scroll is now a list you can read the shape of. The tallest entry — September 12, at nearly 3000px — is also what pushed the animation's duration ceiling from 440ms to 560ms, since a panel that size hit the old cap at roughly 7px per millisecond and unfurled faster than you could follow.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-09-12">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">September 12, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Post rows on the homepage and tag pages can now carry a hand-written <code>summary</code> in front matter, rendered by <code>_includes/post-list.html</code> in place of Jekyll's auto-generated excerpt, which simply took the post's opening paragraph. All eight posts got a one-or-two-line conversational summary. The generated <code>excerpt</code> is untouched, so the RSS feed and <code>jekyll-seo-tag</code> descriptions still quote the real opening; posts without a <code>summary</code> fall back to the old behaviour.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Shipped a full <strong>Quiet Surface</strong> redesign. The Liquid Glass material is gone: no <code>backdrop-filter</code>, no ambient washes, no floating pill nav, no aurora on <code>/links/</code>. The site is now a flat document in a system font stack (<code>-apple-system</code> / Segoe / Roboto), four type sizes (13 / 14 / 16 / 24), regular and medium weights only, and a three-tier gray hierarchy. Teal survives in exactly two places: <code>:focus-visible</code> rings and the active tag-filter chip. Links are text-colored and underlined. Google Fonts (Instrument Serif, Geist, Geist Mono) were removed from <code>base.liquid</code>.</li>
+          <li>Replaced the floating glass nav with a sticky, opaque bar aligned to the same <code>--measure</code> column as the page. The hamburger is gone; Home hides below tablet so the row stays one line. A single sliding <code>.nav-indicator</code> rests on the current page and follows pointer hover and keyboard focus. Same-origin navigations crossfade <code>main</code> via the View Transition API while the nav holds; a first-load-only <code>data-arrive</code> rise (6px, 40ms stagger) plays on cold entry. Theme changes use <code>document.startViewTransition</code> when available.</li>
+          <li>Homepage dates hang in a 6rem left gutter at <code>≥ 60em</code>, baseline-matched to titles. Post syntax highlighting is grayscale. The résumé dropped its timeline rail, markers, pulse, cards, and role index numbers. <code>/links/</code> is a left-aligned list of hairline rows with a trailing <code>↗</code>; <code>_sass/safari-chrome.scss</code> and the toolbar-tint sampling strips were deleted with the blur they existed to paper over.</li>
+          <li>Removed the avatar photo from the top of <code>/links/</code>, so the page now opens on the handle. The image itself is still in <code>assets/img/site/</code> if it comes back.</li>
+          <li>Regenerated <code>assets/img/site/social-card.png</code> in the Quiet Surface dark palette (no serif, no teal) via <code>scripts/generate-social-card.py</code>, which now prefers SF Pro on macOS.</li>
+          <li>Text-on-page contrast against <code>--color-bg</code>: light <code>#292929</code> 13.94:1, <code>#5D5D5D</code> 6.31:1, <code>#737373</code> 4.54:1; dark <code>#EDEDED</code> 15.74:1, <code>#A8A8A8</code> 7.75:1, <code>#8A8A8A</code> 5.34:1. Primary buttons invert the page (<code>#FAFAFA</code> on <code>#292929</code>, <code>#141414</code> on <code>#EDEDED</code>, both 13.94+/15.74+). Active chip text on accent is 6.78:1 light and 9.34:1 dark.</li>
+          <li>Restructured the stylesheets around the partial boundaries they advertise. <code>_sass/index.scss</code> no longer nests the whole site inside <code>html { body { … } }</code> — selectors are flat and the blog list dropped from eight levels of nesting to two. Post footer, comments, figure captions, and code-block rules moved to <code>_sass/posts.scss</code>; the tag-filter chips moved to <code>_sass/_tags.scss</code> alongside the other tag styles. The nav, content column, and footer now share one frame rule instead of repeating the same four width and padding declarations, and the wide résumé and changelog columns come from one <code>max-width</code> override on <code>main</code> rather than patching <code>max-width</code> in three places. The theme-toggle icon crossfade reads its state from palette custom properties, replacing three duplicated selector blocks. Post rows use a <code>.post-row</code> element with a <code>.post-row-body</code> wrapper in place of the <code>&lt;aside&gt;</code> and <code>&lt;header&gt;</code> the date and title were misusing, and the hanging date column aligns with <code>align-items: baseline</code> instead of a hand-computed <code>padding-top</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Every page scrolled sideways by roughly 38px below <code>44em</code>. <code>_sass/reset.scss</code> is normalize.css v8, which deliberately does not set <code>box-sizing</code>, so the <code>width: 100%</code> on the nav inner wrapper, <code>main</code>, and the footer added <code>--page-pad</code> on top of a full-width box. Added the global <code>border-box</code> rule and gave the shared frame a <code>max-width</code> of <code>calc(var(--measure) + var(--page-pad) * 2)</code>, which keeps the 40rem reading column exact at desktop while the box now fits the viewport on phones.</li>
+          <li>The print stylesheet lost to the screen palette. <code>@media (prefers-color-scheme: light) :root:not([data-theme="dark"])</code> outranks the <code>:root</code> block inside <code>@media print</code>, so any visitor who had never used the theme toggle printed <code>#292929</code> on a <code>#FAFAFA</code> wash instead of black on white. Scoped the auto-theme query to <code>screen</code>.</li>
+          <li>The nav pill animated in from the left edge of the row on the first hover of every page, and stacked its own fill on top of the <code>--fill-active</code> already under the current item. It is now placed without a transition on first paint, carries the active tone at rest and the hover tone in flight, and returns to the current page on pointer leave and blur.</li>
+          <li>The nav list carried a permanent 16px <code>mask-image</code> fade on both ends, dimming the first and last items even though the row fits. The fade now appears only when the row genuinely overflows, and post pages — which carry a fifth item — fit without scrolling from 360px up after tightening item padding below <code>40em</code>.</li>
+          <li>Résumé dates sat in a 128px gutter to the left of each job title, but a full month range like <em>February 2020 – February 2022</em> needs about 220px, so every one of them wrapped into a right-aligned two-line block that read as a box. The date now leads its role as a single line above the title, sharing the same left edge as the title and the company. The printed résumé is unchanged — it already used this stacked layout.</li>
+          <li>The nav shifted 32px left when you navigated to the résumé or the changelog. Those two pages run on a wider measure, and the nav and footer inherited it so their left edge would line up with the content. The wide measure now applies to <code>main</code> alone, so the nav mark and the nav row sit in exactly the same place on every page.</li>
+          <li><code>#mainContent</code> drew a 2px accent outline around the entire content column on <code>:focus</code>. The element carries <code>tabindex="-1"</code> only so the skip link can move focus into it, but <code>:focus</code> matches for any non-keyboard focus and then persists while you read. Narrowed to <code>:focus-visible</code>, which still fires for the skip link when it is activated from the keyboard.</li>
+          <li>Nav, footer, and RSS links had no visible focus ring: <code>_sass/index.scss</code> scoped <code>a:focus-visible</code> under <code>main</code>, and <code>_sass/accessibility.scss</code> covered only buttons, summaries, and <code>[tabindex]</code>. Links outside <code>main</code> now get the accent ring.</li>
+          <li>Touch targets overlapped. The <code>hit-area</code> mixin extends tag chips and nav icons to 40×40 with a pseudo-element, but the 8px chip row gap and 4px icon gap were narrower than the overhang, so adjacent invisible targets collided; both gaps now clear it.</li>
+          <li>The first-load arrival animation faded in the <code>h1</code>, deferring the largest contentful paint behind a 480ms opacity animation on exactly the cold navigations Lighthouse measures. The first block now rises without fading.</li>
+          <li>Dropped <code>view-transition-name: site-footer</code>. The footer sits at a different offset on every page, so naming it asked the transition to animate that difference rather than hold the element still. The post title morph now names the list <code>h3</code> instead of the link inside it, because a title that wraps onto two lines is a fragmented inline box and cannot be captured.</li>
+          <li>The theme-color meta sync in the <code>base.liquid</code> head script ran before <code>faviconpackage.html</code> had been parsed, so a stored theme never reached the browser chrome on first load; the script now runs after the meta tags and still before first paint. <code>syncGiscus</code> also guards its <code>postMessage</code>, which previously could throw inside the <code>startViewTransition</code> callback.</li>
+          <li>A June 22 entry below wrote <code>{% raw %}{% include findme.html %}{% endraw %}</code> without escaping it, so Liquid executed the example and rendered a live copy of the About page's contact buttons inside a <code>&lt;code&gt;</code> element — which also meant the <code>.findme a</code> analytics binding fired <code>social_link_click</code> events from this page. Wrapped in <code>{% raw %}{% raw %}{% endraw %}</code>.</li>
+          <li>Replaced the remaining hardcoded values the token system was meant to own: raw <code>font-weight: 500</code> in the Rouge theme, <code>opacity: 0.55</code> on the post-meta and tag separators (now <code>--color-fg-4</code>, the token for decorative marks), and vestigial <code>letter-spacing: inherit</code>, <code>text-transform: none</code>, and <code>max-width: none</code> resets left behind by the old design.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-07-07">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">July 7, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added inline brand logos beside company mentions, in the spirit of the treatment on <a href="https://haydenbleasel.com" target="_blank" rel="noopener">haydenbleasel.com</a>. Three reusable includes — <code>_includes/cursor-logo.html</code> (the official Cursor cube), <code>_includes/atlassian-logo.html</code> (the Atlassian mark), and <code>_includes/edlio-logo.html</code> (the Edlio <em>e</em>, lifted from their wordmark) — are each inline <code>fill="currentColor"</code> SVGs styled by a shared <code>_sass/brand.scss</code>. The marks sit immediately before the brand name in the About intro and across the Résumé (the profile line and every experience company slot), rendered in normal inline flow at <code>1em</code> and nudged onto the text baseline so their line matches the surrounding copy exactly, inheriting the surrounding colour so they read as body text in prose and as the highlight colour in the CV company slots, in both themes.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-30">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 30, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Ran a dead-code and asset audit across the site. Removed the unused <code>.changelog-since</code> selector from <code>_sass/changelog.scss</code> — it shared a rule with <code>.changelog-hash</code> but was referenced in no template — and deleted the orphaned <code>assets/img/site/foxhound-logo.svg</code>, a 3.9&nbsp;KB leftover from the 404 work that nothing referenced once <code>_includes/fox-logo.html</code> inlined its own SVG path.</li>
+          <li>Stopped publishing two source-only files to the live site by excluding them in <code>_config.yml</code>: <code>assets/favicon-source.svg</code> (an output of the offline <code>generate-favicons.py</code> that no page links to) and the local <code>skills-lock.json</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-22">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 22, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Custom <code>404.html</code> not-found page for missing URLs on GitHub Pages — later replaced with the codec-style FOX page (see Changed).</li>
+          <li><code>.ruby-version</code> pinning Ruby 3.2.0 to match the GitHub Actions workflow.</li>
+          <li>Shared <code>_includes/post-list.html</code> partial for the year-grouped blog index markup.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Replaced the plain <code>404.html</code> with a codec-style not-found page: a hand-traced SVG of the FOX unit insignia (full silhouette including the detached mouth and front leg) in <code>_includes/fox-logo.html</code>, Colonel/Snake dialogue personalized to the site's actual pages and Jekyll setup, live requested-path readout via client-side script, and recovery links to the homepage, <em>Still on Jekyll, Probably Forever</em>, and a fallback post. Styled in new <code>_sass/not-found.scss</code>.</li>
+          <li>Expanded <code>README.md</code> into a maintainer guide: project structure, data files, URL shapes, site features (theme, Giscus, analytics, obfuscated email), asset scripts, and workflows for adding posts and tags.</li>
+          <li>Extracted duplicate blog-list markup from <code>index.html</code> and <code>_layouts/tag.liquid</code> into <code>post-list.html</code>.</li>
+          <li>Tag archive pages under <code>tags/</code> now inherit <code>layout: tag</code> from a <code>_config.yml</code> default instead of repeating it in every stub file.</li>
+          <li>Closed two gaps left by the prior interface-polish pass. The nav menu link pills now scale to <code>scale(0.96)</code> on press, matching the press feedback already on the adjacent icon controls and glass buttons (previously they cross-faded color only). And <code>text-wrap: pretty</code> now extends to blog-post list items, so bulleted and numbered body copy gets the same orphan-avoidance the prose paragraphs already had.</li>
+          <li>Renamed the development branch from <code>tmp-checkpoint</code> to <code>main</code> and documented the deploy loop in <code>README.md</code> and the Cursor deploy rule: push <code>main</code>, then <code>git push origin main:release</code> so both branches stay aligned without merge-commit drift. Renamed the frozen Travis-era site branch from <code>master</code> to <code>archive/legacy-site</code>.</li>
+          <li>Bumped GitHub Pages workflow actions to Node 24–native majors (<code>checkout@v5</code>, <code>configure-pages@v6</code>, <code>upload-pages-artifact@v5</code>, <code>deploy-pages@v5</code>) to clear runner deprecation warnings ahead of GitHub’s Node 20 removal.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>404 codec transmission card no longer overflows right on mobile: <code>box-sizing: border-box</code> on <code>.not-found-codec</code> so <code>width: 100%</code> includes its padding, plus <code>min-width: 0</code> on the section flex child and <code>overflow-wrap: anywhere</code> on inline <code>code</code> in the dialogue.</li>
+          <li>Google Analytics stopped initializing in production because the CodeQL-driven <code>.js.liquid</code> rename caused Jekyll to emit <code>ga-bootstrap.js.liquid</code> instead of <code>/assets/js/ga-bootstrap.js</code>, so the layout’s script tag 404’d. Inlined the four-line bootstrap in <code>base.liquid</code>, reverted <code>random-post</code> to <code>assets/js/random-post.js</code> with <code>layout: null</code>, and narrowed the CodeQL <code>paths-ignore</code> to that file only.</li>
+          <li>Bumped <code>concurrent-ruby</code> from 1.3.5 to 1.3.7 in <code>Gemfile.lock</code> (Dependabot security update).</li>
+          <li>Fixed GitHub CodeQL parse errors on Jekyll-templated JavaScript by renaming <code>ga-bootstrap.js</code> and <code>random-post.js</code> to <code>.js.liquid</code> (build output URLs unchanged) and excluding those templates in <code>.github/codeql/codeql-config.yml</code>.</li>
+          <li>Hardened client-side email link assembly in <code>site.js</code>: <code>data-u</code>/<code>data-d</code> values are trimmed, regex-validated, and passed through <code>encodeURIComponent</code> before <code>setAttribute('href', …)</code>, clearing a CodeQL DOM XSS warning.</li>
+          <li>Replaced <code>href.includes(…)</code> platform detection in <code>analytics.js</code> with hostname parsing via <code>URL</code> and an allowlist, fixing CodeQL incomplete URL substring sanitization warnings on music and link-hub click tracking.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-21">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 21, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Applied interface-polish fixes from a design-engineering skills audit: normalized press feedback to <code>scale(0.96)</code> on glass buttons, link-hub cards, and nav icon controls; enlarged nav icon hit areas to 40×40px; retuned the theme-toggle sun/moon crossfade to <code>scale(0.25)</code> with a <code>blur(4px)</code> enter/exit and <code>cubic-bezier(0.2, 0, 0, 1)</code>; swapped tinted image borders for pure black/white <code>--img-outline</code> on the About photo, link-hub avatar, and post figures; added <code>text-wrap: balance</code> on headings and <code>text-wrap: pretty</code> on prose via <code>content-base</code>; applied <code>tabular-nums</code> to dates and footer years; switched music-project hovers to a <code>::before</code> opacity cross-fade; and completed the <code>nav-item-in</code> keyframe <code>to</code> block.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-17">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 17, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Published a new post, "Glass, and the Machine That Built It" (<code>_posts/2026-06-10-glass-and-the-machine.md</code>), on the latest redesign and on letting an AI model carry out the implementation while the direction and taste stayed human. The post leads with a generated abstract image — a frosted glass pane refracting a teal wash, assembling itself from drifting shards — at <code>assets/img/posts/glass-and-the-machine.png</code>, placed after the opening paragraph so the homepage excerpt stays text. Tagged <code>website</code> and <code>ideas</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Aligned the homepage and tag-archive blog index with a shared date gutter: year headings now right-align in the same fixed column as post dates, and each date vertically centers on its title row via matched header padding plus a cap-height offset. Fixed a selector leak where nested tag <code>&lt;li&gt;</code>s were inheriting the post-row subgrid layout.</li>
+          <li>Softened a word in the About page's second paragraph, changing "hobbyist road cyclist" to "recreational road cyclist".</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-16">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 16, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added a social share card so links to the site render a rich preview in iMessage and on social platforms. A new <code>scripts/generate-social-card.py</code> renders a 1200×630 card from the site's own type and palette — the MR monogram, the name in Geist, "customers, product & code" in Instrument Serif Italic, and a Geist Mono footer — to <code>assets/img/site/social-card.png</code>. It is wired into <code>jekyll-seo-tag</code> through a front-matter default <code>image</code> (with width and height) in <code>_config.yml</code>, which every page inherits and which upgrades the Twitter card to <code>summary_large_image</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Polished the homepage lede and the About and Music copy. The lede now reads "help support teams scale"; the About opener leads with the remote Cursor role and closes with a more self-aware take on defining good support as technology enters a new paradigm, with tightened phrasing and a pronoun fix; and the Music intro tightens the instrument progression to guitar, drums, and bass and refines the collaboration line. The About opener was further tightened to drop the "quietly" qualifier and the closing "as daunting as it is exciting" line.</li>
+          <li>Updated the site <code>description</code> and <code>tagline</code> in <code>_config.yml</code> to reflect the current Technical Support Engineer role and the "customers, product, and code" ordering used throughout the new copy.</li>
+          <li>Rewrote the homepage lede beneath the name to reflect current work: it now frames the role around the intersection of customers, product, and code, with a drive to help young support teams scale and define what support looks like in an AI-native world. Renamed the element from <code>#tagline</code> to <code>#lede</code> in <code>index.html</code> and its style block in <code>_sass/_settings.scss</code>, since the paragraph functions as an introductory lede rather than a tagline.</li>
+          <li>Rewrote the About page in a tighter, more self-aware voice. The opening paragraph now leads with the current Cursor role and the customers/product/code intersection, including the work of scaling young support teams and defining support in an AI-native environment; the remaining paragraphs trim corporate phrasing, add a note on a love for art and life, and drop em dashes and colons in favor of plainer punctuation.</li>
+          <li>Rewrote the Music page intro, replacing the previous "Playing music has been a constant" opener with a more personal account: making and collaborating on music since sixteen, moving from guitar to drums to bass, framing collaboration as one of the joys of music and an open invitation to new projects, and presenting the page as a rough archive of projects.</li>
+          <li>Redesigned per-post tags on the homepage, tag archives, and blog post layouts as a quiet metadata line — lowercase monospace labels in the muted dates color with middot separators, rendered through a shared <code>_includes/post-tags.html</code> partial. On listing rows the tags sit below the excerpt and the date column is pinned to a fixed width, so titles and rows stay aligned no matter how many tags a post carries; on post pages the tags sit on their own line beneath the date. The interactive filter-nav pills are unchanged.</li>
+          <li>The Google Analytics loader now reads the measurement ID from <code>{{ site.google_analytics }}</code> in <code>_config.yml</code> instead of a hardcoded <code>G-</code> ID in the base layout, making the config the single source of truth for both the <code>gtag.js</code> tag and the bootstrap script.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>On iOS Safari, the ambient bottom glow on the homepage and other full-chrome pages left a flat seam above the floating bottom toolbar. The glow is anchored to a fixed (layout-viewport) layer, so it can't track the toolbar as it expands, and <code>env(safe-area-inset-*)</code> only accounts for the home indicator rather than the toolbar height. The bottom wash is now dropped on iOS phones (<code>@supports (-webkit-touch-callout: none)</code> at narrow widths) while the two top washes remain; the bottom simply renders as clean base color. An earlier attempt to close the seam with site-wide <code>viewport-fit=cover</code> and safe-area bleeds was reverted because it could not reach past the toolbar.</li>
+          <li>Google Analytics stopped initializing because <code>ga-bootstrap.js</code> was being wrapped in the default layout at build time, so the browser received a full HTML page instead of JavaScript. Added <code>layout: null</code> to the file's front matter so Jekyll emits only the processed bootstrap script.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-12">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 12, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>About page CTAs are now driven by <code>_data/findme.yml</code> via <code>{% raw %}{% include findme.html %}{% endraw %}</code>, so contact and social links can be edited in one place without touching HTML.</li>
+          <li>Post pages now hide the Giscus comments section when the embed reports an unrecoverable error (for example a giscus.app outage), instead of leaving a broken widget on the page.</li>
+          <li>Added blog tags (<strong>website</strong>, <strong>projects</strong>, <strong>ideas</strong>, <strong>music</strong>) with archive pages at <code>/tags/&lt;tag&gt;/</code>, tag front matter on every post, and a homepage filter nav driven by <code>_data/tags.yml</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Collapsed <code>_layouts/minimal.liquid</code> into <code>default.liquid</code>; the links hub now sets <code>minimal_chrome: true</code> in front matter instead of a separate layout.</li>
+          <li>Renamed legacy post files to kebab-case and added explicit <code>layout: post</code> and <code>date:</code> front matter to every post.</li>
+          <li>Split <code>assets/img/</code> into <code>assets/img/site/</code> (photos and UI images) and <code>assets/img/posts/</code> (blog figures).</li>
+          <li>Excluded <code>scripts/</code> from the Jekyll build so favicon tooling no longer ships to production.</li>
+          <li>Replaced the terminal-style favicon set with an <strong>MR wordmark</strong> that matches the nav home mark — Instrument Serif italic on the site charcoal base, across every size in the package (<code>favicon.ico</code>, PNGs, Apple touch icon, Android chrome icons, Safari pinned tab, and Windows tile). Cache-bust query bumped to <code>?v=3</code>; manifest and tile theme colors now use the current palette.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Removed</h3>
+        <ul>
+          <li>Deleted unused <code>_includes/pagetitles.html</code>; page titles are handled by <code>jekyll-seo-tag</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Link hub hovers felt sluggish because entrance animations were applying <code>transform</code> and <code>will-change: transform</code> to <code>.link-hub-section</code> parents of glass link cards, and hover was repainting <code>background-color</code> inside <code>backdrop-filter</code> surfaces. Sections now use an opacity-only entrance (<code>animate-fade-only</code>), link hovers cross-fade a <code>::before</code> overlay like the nav, and <code>animationend</code> handlers only detach after the entrance animation on the target element itself.</li>
+          <li>On <code>/links/</code>, Safari 26+ was tinting the tab/status bar from the animated aurora and the nav's <code>backdrop-filter</code> instead of the active theme. The aurora now carries an explicit <code>--color-base</code> fill plus a neutral <code>backdrop-filter</code> to opt out of toolbar sampling; the links nav's glass moved to an absolute <code>::after</code> so the fixed bar stays transparent; ambient washes moved to <code>html::before</code> so they aren't buried by <code>body</code> background; and <code>viewport-fit=cover</code> is scoped to the links layout only.</li>
+          <li>On iOS Safari (<code>/links/</code>), Liquid Glass left a seam between the URL bar tint and page paint. The aurora bleeds into <code>env(safe-area-inset-*)</code> and hidden mobile sampling strips pin toolbar tint to the theme base.</li>
+          <li>On Chromium (<code>/links/</code>, e.g. Dia), the title bar was still tracking the animated aurora. A fixed top <code>.link-chrome-edge</code> strip pins sampling to <code>--color-base</code>, site-wide html washes are suppressed behind the aurora, and the links nav opts out of backdrop sampling.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-11">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 11, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li><strong>Résumé experience timeline</strong> — each role is now a chapter card on a vertical rail with mono index + dates eyebrows, scroll-triggered reveal, and a breathing marker on the current role. Section headings, skill cards, and recommendation cards share the same soft surface vocabulary (<code>--card-bg</code>, hairline border, <code>--radius-md</code>).</li>
+          <li>Sequenced <strong>page entrance animations</strong> (<code>_sass/animations.scss</code>, <code>site.js</code>): main content blocks float in on load with staggered timing. Animation classes are stripped on <code>animationend</code> so compositor layers don't linger and post-load hovers stay responsive.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Restyled the résumé beyond the timeline: profile opens with a lead paragraph, recommendations collapsed into one section of serif quote cards, and skills became a two-column grid of capability cards with mono labels. Print styles collapse cards back to plain stacked copy.</li>
+          <li>Nav and blog post hovers now fade a <code>::before</code> overlay (opacity) instead of repainting <code>background-color</code> inside the glass nav — faster interaction on <code>backdrop-filter</code> surfaces.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-10">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 10, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Opening the mobile menu no longer shifts the nav's top-row controls. The bar relied on <code>min-height</code> centering, so when the menu wrapped in as a second flex row the first row collapsed to content height, squeezing the MR mark, RSS, theme, and close controls against the nav edge. The first row is now pinned to a fixed height (<code>--nav-row</code>) that the scrolled state compresses instead, so the controls hold position whether the menu is open or not.</li>
+          <li>Mobile menu items now have proper spacing (<code>gap</code>) between the stacked pills, so a tapped item's focus ring no longer touches the active item's lozenge.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Removed</h3>
+        <ul>
+          <li>Deleted the unfinished <code>link-in-bio-platform-who.md</code> draft in favor of an upcoming post introducing the redesign.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Shipped a full <strong>Liquid Glass redesign</strong> across every page, guided by Apple's Human Interface Guidelines. The fixed full-width nav became a <strong>floating glass pill</strong> — inset from the top, centred, capped at 760px — built from real glass material (<code>backdrop-filter</code> blur + saturate, hairline border, inner top bevel, soft depth shadow) with an opaque fallback when <code>backdrop-filter</code> is unsupported. The bar compresses and strengthens its material once the page scrolls (an <code>IntersectionObserver</code> sentinel, no scroll listeners), nav links became sentence-case lozenge pills with a soft active highlight, and the mobile menu expands the pill into a glass sheet with staggered item entrances.</li>
+          <li>New <strong>type pairing</strong>: <em>Instrument Serif</em> for display headings (with italic accent words in the hero, page titles, and the new serif-italic "MR" home mark) and <em>Geist</em> for body and UI, with <em>Geist Mono</em> replacing Source Code Pro for code, dates, and metadata. The scale was rebuilt around clamp-based display sizes with tighter heading tracking.</li>
+          <li><strong>Evolved the palette</strong>: the charcoal base deepened to near-black with layered surface tints, cream text softened toward warm off-white, and the old pink/cyan pair was demoted to a single refined teal accent (pink survives only decoratively — code strings and background washes). Both themes pick up faint fixed radial <strong>ambient washes</strong> behind the content for the glass to refract.</li>
+          <li>Reskinned every page on the new system: blog rows trade the hard <code>border-left</code> hover for soft rounded surfaces, tag chips became quiet glass pills, music entries became cards, the about CTAs and résumé print button became glass buttons, code blocks picked up rounded hairline borders, heavy accent rules were replaced with hairlines throughout, and the <code>/links/</code> hub cards upgraded to the shared glass material. The iOS-style theme switch was replaced with a single <strong>sun/moon icon button</strong> that cross-fades and rotates between modes.</li>
+          <li>New shared design tokens in <code>_settings.scss</code>: glass material (<code>--glass-*</code>), motion (<code>--ease-glass</code>, duration steps), shape (12/20/28px radii + pill), and card/hairline surfaces. All animation respects <code>prefers-reduced-motion</code>, the résumé print stylesheet is untouched, and <code>theme-color</code> metas track the new base colours.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-05">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 5, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Smoothed out <strong>scroll jank</strong> on the <code>/links/</code> mesh-gradient background. Three culprits were making the field feel "glitchy" while scrolling: the <code>mix-blend-mode: screen</code> layers were reading the scrolling page as their blend backdrop, forcing the heavily-blurred mesh to re-rasterise every frame; the layer used <code>inset: 0</code>, so its height tracked the <em>dynamic</em> viewport and the centred mesh lurched as mobile browser chrome collapsed on scroll; and the oversized, blurred fields were expensive to repaint. Fixed by adding <code>isolation: isolate</code> (so the blend stays within the two gradient layers instead of the page behind them), pinning the layer to the <em>large</em> viewport (<code>height: 100lvh</code> with a <code>vh</code> fallback, via <code>top/left/right</code> instead of <code>inset</code>), and promoting each field to its own GPU layer (<code>contain: layout paint</code> + <code>backface-visibility: hidden</code>) so the animation is a pure composited transform. No visual change — the look is identical, just steady while scrolling.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-04">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 4, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Reworked the <code>/links/</code> <strong>aurora background</strong> into a full-viewport <strong>flowing mesh gradient</strong>. The four discrete drifting colour blobs were replaced with two oversized, heavily-blurred multi-stop radial layers (rendered on <code>.link-aurora</code>'s <code>::before</code>/<code>::after</code>) that slowly counter-rotate and pulse-scale, so the palette-derived colour wells bleed into one continuous, morphing field rather than reading as separate orbs. The layer now spans the entire viewport (<code>inset: 0</code>) instead of a top-of-page band, the previous vertical fade was swapped for a soft radial vignette that frames and gently dims the reading column while melting the field into the screen edges, the brand hues were punched up a notch in both themes, and the motion runs roughly twice as fast. Link buttons also picked up a <strong>frosted-glass</strong> treatment (<code>backdrop-filter</code> blur + a translucent base) so they stay legible over the brighter full-bleed field. The whole effect still holds still under <code>prefers-reduced-motion</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-03">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 3, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added an animated <strong>aurora background</strong> to the <code>/links/</code> page: four slow-drifting, palette-derived colour blobs (the brand rose and teal, plus a periwinkle bridge and a warm amber glow) rendered as a fixed, negative <code>z-index</code> layer behind the hub. The layer is masked with a vertical gradient so the glow concentrates above the fold and dissolves into the page around the first link, and it scales fluidly from mobile to desktop via <code>clamp()</code>-sized blobs. Intensity is tuned per theme — gentler on dark, more vivid and saturated on light — and the whole effect holds still under <code>prefers-reduced-motion</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Replaced the link hub's static <code>--link-hub-wash</code> radial gradient with the new aurora layer, promoting <code>main:has(.link-hub)</code> to a stacking context (<code>isolation: isolate</code>) so the animated background paints above the opaque base colour but below both the links and the fixed nav.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-06-02">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">June 2, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Updated <strong>about.html</strong> to reflect the new role as Technical Support Engineer at Cursor. Removed the "open to new opportunities" paragraph.</li>
+          <li>Updated <strong>resume.html</strong>: added Cursor as the current position (Technical Support Engineer, June 2026 – Present, no bullet points yet), updated the page meta description, header tagline, and profile blurb to reflect the role change.</li>
+          <li>Updated <strong>index.html</strong> homepage intro to read "Support Engineer based in Los Angeles", keeping the homepage line minimal while role details live on About and Résumé.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-05-15">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">May 15, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added an inline <strong>Discord glyph</strong> to any link-hub item whose URL points to <code>discord.gg</code> or <code>discord.com</code>, using the same sizing/coloring conventions as the Instagram and Steam icons.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Expanded the link-hub click-tracking platform detection to recognize <strong>Steam</strong> and <strong>Discord</strong> as named platforms instead of bucketing them under <code>other</code>, so the GA breakdown stays consistent with the icons rendered on the page.</li>
+          <li>Refreshed the <strong><code>README.md</code></strong> so it actually describes the project: replaced the dead Travis CI badge with a live GitHub Actions deploy badge, updated the stack and plugin list to match the current <code>Gemfile</code> and <code>_config.yml</code>, documented the <code>tmp-checkpoint</code> → <code>release</code> deploy workflow, and removed the long-stale "Goals" list.</li>
+          <li>Audited <strong><code>_config.yml</code></strong>: split the homepage identity into a short <code>tagline</code> ("Customers, code, and product") that jekyll-seo-tag uses for the homepage <code>&lt;title&gt;</code> concat, and a longer <code>description</code> reserved for the meta description and social cards. Removed stale <code>twitter_username</code> and <code>codepen_username</code> entries, deleted a no-op <code>defaults</code> rule that set <code>image: true</code> on every file under <code>assets/img/</code>, and added an explicit <code>exclude</code> block so <code>README.md</code>, <code>LICENSE</code>, <code>Gemfile</code>(<code>.lock</code>), <code>vendor/</code>, and <code>.github/</code> stop getting copied into the built site.</li>
+          <li>Audited <strong><code>.gitignore</code></strong>: added <code>vendor/</code> and <code>.bundle/</code> for bundler vendoring directories that don't belong in version control, and tightened the existing <code>*swp</code> pattern to <code>*.swp</code> so it only matches the actual vim swap extension.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Styled <strong>lists inside blog posts</strong>. The global reset strips bullets and indent from every <code>&lt;ul&gt;</code>, and no rule restored them inside <code>article.blogpost</code>, so <code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code>/<code>&lt;li&gt;</code> fell back to the browser-default serif (Times New Roman) with no markers. Added matching <code>$fonts-body</code>, indent, bullets, and item spacing inside the post article. The issue was latent until the first post that actually used a list.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added a <strong>citations / footnotes</strong> treatment for posts: kramdown's <code>.footnotes</code> block now renders as a muted, smaller-type section below the post body with a thin top divider, an inline-rendered paragraph per item (so the marker stays inline with the text), and a subtly styled <code>↩</code> back-reference. Inline <code>sup a.footnote</code> reference markers also get a small bump in weight so they read as citations rather than orphan numerals.</li>
+          <li>Backfilled <strong>inline links and footnotes</strong> in <em>The Redesign</em> and <em>Still on Jekyll, Probably Forever</em>: brand names (Jekyll, GitHub Pages, Next.js, Astro, Netlify, Cloudflare Pages) now link to their respective homepages, and each post picks up a single explanatory footnote where the original prose was lightly hand-waving a technical claim.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-05-14">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">May 14, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Extracted the inline body scripts from the base layout and event-tracking include into external files at <code>/assets/js/site.js</code> and <code>/assets/js/analytics.js</code>, loaded with <code>defer</code>. Keeps the HTML cleaner, lets the browser cache the scripts across pages, and is friendlier to a future Content Security Policy. The pre-paint theme-flash script in <code>&lt;head&gt;</code> intentionally stays inline so it can run before first paint.</li>
+          <li>Extracted the Google Analytics bootstrap into a Jekyll-processed <code>/assets/js/ga-bootstrap.js</code> (the <code>{{ site.google_analytics }}</code> token still gets substituted at build), and dissolved the now-redundant <code>event-tracking.html</code> and <code>GoogleAnalytics.html</code> includes back into the base layout.</li>
+          <li>Extracted the post-layout inline scripts into <code>/assets/js/giscus-loader.js</code> (comments embed) and <code>/assets/js/random-post.js</code> (Jekyll-processed so the full post list is still rendered at build, but filtering of the current page now happens client-side against <code>window.location.pathname</code>).</li>
+          <li>Merged the standalone <code>syntax.css</code> Rouge theme into <code>_sass/posts.scss</code> and dropped the extra stylesheet link from the base layout, so syntax tokens now compile into the main <code>styles.css</code> bundle alongside the rest of the post styles.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-05-13">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">May 13, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added a <strong>links hub</strong> at <code>/links/</code>: a stacked, mobile-first profile page that pulls sections and items from <code>_data/links.yml</code>, rendered through the minimal layout. Includes outbound-click tracking with platform detection (Spotify / YouTube / SoundCloud / Instagram).</li>
+          <li>Added an inline <strong>Instagram glyph</strong> to any link-hub item whose URL points to <code>instagram.com</code>, sized in <code>em</code> so it tracks the button's font size and inherits the link color on hover.</li>
+          <li>Added an inline <strong>Steam glyph</strong> to any link-hub item whose URL points to <code>steamcommunity.com</code> or <code>steampowered.com</code>, using the same sizing/coloring conventions as the Instagram icon.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Swapped the link-hub's <strong>radial wash</strong> from rose to teal in <strong>light mode</strong> (via a new <code>--link-hub-wash</code> custom property), so the page sits inside the rest of the site's light-mode palette instead of fighting it.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Associated each link's optional <strong>hint text</strong> with its anchor via <code>aria-describedby</code>, so screen readers announce the hint as part of the link's accessible description instead of as orphaned text below it.</li>
+          <li>Aligned the links-hub <strong>avatar</strong>'s <code>width</code>/<code>height</code> attributes (88×88) with its rendered CSS size to prevent a small layout shift on slow connections.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-05-10">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">May 10, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Aligned the theme toggle with proper <strong>switch semantics</strong>: the control is now named <em>Dark mode</em> and its <code>aria-checked</code> state matches the active theme (true when dark mode is on).</li>
+          <li>Improved the mobile navigation behavior by scoping toggling logic to the header nav (so it doesn't interact with the tag filter nav) and adding <strong>Escape-to-close</strong> with focus return to the toggle.</li>
+          <li>Upgraded date markup across the site to use semantic <code>&lt;time&gt;</code> elements with machine-readable <code>datetime</code> attributes (homepage listing, tag archives, and post headers).</li>
+          <li>Refactored the post footer navigation from a <code>&lt;table&gt;</code> to a <strong>semantic definition list</strong> (<code>&lt;dl&gt;</code>) inside a labeled <code>&lt;nav&gt;</code>, preserving the same visual layout while improving meaning.</li>
+          <li>Removed inline JS on the résumé print button and attached printing behavior via the site script instead, keeping markup cleaner and more CSP-friendly.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added an <strong>accessibility stylesheet</strong> with consistent <code>:focus-visible</code> rings and a <code>prefers-reduced-motion</code> mode to reduce animations and transitions for motion-sensitive users.</li>
+          <li>Labeled the Giscus container as a <strong>Comments</strong> region so it’s discoverable as a landmark/region for assistive tech.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Fixed the <strong>Skip to Main Content</strong> link on post and tag pages by ensuring the target exists everywhere (<code>id=&quot;mainContent&quot;</code>) and is focusable for reliable keyboard navigation.</li>
+          <li>Fixed the post footer <strong>random post</strong> link for no-JS / script-failure scenarios by giving it a real server-rendered fallback URL and title.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-25">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 25, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Rewrote the <strong>code syntax theme</strong> to align with the site's brand palette. Block code (<code>pre.highlight</code>) and inline code (<code>code.highlighter-rouge</code>) now consume CSS variables, so light and dark modes share one cohesive scheme: keywords use highlight (cyan in dark / deep teal in light), strings use links (pink / deep rose), numbers and names use dates (sage / dark teal), and comments use a mode-specific muted tone.</li>
+          <li>Added <code>--code-bg</code>, <code>--code-comment</code>, <code>--inline-code-bg</code>, and <code>--inline-code-border</code> custom properties to <code>_settings.scss</code>, with values defined for dark, light, and print modes.</li>
+          <li>Removed the hardcoded rose border on <code>pre.highlight</code> blocks; the themed background now defines the well on its own.</li>
+          <li>Redesigned the <strong>post footer</strong>. The two-column flex layout is now a <code>1fr auto</code> grid: the left rail (next/previous/random) absorbs slack, the right rail (RSS / about / reply via email) sits flush at content width. Section headings are dropped — structure carries the meaning. The left rail is now a <code>&lt;table&gt;</code> with <em>Next</em>/<em>Previous</em>/<em>Random</em> labels and post-title links; the right rail is an <code>&lt;ol&gt;</code> with visible numerals.</li>
+          <li>The post footer's <strong>random link</strong> now picks a post on page load and renders its actual title in the footer (rather than a generic "Random post" label that picks at click time).</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Fixed inline code chips (<code>--safe</code>, <code>.travis.yml</code>, etc.) rendering as cream text on a dark slab in <strong>light mode</strong>, failing WCAG contrast. Light mode now uses dark text on a near-transparent <code>$light-selected</code> tint with a hairline <code>$light-inactive</code> border.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-23">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 23, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added a <strong>post footer</strong> below Giscus comments on every blog post with two columns: Navigate (next/previous/random post links) and Elsewhere (RSS, about page, reply via email).</li>
+          <li>Added <strong>tag system infrastructure</strong>: tag filter bar include, tag archive page layout, and inline tag display on posts and homepage. Ready to use once tags are assigned to posts.</li>
+          <li>Added <strong>email obfuscation</strong> across the site. Contact email is now constructed at runtime via JavaScript data attributes, keeping it out of the HTML source to deter scrapers. Falls back to the about page for no-JS visitors.</li>
+          <li>Added event tracking for tag filter clicks and post footer link clicks.</li>
+          <li>Added an <strong>RSS icon</strong> (SVG) to the navigation bar actions, to the left of the theme toggle. Visible on all screen sizes.</li>
+          <li>Added a <strong>"MR" home wordmark</strong> on the left side of the mobile navigation bar for quick tap-to-home navigation. Hidden on desktop where the full nav is visible.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Replaced the plaintext <code>mailto:</code> link on the about page with the new obfuscated email include.</li>
+          <li>Replaced the sun/moon theme toggle icons with an <strong>iOS-style toggle switch</strong>. Pill-shaped track with a sliding circular thumb; track highlights on light mode.</li>
+          <li>Moved the RSS link from the site footer to the navigation bar.</li>
+          <li>Scoped site navigation CSS from bare <code>nav</code> to <code>header > nav</code> to prevent styles leaking into the tag filter <code>&lt;nav&gt;</code> element.</li>
+          <li>Bumped <code>addressable</code> from 2.8.7 to 2.9.0 and <code>json</code> from 2.15.1 to 2.15.2.1 (transitively pulling <code>public_suffix</code> from 6.0.2 to 7.0.5).</li>
+          <li>Resized the navigation <strong>RSS icon</strong> from 16px to 20px so it visually matches the height of the theme toggle track.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Fixed the nav link hover underline animation appearing on touch devices (phones/tablets) where hover is not supported. Wrapped the <code>::after</code> underline in <code>@media (hover: hover)</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-21">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 21, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Browser URL bar now matches the active color scheme. The <code>theme-color</code> meta tag updates on page load (from stored preference) and on every toggle click, so the chrome reflects dark or light mode in real time.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-20">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 20, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added a third <strong>Résumé</strong> testimonial from Daren Nkomo (Software Engineer – Trello, Atlassian) highlighting resilience, energy, and ownership under pressure.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Fixed résumé print output on iOS Safari rendering with a black background and black text when the device is in dark mode. Added <code>color-scheme</code> declarations and forced light-palette CSS custom properties in the print media query.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Tightened wording across five résumé <strong>Skills</strong> rows for clarity and industry-standard terminology: <em>Frontend</em> now reads "step-through debugging" instead of "live breakpoint tracing," <em>Local development</em> replaced the task-description phrasing with "Full-stack local environments, codebase navigation, feature branch UAT," <em>Observability</em> splits out "distributed tracing" as its own keyword, <em>Incidents</em> leads with "Critical incidents (Sev-1/2)" for context, and <em>Product</em> uses "Pre-release validation" and "release readiness" instead of the redundant "UAT (pre-release testing)" and vague "release feedback."</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-16">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 16, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Rebuilt the <strong>About</strong> page as a single-column layout on all viewports. The previous CSS grid (text-left / image-right on desktop) was replaced with a simple flex column ordered H1 → photo → body. The hero photo now spans the full container width and preserves its native 4:3 aspect ratio at every breakpoint. Container max-width is 900px.</li>
+          <li>Updated the About page H1 to "Hey, I'm Matthew Rugamas," and lightly polished the body copy: combined the opener into a value-forward sentence, surfaced a quantified outcome from the Atlassian role (15% YoY escalation reduction), and added a one-line tools/keywords mention (Splunk, Jira, Postman, LaunchDarkly, MongoDB).</li>
+          <li>Revised the <strong>Résumé</strong> across most sections: tightened the profile opener to match the About page voice, broadened the tagline with a "debugging, escalations, customer engineering" keyword bridge, dropped a page-specific SEO <code>description</code> into the front matter, tightened the Atlassian role summary to remove duplication with the first bullet, reordered the Atlassian summary bullets so enterprise customer impact leads, trimmed long bullets on incidents and product-influence, and swept verbs so <em>Reduced</em> no longer opens consecutive bullets.</li>
+          <li>Specific dates across the résumé are now month + year on every role for consistency: <strong>Atlassian</strong> March 2022 – March 2026, <strong>Accessibility Lead</strong> (Edlio) February 2020 – February 2022, <strong>Lead Technical Support Engineer</strong> (Edlio) February 2019 – January 2020. Tenure framing on both the résumé profile and the About page moved from "8 years" to "nearly a decade" to match the actual timeline.</li>
+          <li>Expanded the résumé <strong>Skills</strong> section with a clearer breakdown that surfaces work done on Halp / JSM Chat: added <em>Languages</em> (TypeScript, JavaScript, HTML, CSS, SQL, Bash), <em>Frontend</em> (React, GraphQL, Chrome DevTools, live breakpoint tracing), <em>Local development</em> (running product instances locally, tracing through code, UAT against feature branches), and <em>Observability</em> rows, and split <em>Accessibility</em> (WCAG 2.1 AA, ADA, ARIA) out of the old "Web" row so a full role of accessibility work isn't undersold.</li>
+          <li>Consolidated the <strong>Accessibility Lead</strong> bullets from 8 to 5, merged overlap, and folded in concrete scale (50+ templates, 100+ audits, 100+ districts).</li>
+          <li>Flipped the <strong>Lead Technical Support Engineer</strong> opener so ownership of the hardest escalations leads and case volume (80–120 / month) trails as a qualifier. Named the stakeholder type ("non-technical school district administrators and IT staff") on the translation bullet for Customer/Solutions Engineer keyword coverage.</li>
+          <li>Constrained the résumé <code>.cv-tagline</code> to <code>max-width: 75%</code> at the <code>md</code> breakpoint and above so the now-longer tagline ("Senior Support Engineer · Debugging, escalations, customer engineering · Los Angeles, CA") no longer runs the full header width on desktop. Mobile layout is unchanged.</li>
+          <li>Narrowed prose containers to portfolio-standard widths: <strong>About</strong> page container <code>900px → 720px</code>, and blog <strong>post article</strong> container <code>1000px → 760px</code>. The Giscus <code>.post-comments</code> widget was re-pegged to match the article body. The About hero photo (<code>#selfie</code>) is now capped at <code>max-width: 480px</code> and centered via <code>align-self: center</code>, so it no longer pushes the body copy below the fold on desktop. Post images (<code>figure.shadow_image img.img-responsive</code>) got a <code>max-height: 75vh</code> cap so tall screenshots can't dominate the viewport.</li>
+          <li>Introduced <strong>content-width design tokens</strong> as CSS custom properties in <code>:root</code>: <code>--content-hero</code> (675px), <code>--content-prose</code> (720px), <code>--content-post</code> (760px), <code>--content-cv</code> (800px), <code>--content-wide</code> (1000px). Replaced all magic-number <code>max-width</code> values across <code>_settings.scss</code>, <code>about.scss</code>, <code>posts.scss</code>, <code>index.scss</code>, <code>resume.scss</code>, and <code>changelog.scss</code> with the corresponding token. Content widths are now defined in one place and reusable sitewide.</li>
+          <li>Scoped <code>posts.scss</code> from bare <code>article</code> selectors to <code>article.blogpost</code> so blog-post styles no longer bleed into homepage article cards. The <code>.blogpost</code> class was added to the <code>&lt;article&gt;</code> element in <code>post.html</code>. Backfilled explicit <code>font-size</code> and <code>line-height</code> on the homepage <code>article header p</code> rule in <code>index.scss</code> to replace values that were previously leaking from the unscoped <code>posts.scss</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added a primary <strong>"Get in touch →"</strong> CTA (mailto:) and a secondary <strong>LinkedIn</strong> button to the About page so visitors hiring out of the page have an unambiguous next action.</li>
+          <li>Added a <strong>print-only</strong> expanded contact row to the résumé header (email, site URL, GitHub) so the saved/printed PDF stands on its own even though screen viewers already have those links on the About page. Implemented via a <code>.print-only</code> utility that's hidden on screen and inline inside <code>@media print</code>.</li>
+          <li>Added two short <strong>testimonial</strong> blocks to the résumé, pulled from LinkedIn recommendations. The first (Don Pierce, Manager of Cloud Growth Products, Atlassian) sits between Profile and Skills as an opening hook. The second (Al Lawlor, Director / Sr. Manager, CX &amp; Support Operations, Atlassian) closes the page after Experience, introducing a concrete project reference — legacy product sunset ownership and customer migration — that doesn't appear elsewhere on the page. Styled as left-bordered blockquotes on screen with a tightened variant in print. Each citation links to the LinkedIn recommendations page (<code>view on LinkedIn</code>) so readers can verify the quotes; the URL suffix otherwise appended to print links is suppressed for these to keep the printed attribution line readable.</li>
+          <li>Added an <code>@page { margin: 0.6in; }</code> rule and <code>break-inside: avoid</code> on testimonials to keep print margins comfortable and prevent quotes from orphaning across a page break.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Removed</h3>
+        <ul>
+          <li>Removed the "See what I've been playing →" music link from the About page. The Music page is already reachable from the nav, and the contact CTAs now occupy that visual slot.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-11">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 11, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Added <strong>Giscus</strong> reactions and comments to all blog posts, powered by GitHub Discussions. Visitors with a GitHub account can leave emoji reactions (👍 ❤️ 🎉 etc.) and comments directly on each post. The widget reads from <code>localStorage</code> on load and responds to the dark/light theme toggle via the Giscus <code>postMessage</code> API. Data lives entirely in the repository's Discussions tab — no third-party tracking.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Centered code blocks in blog posts and constrained them to the same 1000px max-width as prose content. Previously <code>pre.highlight</code> had no width constraint and appeared left-aligned relative to body text.</li>
+          <li>Changed <code>pre.highlight</code> from <code>overflow: scroll</code> to <code>overflow: auto</code> so scrollbars only appear when content actually overflows. On macOS this restores the native overlay scrollbar behavior — bars appear on scroll and fade when idle.</li>
+          <li>Constrained <code>.post-comments</code> (Giscus widget) to 1000px max-width so it aligns with post content rather than stretching to full container width.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Updated</h3>
+        <ul>
+          <li>Updated résumé: revised Skills section to use more concise, role-aligned categories (Debugging, Incidents, Enablement, Product, Tools, Web). Expanded Accessibility Lead role with a summary paragraph and additional detail bullets. Refreshed Lead Technical Support Engineer bullet wording. Updated Atlassian start date to March 2022.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-10">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 10, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Eliminated a chained CSS request that was adding ~120ms to the critical render path. <code>styles.scss</code> was using <code>@import "syntax.css"</code>, which SASS passes through as a literal CSS <code>@import</code> — causing the browser to download <code>syntax.css</code> sequentially after <code>styles.css</code>. Removed the <code>@import</code> and added <code>syntax.css</code> as a direct <code>&lt;link&gt;</code> in <code>base.html</code> so both files download in parallel.</li>
+          <li>Fixed render-blocking Google Fonts. Replaced <code>rel="stylesheet"</code> with the <code>rel="preload"</code> + <code>onload</code> non-blocking pattern (with a <code>&lt;noscript&gt;</code> fallback) in <code>base.html</code>. Fonts now load asynchronously and do not block initial render.</li>
+          <li>Moved <code>preconnect</code> hints for <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code> before the stylesheet links in <code>base.html</code> so connections warm up earlier in the page load sequence.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-09">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 9, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Switched the site font from the OS system stack to <strong>Inter</strong> (Google Fonts) across all pages. Both <code>$fonts-body</code> and <code>$fonts-titles</code> in <code>_sass/_settings.scss</code> now use Inter with the system stack as a fallback. Weights 400, 500, 600, and 700 are loaded via a single Google Fonts request in the base layout alongside Source Code Pro. Source Code Pro is retained as the monospace face for code and CV metadata. A <code>--font-weight-medium: 500</code> token was added to the design-token set in <code>:root</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-08">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 8, 2026</h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Résumé content fully updated. Profile rewritten to position as Senior Support Engineer with 8 years of experience; split into two paragraphs leading with the value proposition. Header tagline updated from "Support Engineer" to "Senior Support Engineer".</li>
+          <li>Atlassian role rewritten with a new structure: opening summary paragraph, three high-signal overview bullets, then three sub-sections — <em>Debugging &amp; Incident Ownership</em>, <em>Product &amp; Engineering Impact</em>, and <em>Process &amp; Team Impact</em>. Dates simplified to 2022–2026. Old sub-sections (Core Responsibilities, Product &amp; Engineering Partnership, Process &amp; Impact, Team Enablement) removed.</li>
+          <li>Accessibility Lead and Lead Technical Support Engineer roles at Edlio condensed: removed summary paragraphs from both, updated bullets to match tighter, outcome-focused copy.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-07">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 7, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">fa87257</span></h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>GA4 custom event tracking across all pages via <code>_includes/event-tracking.html</code>, injected through the base layout. Tracks: navigation link clicks (with desktop vs. hamburger context), theme toggle direction, blog post clicks from the homepage listing, music page external link clicks with platform detection (Spotify / YouTube / SoundCloud / Instagram), social link clicks from the Elsewhere section, the About page music CTA, the résumé LinkedIn link, footer links, the résumé print button, and scroll depth at 25 / 50 / 75 / 100%. All <code>gtag()</code> calls are guarded with a typeof check, making the script a no-op in local development.</li>
+          <li>Save/Print button on the résumé page, placed inside the <code>cv-header</code> grid alongside the name. Triggers <code>window.print()</code> and fires a <code>resume_print_click</code> GA4 event. Styled to match the existing CTA button pattern from the About page. Hidden in print.</li>
+          <li><code>@media print</code> stylesheet for the résumé. Hides site chrome, resets to black-on-white, sets print-appropriate font sizes and spacing, and appends full link URLs inline — suppressed on the contact link, which already displays as a URL.</li>
+          <li>This changelog page (<code>/changelog</code>), styled in the site theme with a dedicated SCSS partial (<code>_sass/changelog.scss</code>).</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Résumé <code>.cv-header</code> restructured from a flexbox row into a two-column CSS grid. Name and Save/Print button share the top row; tagline and LinkedIn link sit below. Mobile stacks all items centered.</li>
+          <li>Footer year is now rendered dynamically via <code>&#123;&#123; 'now' | date: '%Y' &#125;&#125;</code> instead of a hardcoded value.</li>
+          <li>All external links on the Music page and in the Elsewhere section on About now include <code>target="_blank" rel="noopener noreferrer"</code>. Previously, clicking any of them navigated away from the site with no new-tab behavior.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Fixed</h3>
+        <ul>
+          <li>Hardcoded <code>&lt;link rel="canonical" href="https://mattrugamas.com"/&gt;</code> removed from <code>base.html</code>. Every page was incorrectly declaring the homepage as its canonical URL. The <code>jekyll-seo-tag</code> plugin already handles per-page canonicals correctly via the <code>&#123;% seo %&#125;</code> tag.</li>
+          <li>Print stylesheet was targeting <code>header { display: none }</code>, which hid all semantic <code>&lt;header&gt;</code> elements on the résumé — including the name/contact row and every job title header. Corrected to <code>body > header</code> to target only the site navigation wrapper.</li>
+          <li>Résumé <code>.cv-role</code> entries had <code>break-inside: avoid</code> set, which caused the Atlassian role (the longest entry) to push entirely to page two, leaving a blank gap on page one. Removed the rule from roles; added <code>break-after: avoid</code> on <code>.cv-role-header</code> instead, keeping each role's title attached to its content without blocking mid-role page breaks.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-03">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 3, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">99181d7</span></h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Converted all SCSS placeholder selectors (<code>%content-base</code>, <code>%link-setup</code>, <code>%nav-animate</code>, etc.) to <code>@mixin</code> and added <code>@use 'settings' as *</code> imports to every SCSS partial, aligning with the Dart Sass module system.</li>
+          <li>Added <code>--text-2xl</code>, <code>--text-3xl</code>, and <code>--content-gap</code> to the design token set in <code>_settings.scss</code>.</li>
+          <li>Content area padding switched to <code>clamp()</code> for fluid responsive spacing instead of a fixed value.</li>
+          <li>Homepage blog listing redesigned: posts are now grouped by year, each row shows the date in a right-aligned aside alongside the post title and excerpt, and the full row gets a left-border highlight on hover at desktop widths. Markup in <code>index.html</code> restructured with <code>group_by_exp</code> to generate the year groups.</li>
+          <li><code>scrollbar-gutter: stable</code> added to the root to prevent layout shift when the scrollbar appears on long pages.</li>
+          <li>Site description in <code>_config.yml</code> updated to reflect current role and location.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-02">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 2, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">94e6ffa</span></h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Added <code>--font-weight-normal</code>, <code>--font-weight-semi</code>, and <code>--font-weight-bold</code> tokens; replaced all hardcoded <code>font-weight</code> values with token references.</li>
+          <li>Corrected <code>--text-sm</code> from <code>0.875rem</code> to <code>0.8125rem</code>.</li>
+          <li>Blog post typography overhauled: explicit h2/h3 styles with correct size, weight, and spacing; post date styled using <code>--color-dates</code> and body font; paragraph line-height set to 1.7; removed legacy breakpoint overrides that were fighting the new system.</li>
+          <li>Both blog posts converted from bold-text section headings (<code>**Bold**</code>) to proper Markdown H2s, which now render with the correct semantic hierarchy and visual treatment.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+
+  <details class="disclosure changelog-entry" id="2026-04-02-2">
+    <summary class="disclosure-summary">
+      <h2 class="changelog-date">April 2, 2026 <span class="changelog-dot">·</span> <span class="changelog-hash">c063f77</span></h2>
+      <span class="disclosure-hint" data-count="li" data-unit="change"></span>
+      <span class="disclosure-icon" aria-hidden="true"></span>
+    </summary>
+    <div class="disclosure-body">
+
+      <div class="changelog-group">
+        <h3>Added</h3>
+        <ul>
+          <li>Music page (<code>music.html</code>) with a full archive of projects, roles, and links to Spotify, YouTube, SoundCloud, and Instagram.</li>
+          <li>Résumé page (<code>resume.html</code>) as a proper web CV: semantic HTML with <code>&lt;article&gt;</code> per role, a <code>&lt;dl&gt;</code> for skills, and full employment history replacing placeholder content.</li>
+          <li>Music and Résumé added to site navigation in <code>_data/navigation.yml</code>.</li>
+          <li>Light/dark mode theme toggle with <code>localStorage</code> persistence. A flash-prevention script in <code>&lt;head&gt;</code> reads the stored preference before first paint. System <code>prefers-color-scheme</code> is used as the default when no stored value exists.</li>
+          <li>Hamburger navigation for mobile viewports, with animated icon, <code>aria-expanded</code> state tracking, and close-on-outside-click behavior.</li>
+          <li>Skip-to-main-content link for keyboard and assistive technology navigation.</li>
+          <li>Two blog posts: <em>The Redesign</em> (March 31) and <em>Still on Jekyll, Probably Forever</em> (April 2).</li>
+          <li>Music-specific SCSS partial (<code>_sass/music.scss</code>) and corresponding <code>@use</code> import in <code>main.scss</code>.</li>
+        </ul>
+      </div>
+
+      <div class="changelog-group">
+        <h3>Changed</h3>
+        <ul>
+          <li>Full CSS rebuild. All stylesheets converted to mobile-first, all color values replaced with CSS custom properties, a spacing scale and type scale established. Dark mode is the default; light mode maps the same palette to warm-background equivalents via a <code>data-theme</code> attribute on the root element.</li>
+          <li>About page rebuilt with CSS Grid (heading → photo → text on mobile; two-column on desktop) in place of the previous <code>column-reverse</code> flexbox approach.</li>
+          <li>Font stack simplified: removed Rubik and Work Sans, retained Source Code Pro for monospace use only. Body and UI text now use the system font stack.</li>
+          <li>Google Fonts loading updated to use <code>preconnect</code> hints and the modern <code>display=swap</code> API.</li>
+          <li>Jekyll updated from 4.2.0 to 4.4.1. <code>jekyll-sass-converter</code> updated from 2.x to 3.x (Dart Sass via <code>sass-embedded</code>). Rouge updated from 3.x to 4.x. Various other dependency bumps in <code>Gemfile.lock</code>.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
 
 </div>
