@@ -4,10 +4,12 @@
 /* BRAND MARKS */
 /////////////////
 
-// Inline brand name preceded by its logo (e.g. "at [cube] Cursor"),
+// Inline brand name preceded by its logo (e.g. "at [mark] Atlassian"),
 // mirroring the company-mark treatment. The wrapper stays in normal
 // inline flow so its text matches the surrounding copy exactly; only
 // the logo is offset. white-space: nowrap keeps logo + name together.
+// Compact square marks only — a wide wordmark (SpaceXAI) sits as the
+// name alone, because the trailing stroke opens a hole in running copy.
 .brand-mention {
   white-space: nowrap;
 }
@@ -17,6 +19,6 @@
   height: 1em;
   color: currentColor;
   margin-inline: 0.15rem;
-  // Sit the cube optically centred on the text baseline.
+  // Sit the mark optically centred on the text baseline.
   vertical-align: -0.14em;
 }

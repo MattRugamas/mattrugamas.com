@@ -1,7 +1,5 @@
-- name: Home
-  link: /
-- name: About
-  link: /about
+# Primary nav. Home is omitted deliberately — the "MR" mark in the nav bar
+# already links to /, and About now lives in the homepage bio.
 - name: Music
   link: /music
 - name: Résumé
